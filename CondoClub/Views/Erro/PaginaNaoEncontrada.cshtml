@@ -1,0 +1,13 @@
+﻿@{
+    Layout = "~/Views/Shared/_Blank.cshtml";
+}
+
+<div class="logo-blank">
+    <a class="logo" href="~/"><img src="~/Content/images/logo_grande.png" /></a>
+</div>
+<div>
+    <h5>@Resources.Erro.PaginaNaoEncontrada</h5>
+</div>
+
+<br />
+<a class="link-orange-underline" style="font-size:0.8em;" onclick="history.go(-1); return false;" href="#">@Html.Raw(Resources.Geral.Voltar)</a>

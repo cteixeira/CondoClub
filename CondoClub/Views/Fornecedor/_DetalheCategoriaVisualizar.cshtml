@@ -1,0 +1,6 @@
+﻿@using CondoClub.Web.Models;
+@using CondoClub.Web.Controllers;
+
+@model KeyValuePair<FornecedorCategoria, CondoClub.Regras.Fornecedor.Categoria>
+
+<td onclick="EditRecCategoria(@Model.Key.FornecedorCategoriaID)" class="link-orange">@Model.Value.Designacao</td>

@@ -1,0 +1,12 @@
+﻿@model IEnumerable<CondoClub.Web.Models.Pagamento>
+@if (Model != null && Model.Count() > 0) {
+    foreach (var item in Model) {
+        <div id="@String.Concat(item.Origem, "_", @item.ID)" class="block-list-group">
+            @{Html.RenderPartial("_Detalhe", item);}
+        </div>
+    }
+} else { 
+@*Hack para, ao fazer o append dos dados da resposta, não ocorrer um erro devido à resposta estar vazia*@
+    <div>
+    </div>
+}

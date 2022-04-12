@@ -1,0 +1,16 @@
+﻿@model CondoClub.Web.Models.ConteudoDirectoria
+
+
+@Html.HiddenFor(m => m.DirectoriaID)
+@foreach (var directoria in Model.Directorias)
+{
+    <div id="dir_@directoria.ID" class="line">
+        @{ Html.RenderPartial("_DetalheVisualizarDirectoria", directoria); }
+    </div>
+}
+@foreach (var ficheiro in Model.Ficheiros)
+{
+    <div id="file_@ficheiro.ID" class="line">
+        @{ Html.RenderPartial("_DetalheVisualizarFicheiro", ficheiro); }
+    </div>
+}

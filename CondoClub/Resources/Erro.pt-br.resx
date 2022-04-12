@@ -1,0 +1,267 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AceitarCondicoesGerais" xml:space="preserve">
+    <value>Tem de aceitar as Condições Gerais do CondoClub.</value>
+  </data>
+  <data name="Acesso" xml:space="preserve">
+    <value>Desculpe mas ocorreu um erro. Neste momento, voce está sem acesso à página, por favor contate o administrador do sistema.</value>
+  </data>
+  <data name="Autenticacao" xml:space="preserve">
+    <value>O nome do usuário ou senha estão incorretos.</value>
+  </data>
+  <data name="CampoObrigatorio" xml:space="preserve">
+    <value>O campo '{0}' é obrigatório.</value>
+  </data>
+  <data name="CategoriaRepetida" xml:space="preserve">
+    <value>A Categoria já existe. Seleccione outra por favor.</value>
+  </data>
+  <data name="CondominioSemSindico" xml:space="preserve">
+    <value>Para poder prosseguir com esta alteração terá de primeiro nomear um novo síndico.</value>
+  </data>
+  <data name="ConviteEmailsInvalidos" xml:space="preserve">
+    <value>Os seguintes emails não têm um formato válido: {0}</value>
+  </data>
+  <data name="ConviteEmailsRepetidos" xml:space="preserve">
+    <value>Os seguintes emails já se encontram registados no sistema: {0}</value>
+  </data>
+  <data name="DadosIncorrectos" xml:space="preserve">
+    <value>Os dados do registro não são válidos.</value>
+  </data>
+  <data name="DataMaiorIgualQue" xml:space="preserve">
+    <value>O campo '{0}' deve de ser maior ou igual que o campo '{1}'</value>
+  </data>
+  <data name="DataMaiorIgualQueHoje" xml:space="preserve">
+    <value>O campo '{0}' deve de ser maior ou igual que a data actual</value>
+  </data>
+  <data name="DataMaiorQue" xml:space="preserve">
+    <value>O campo '{0}' deve de ser maior que o campo '{1}'</value>
+  </data>
+  <data name="DataMaiorQueHoje" xml:space="preserve">
+    <value>O campo '{0}' deve de ser maior que a data actual</value>
+  </data>
+  <data name="DataObrigatoria" xml:space="preserve">
+    <value>Obrigatório seleccionar uma data</value>
+  </data>
+  <data name="DesignacaoRepetida" xml:space="preserve">
+    <value>A Designação já existe. Seleccione outra por favor.</value>
+  </data>
+  <data name="EmailRepetido" xml:space="preserve">
+    <value>Esse Email já existe. Selecione outro por favor.</value>
+  </data>
+  <data name="EmpresaSemUtilizador" xml:space="preserve">
+    <value>Não é possível executar a operação porque este é o único utilizador da empresa.</value>
+  </data>
+  <data name="Evento" xml:space="preserve">
+    <value>Pedimos desculpa mas ocorreu um erro. Neste momento voce não tem permissões para executar essa funcionalidade, por favor contate o administrador de sistema.</value>
+  </data>
+  <data name="FicheiroTamanhoMaximo" xml:space="preserve">
+    <value>O arquivo não pode ter mais de {0} MB.</value>
+  </data>
+  <data name="FormatoData" xml:space="preserve">
+    <value>O campo '{0}' deve o formato de data (dd/mm/aaaa).</value>
+  </data>
+  <data name="FormatoEmail" xml:space="preserve">
+    <value>O campo '{0}' deve ter o formato de email.</value>
+  </data>
+  <data name="FormatoHora" xml:space="preserve">
+    <value>O campo '{0}' deve o formato de hora (hh:mm).</value>
+  </data>
+  <data name="FormatoImagemInvalido" xml:space="preserve">
+    <value>Formato de imagem inválido.</value>
+  </data>
+  <data name="FormatoImagemSuportado" xml:space="preserve">
+    <value>Pode escolher tipos de imagem JPEG e PNG.</value>
+  </data>
+  <data name="FormatoNumeroInteiro" xml:space="preserve">
+    <value>O campo '{0}' deve ser um número inteiro.</value>
+  </data>
+  <data name="FornecedorNaoExiste" xml:space="preserve">
+    <value>Desculpe mas o fornecedor não foi encontrado.</value>
+  </data>
+  <data name="FornecedorSemUtilizador" xml:space="preserve">
+    <value>Não é possível executar a operação porque este é o único utilizador do fornecedor.</value>
+  </data>
+  <data name="Geral" xml:space="preserve">
+    <value>Desculpe mas ocorreu um erro, por favor contacte o administrador de sistema.</value>
+  </data>
+  <data name="IDFicheiroInvalido" xml:space="preserve">
+    <value>ID de arquivo inválido.</value>
+  </data>
+  <data name="MatriculaRepetida" xml:space="preserve">
+    <value>A Matrícula já existe. Seleccione outra por favor.</value>
+  </data>
+  <data name="MoradaGoogleMaps" xml:space="preserve">
+    <value>Seleccione o endereço no Google Maps.</value>
+  </data>
+  <data name="NomeRepetido" xml:space="preserve">
+    <value>O Nome já existe. Seleccione outro por favor.</value>
+  </data>
+  <data name="NumeroEntre" xml:space="preserve">
+    <value>O campo '{0}' deve ser entre {1} e {2}.</value>
+  </data>
+  <data name="NumeroMaiorQue" xml:space="preserve">
+    <value>O campo '{0}' deve ser maior ou igual que {1}.</value>
+  </data>
+  <data name="NumeroMenorQue" xml:space="preserve">
+    <value>O campo '{0}' deve ser menor ou igual que {1}.</value>
+  </data>
+  <data name="OpcaoObrigatoria" xml:space="preserve">
+    <value>Você deve seleccionar uma das opções.</value>
+  </data>
+  <data name="PaginaEmDesenvolvimento" xml:space="preserve">
+    <value>Esta página encontra-se em desenvolvimento.</value>
+  </data>
+  <data name="PaginaNaoEncontrada" xml:space="preserve">
+    <value>A página não foi encontrada.</value>
+  </data>
+  <data name="PasswordActualErrada" xml:space="preserve">
+    <value>A Senha actual não está correcta!</value>
+  </data>
+  <data name="PasswordsIncorrectas" xml:space="preserve">
+    <value>As senhas indicadas não são iguais.</value>
+  </data>
+  <data name="PrecoRepetidoRange" xml:space="preserve">
+    <value>Já existe um preço definido para os dados inseridos.</value>
+  </data>
+  <data name="RegistoPorAprovar" xml:space="preserve">
+    <value>O seu cadastro aguarda aprovação.</value>
+  </data>
+  <data name="SemDestinatarios" xml:space="preserve">
+    <value>Primeiro insira os destinatários dos convites.</value>
+  </data>
+  <data name="TamanhoMaximo" xml:space="preserve">
+    <value>O campo '{0}' pode ter até {1} caracteres.</value>
+  </data>
+  <data name="TamanhoMinimo" xml:space="preserve">
+    <value>O campo '{0}' tem de ter pelo menos {1} caracteres.</value>
+  </data>
+  <data name="TemDependencias" xml:space="preserve">
+    <value>O registo não pode ser eliminado porque tem dependências em outras tabelas. Contacte o administrador de sistema.</value>
+  </data>
+  <data name="TituloErro" xml:space="preserve">
+    <value>Opsss, ocorreu um erro :(</value>
+  </data>
+  <data name="UserNameRepetido" xml:space="preserve">
+    <value>O User Name já existe. Seleccione outro por favor.</value>
+  </data>
+  <data name="UtilizadorInactivo" xml:space="preserve">
+    <value>O usuário não existe ou está inativo, por favor contacte o administrador de sistema.</value>
+  </data>
+</root>

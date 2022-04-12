@@ -1,0 +1,51 @@
+﻿@using CondoClub.Web.Models;
+@using CondoClub.Web.Controllers;
+
+@model Questionario
+
+<div class="header multiline">
+    <span class="title" style="width: 100%;">@Model.Questao</span>
+</div>
+<div class="content" style="display:none;">
+    <!--opcoes-->
+    <div class="form-1column" style="line-height: 30px;">
+        <div><input type="radio" name="Opcao" value="1" />@Html.Raw(Model.Opcao1)</div>
+        <div><input type="radio" name="Opcao" value="2" />@Html.Raw(Model.Opcao2)</div>
+        @if (!string.IsNullOrEmpty(Model.Opcao3)) {
+            <div><input type="radio" name="Opcao" value="3" />@Html.Raw(Model.Opcao3)</div>
+        }
+        @if (!string.IsNullOrEmpty(Model.Opcao4)) {
+            <div><input type="radio" name="Opcao" value="4" />@Html.Raw(Model.Opcao4)</div>
+        }
+        @if (!string.IsNullOrEmpty(Model.Opcao5)) {
+            <div><input type="radio" name="Opcao" value="5" />@Html.Raw(Model.Opcao5)</div>
+        }
+        @if (!string.IsNullOrEmpty(Model.Opcao6)) {
+            <div><input type="radio" name="Opcao" value="6" />@Html.Raw(Model.Opcao6)</div>
+        }
+        @if (!string.IsNullOrEmpty(Model.Opcao7)) {
+            <div><input type="radio" name="Opcao" value="7" />@Html.Raw(Model.Opcao7)</div>
+        }
+        @if (!string.IsNullOrEmpty(Model.Opcao8)) {
+            <div><input type="radio" name="Opcao" value="8" />@Html.Raw(Model.Opcao8)</div>
+        }
+    </div>
+    <!--outra opcao-->
+    <div class="form-1column" style="line-height: 30px; margin-bottom: 20px;">
+        <input type="text" id="@String.Concat("OutraOpcao", Model.ID)" style="width: 100%;" placeholder="@Resources.Questionario.OutraOpcao" />
+    </div>
+    <div class="form-1column">
+        <label class="value" style="font-size:.9em;">
+            @String.Concat(Resources.Questionario.Legenda1, Model.TotalRespostas, Resources.Questionario.Legenda2,
+                            Resources.Questionario.Legenda3, Model.Inicio.ToShortDateString(),
+                            Resources.Questionario.Legenda4, Model.Fim.ToShortDateString())
+        </label>
+    </div>
+    <div class="toolbox-no-border">
+        @if (Model.ID != null && Model.Permissoes.Contains(CondoClub.Regras.Enum.Permissao.Gravar)){
+            <input type="button" onclick="EditRec(@Model.ID)" class="orange1-button" value="@Resources.Geral.Editar" />
+        }
+        <input type="button" onclick="Resposta(@Model.ID)" class="orange1-button" value="@Resources.Questionario.Votar" />
+    </div>
+    <div class="clear"></div>
+</div>

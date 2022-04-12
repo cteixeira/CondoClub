@@ -1,0 +1,37 @@
+﻿@using CondoClub.Web.Models;
+@using CondoClub.Web.Controllers;
+
+@model ListaReservaFiltro
+
+@using (Ajax.BeginForm("_ListaReserva", null, new AjaxOptions {
+    UpdateTargetId = "lista",
+    InsertionMode = InsertionMode.Replace,
+    OnSuccess="AfterSearch"
+    }, new { id = "formPesquisa" })) { 
+    <div class="form-2column">
+        @Html.LabelFor(m => m.RecursoID)
+        @Html.DropDownListFor(m => m.RecursoID, new RecursoController().ConstroiDropDown(null, null), "")
+    </div>        
+    <div class="form-2column">
+        @Html.LabelFor(m => m.MoradorID)
+        @Html.DropDownListFor(m => m.MoradorID, new MoradorController().ConstroiDropDown(CondoClub.Web.ControladorSite.Utilizador.CondominioID.Value, true), "")
+    </div>        
+    <div class="form-2column">
+        @Html.LabelFor(m => m.DataInicio)
+        @Html.DisplayFor(m => m.DataInicio, "Calendario", new { CalID = "calSearchDataInicio" })
+    </div>        
+    <div class="form-2column">
+        @Html.LabelFor(m => m.DataFim)
+        @Html.DisplayFor(m => m.DataFim, "Calendario", new { CalID = "calSearchDataFim" })
+    </div>
+    <div class="form-2column" style="display:none;">
+        @Html.LabelFor(m => m.Estado)
+        @Html.DropDownListFor(m => m.Estado, new RecursoController().ConstroiDropDownEstadoReserva(), CondoClub.Regras.Enum.EstadoRecursoReserva.Reservado)
+    </div>        
+    <!--opções---------------------->
+    <div class="toolbox-no-border">
+        <input type="submit" class="button-option orange3-button" id="submitFiltro" value="@Resources.Geral.Pesquisar" />
+    </div>
+    <div class="clear">
+    </div>
+}

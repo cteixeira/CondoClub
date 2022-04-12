@@ -1,0 +1,31 @@
+﻿@using CondoClub.Web.Models;
+@using CondoClub.Web.Controllers;
+
+@model ArquivoDirectoria
+
+<a class="link" href="@Model.Link" title="@Model.Nome">
+    <span class="column-1">
+        <span class="file-icon-folder"></span>
+        <span class="name">@Model.Nome</span>
+    </span>
+    <span class="column-2"></span>
+    <span class="column-3">@Model.DataHora</span>
+    <span class="column-4">@Model.UtilizadorNome</span>
+</a>
+@if (Model.Permissoes.Contains(CondoClub.Regras.Enum.Permissao.Gravar) ||
+    Model.Permissoes.Contains(CondoClub.Regras.Enum.Permissao.Apagar))
+{
+    <span class="column-5 menu">
+        @if (Model.Permissoes.Contains(CondoClub.Regras.Enum.Permissao.Gravar))
+        {
+            @Ajax.ActionLink(" ", "_DetalheEditarDirectoria",
+                new { @id = Model.ID },
+                new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "dir_" + Model.ID }
+            )
+        }
+    </span>
+}
+else
+{
+    <span class="column-5"></span>
+}

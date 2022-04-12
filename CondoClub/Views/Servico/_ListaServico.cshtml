@@ -1,0 +1,7 @@
+﻿@model IEnumerable<CondoClub.Web.Models.Servico>
+
+@foreach (var item in Model) {
+    <div class="announcement list-service" id="@item.ID">
+        @{ Html.RenderPartial("_DetalheServico", item); }
+    </div>
+}

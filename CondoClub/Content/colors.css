@@ -1,0 +1,277 @@
+﻿/*
+CORES:(Palete Outlook.com)
+color0: #E6E6E6; cinzento por defeito
+color1: #008A17; verde1
+color2: #004B8B; azul escuro
+color3: #FF8F32; laranja
+color4: #D24726; vermelho
+color5: #4617B4; azul
+color6: #008299; verde mar
+color7: #03B3B2; verde claro
+color8: #8C0095; purple 
+color9: #570000; castanho
+color10:#82BA00; verde2
+
+
+color0: #F07D00;
+color1: #2E8BCC;
+color2: #51A351;
+color3: #FF652C;
+color4: #F5A932;
+color5: #A35180;
+color6: #2F96B4;
+color7: #00ABA9;
+color8: #9F6810; 
+color9: #570000;
+color10:#DA4F49;
+
+*/
+.top-bar{
+    background-color:#F07D00;
+}
+.top-bar .logo{
+    background:url(images/logo_white_30.png) no-repeat left center;    
+}
+body.color1 .top-bar{
+    background-color:#2E8BCC;
+}
+body.color2 .top-bar{
+    background-color:#51A351;
+}
+body.color3 .top-bar{
+    background-color:#FF652C;
+}
+body.color4 .top-bar{
+    background-color:#F5A932;
+}
+body.color5 .top-bar{
+    background-color:#A35180;
+}
+body.color6 .top-bar{
+    background-color:#2F96B4;
+}
+body.color7 .top-bar{
+    background-color:#00ABA9;
+}
+body.color8 .top-bar{
+    background-color:#9F6810;
+}
+body.color9 .top-bar{
+    background-color:#570000;
+}
+body.color10 .top-bar{
+    background-color:#DA4F49;
+}
+.top-bar .user-info, 
+body.color1 .top-bar .user-info, body.color2 .top-bar .user-info, 
+body.color3 .top-bar .user-info, body.color4 .top-bar .user-info, 
+body.color5 .top-bar .user-info, body.color6 .top-bar .user-info, 
+body.color7 .top-bar .user-info, body.color8 .top-bar .user-info, 
+body.color9 .top-bar .user-info, body.color10 .top-bar .user-info{
+    color:#FFFFFF;
+}
+
+body.color1 .top-bar .logo, body.color2 .top-bar .logo,
+body.color3 .top-bar .logo, body.color4 .top-bar .logo,
+body.color5 .top-bar .logo, body.color6 .top-bar .logo,
+body.color7 .top-bar .logo, body.color8 .top-bar .logo,
+body.color9 .top-bar .logo, body.color10 .top-bar .logo{
+     background:url(images/logo_white_30.png) no-repeat left center;
+}
+      
+.top-bar .user-info .drop-menu .down-image, 
+body.color1 .top-bar .user-info .drop-menu .down-image, body.color2 .top-bar .user-info .drop-menu .down-image,
+body.color3 .top-bar .user-info .drop-menu .down-image, body.color4 .top-bar .user-info .drop-menu .down-image,
+body.color5 .top-bar .user-info .drop-menu .down-image, body.color6 .top-bar .user-info .drop-menu .down-image,
+body.color7 .top-bar .user-info .drop-menu .down-image, body.color8 .top-bar .user-info .drop-menu .down-image,
+body.color9 .top-bar .user-info .drop-menu .down-image, body.color10 .top-bar .user-info .drop-menu .down-image{
+    background:url("images/icones/white_25/down.png") no-repeat;
+}
+/*menu principal*/
+.main-menu .menu-item.color1:hover{
+    background-color:#2E8BCC;
+}
+.main-menu .menu-item.color2:hover{
+    background-color:#51A351;
+}
+.main-menu .menu-item.color3:hover{
+    background-color:#FF652C;
+}
+.main-menu .menu-item.color4:hover{
+    background-color:#F5A932;
+}
+.main-menu .menu-item.color5:hover{
+    background-color:#A35180;
+}
+.main-menu .menu-item.color6:hover{
+    background-color:#2F96B4;
+}
+.main-menu .menu-item.color7:hover{
+    background-color:#00ABA9;
+}
+.main-menu .menu-item.color8:hover{
+    background-color:#9F6810;
+}
+.main-menu .menu-item.color9:hover{
+    background-color:#570000;
+}
+.main-menu .menu-item.color10:hover{
+    background-color:#DA4F49;
+}
+/*Menu Interior*/
+.inner-menu .menu-item:hover, .inner-menu .menu-item.active{
+    background-color:#F07D00;
+}
+.inner-menu .menu-item.color1:hover, .inner-menu .menu-item.color1.active{
+    background-color:#2E8BCC;
+}
+.inner-menu .menu-item.color2:hover, .inner-menu .menu-item.color2.active{
+    background-color:#51A351;
+}
+.inner-menu .menu-item.color3:hover, .inner-menu .menu-item.color3.active{
+    background-color:#FF652C;
+}
+.inner-menu .menu-item.color4:hover, .inner-menu .menu-item.color4.active{
+    background-color:#F5A932;
+}
+.inner-menu .menu-item.color5:hover, .inner-menu .menu-item.color5.active{
+    background-color:#A35180;
+}
+.inner-menu .menu-item.color6:hover, .inner-menu .menu-item.color6.active{
+    background-color:#2F96B4;
+}
+.inner-menu .menu-item.color7:hover, .inner-menu .menu-item.color7.active{
+    background-color:#00ABA9;
+}
+.inner-menu .menu-item.color8:hover, .inner-menu .menu-item.color8.active{
+    background-color:#9F6810;
+}
+.inner-menu .menu-item.color9:hover, .inner-menu .menu-item.color9.active{
+    background-color:#570000;
+}
+.inner-menu .menu-item.color10:hover, .inner-menu .menu-item.color10.active{
+    background-color:#DA4F49;
+}
+/*top bar drop menu*/
+.drop-menu-buttons a{
+    background-color:#F07D00;    
+}
+.drop-menu-buttons a:hover{
+    border-color:#F07D00;    
+    color:#F07D00;
+    background-color:#FFFFFF;
+} 
+body.color1 .drop-menu-buttons a{
+    background-color:#2E8BCC;    
+}
+body.color1 .drop-menu-buttons a:hover{
+    border-color:#2E8BCC;    
+    color:#2E8BCC;
+    background-color:#FFFFFF;
+}
+body.color2 .drop-menu-buttons a{
+    background-color:#51A351;    
+}
+body.color2 .drop-menu-buttons a:hover{
+    border-color:#51A351;    
+    color:#51A351;
+    background-color:#FFFFFF;
+}
+body.color3 .drop-menu-buttons a{
+    background-color:#FF652C;    
+}
+body.color3 .drop-menu-buttons a:hover{
+    border-color:#FF652C;    
+    color:#FF652C;
+    background-color:#FFFFFF;
+}
+body.color4 .drop-menu-buttons a{
+    background-color:#F5A932;    
+}
+body.color4 .drop-menu-buttons a:hover{
+    border-color:#F5A932;    
+    color:#F5A932;
+    background-color:#FFFFFF;
+}
+body.color5 .drop-menu-buttons a{
+    background-color:#A35180;    
+}
+body.color5 .drop-menu-buttons a:hover{
+    border-color:#A35180;    
+    color:#A35180;
+    background-color:#FFFFFF;
+}
+body.color6 .drop-menu-buttons a{
+    background-color:#2F96B4;    
+}
+body.color6 .drop-menu-buttons a:hover{
+    border-color:#2F96B4;    
+    color:#2F96B4;
+    background-color:#FFFFFF;
+}
+body.color7 .drop-menu-buttons a{
+    background-color:#00ABA9;    
+}
+body.color7 .drop-menu-buttons a:hover{
+    border-color:#00ABA9;    
+    color:#00ABA9;
+    background-color:#FFFFFF;
+}
+body.color8 .drop-menu-buttons a{
+    background-color:#9F6810;    
+}
+body.color8 .drop-menu-buttons a:hover{
+    border-color:#9F6810;    
+    color:#9F6810;
+    background-color:#FFFFFF;
+}
+body.color9 .drop-menu-buttons a{
+    background-color:#570000;   
+}
+body.color9 .drop-menu-buttons a:hover{
+    border-color:#570000;    
+    color:#570000;
+    background-color:#FFFFFF;
+}
+body.color10 .drop-menu-buttons a{
+    background-color:#DA4F49;    
+}
+body.color10 .drop-menu-buttons a:hover{
+    border-color:#DA4F49;    
+    color:#DA4F49;
+    background-color:#FFFFFF;
+}
+/*top hidden bar*/
+.top-hidden-bar{
+    background-color:#F07D00;    
+}
+body.color1 .top-hidden-bar{
+    background-color:#2E8BCC;    
+}
+body.color2 .top-hidden-bar{
+    background-color:#51A351;    
+}
+body.color3 .top-hidden-bar{
+    background-color:#FF652C;    
+}
+body.color4 .top-hidden-bar{
+    background-color:#F5A932;    
+}
+body.color5 .top-hidden-bar{
+    background-color:#A35180;    
+}
+body.color6 .top-hidden-bar{
+    background-color:#2F96B4;    
+}
+body.color7 .top-hidden-bar{
+    background-color:#00ABA9;    
+}
+body.color8 .top-hidden-bar{
+    background-color:#9F6810;    
+}
+body.color9 .top-hidden-bar{
+    background-color:#570000;    
+}
+body.color10 .top-hidden-bar{
+    background-color:#DA4F49;    
+}

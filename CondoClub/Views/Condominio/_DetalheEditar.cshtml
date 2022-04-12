@@ -1,0 +1,15 @@
+﻿@using CondoClub.Web.Models;
+@using CondoClub.Web.Controllers;
+
+@model Condominio
+
+@using (Ajax.BeginForm("Gravar",
+    new AjaxOptions
+    {
+        UpdateTargetId = Model.ID.Value.ToString(),
+        InsertionMode = InsertionMode.Replace,
+        OnSuccess = "AfterUpdate(data, " + Model.ID.Value + ")"
+    }))
+{
+    Html.RenderPartial("_Detalhe", Model);
+}

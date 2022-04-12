@@ -1,0 +1,61 @@
+﻿@using CondoClub.Web.Models;
+@using CondoClub.Web.Controllers;
+
+@model Recurso
+
+<div class="header">
+    <span class="title">@Model.Designacao</span>
+</div>
+<div class="content" style="display:none;">
+   <div class="form-readonly">
+        <div class="form-2column">
+            @Html.LabelFor(m => m.Activo)
+            <label class="value">
+                @if (Model.Activo){
+                    @Resources.Geral.Sim;
+                }else{
+                    @Resources.Geral.Nao;
+                }
+            </label>
+        </div>
+        <div class="form-2column">
+            @Html.LabelFor(m => m.RequerAprovacao)
+            <label class="value">
+                @if (Model.RequerAprovacao){
+                    @Resources.Geral.Sim;
+                }else{
+                    @Resources.Geral.Nao;
+                }
+            </label>
+        </div>
+        <div class="form-2column">
+            @Html.LabelFor(m => m.DiasMinimosAprovacao)
+            <label class="value">
+                @if (Model.DiasMinimosAprovacao.HasValue) { 
+                    @Model.DiasMinimosAprovacao    
+                } else { 
+                    @Html.DisplayFor(m => m.DiasMinimosAprovacao, "CampoVazio")
+                }
+            </label>
+        </div>
+        <div class="form-2column">
+            @Html.LabelFor(m => m.MaxSlotsReserva)
+            <label class="value">@Model.MaxSlotsReserva</label>
+        </div>
+        @*<div class="form-2column">
+            @Html.LabelFor(m => m.IntervaloReserva)
+            <label class="value">@Model.IntervaloReserva</label>
+        </div>*@
+        @if (Model.ID != null && (
+            Model.Permissoes.Contains(CondoClub.Regras.Enum.Permissao.Gravar) ||
+            Model.Permissoes.Contains(CondoClub.Regras.Enum.Permissao.Apagar)
+        ))
+        {
+            <div class="toolbox-no-border">
+                <input type="button" onclick="EditRec(@Model.ID)" class="orange1-button" value="@Resources.Geral.Editar" />
+            </div>
+            <div class="clear"></div>
+        }
+        @{ Html.RenderPartial("_ListaHorario", Model); }
+    </div>
+</div>

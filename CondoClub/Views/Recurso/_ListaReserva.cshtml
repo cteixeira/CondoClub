@@ -1,0 +1,10 @@
+﻿@using CondoClub.Web.Models;
+@model IEnumerable<RecursoReserva>
+
+@foreach (var item in Model) {
+    <div id="@item.ID" class="block-list-group">
+        <div class="header">
+            <span class="title">@item.DataInicio.ToShortDateString() @item.DataInicio.ToString("HH:mm")  - @item.RecursoDesignacao</span> <span class="subtitle">@item.UtilizadorDesignacao</span>
+        </div>
+    </div>
+}

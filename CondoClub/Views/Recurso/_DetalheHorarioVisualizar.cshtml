@@ -1,0 +1,17 @@
+﻿@using CondoClub.Web.Models;
+@using CondoClub.Web.Controllers;
+
+@model RecursoHorario
+
+<td onclick="EditRecHorario(@Model.RecursoHorarioID)" class="link-orange">
+    @Html.DisplayFor(m => m.DiaSemanaDesignacao)
+</td>
+<td onclick="EditRecHorario(@Model.RecursoHorarioID)" class="link-orange">
+    @Html.DisplayFor(m => m.Inicio, "FormataHora")
+</td>
+<td onclick="EditRecHorario(@Model.RecursoHorarioID)" class="link-orange">
+    @Html.DisplayFor(m => m.NumeroSlots)
+</td>
+<td onclick="EditRecHorario(@Model.RecursoHorarioID)" class="link-orange">
+    @Html.DisplayFor(m => m.DuracaoSlot)
+</td>

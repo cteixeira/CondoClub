@@ -1,0 +1,96 @@
+﻿@using CondoClub.Web.Models;
+@using CondoClub.Web.Controllers;
+
+@model Utilizador
+
+
+<div class="main-container">
+    <div class="header">
+        <div class="title">
+            <h5>@Resources.Utilizador.EditarPerfil</h5>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="separator10"></div>
+    @using (Html.BeginForm("GravarPerfil", "Utilizador"))
+    {
+        <div class="form">
+            @Html.ValidationSummary()
+            @Html.HiddenFor(m => m.ID)
+            @Html.HiddenFor(m => m.PerfilID)
+            @Html.HiddenFor(m => m.CondominioID)
+            @Html.HiddenFor(m => m.EmpresaID)
+            @Html.HiddenFor(m => m.FornecedorID)
+            <div class="form-2column">
+                <span class="photo">
+                    <img alt="user" height="60" width="60" src="@Url.Action("Avatar", "Ficheiro",
+                        new { id = Model.AvatarID, thumbnail = false })" />
+                    <span class="orange1-button modify-button">@Resources.Geral.Alterar</span>
+                </span>
+                <div class="note">@Resources.Registo.AlterarAvatar</div>
+                <div class="toolbox-no-border" style="margin:0;">
+                    @Html.HiddenFor(m => m.AvatarID)
+                    <div style="display:none">
+                        @{ Html.RenderPartial("_FileUploader", "orange1-button no-float"); }
+                    </div>
+                </div>
+            </div>
+            <div class="form-2column">
+                @Html.LabelFor(m => m.Nome)
+                @Html.TextBoxFor(m => m.Nome)
+            </div>
+            <div class="form-2column">
+                @Html.LabelFor(m => m.Email)
+                @Html.TextBoxFor(m => m.Email)
+            </div>
+            @if (Model.PerfilID != (int)CondoClub.Regras.Enum.Perfil.CondoClub &&
+                Model.PerfilID != (int)CondoClub.Regras.Enum.Perfil.Empresa &&
+                Model.PerfilID != (int)CondoClub.Regras.Enum.Perfil.Fornecedor &&
+                Model.PerfilID != (int)CondoClub.Regras.Enum.Perfil.Portaria)
+            {
+                <div class="form-2column">
+                    @Html.LabelFor(m => m.Fraccao)
+                    @Html.TextBoxFor(m => m.Fraccao)
+                </div>
+            }
+            <div class="clear"></div>
+            <div class="toolbox-no-border">
+                <input type="submit" class="orange1-button" value="@Resources.Geral.Gravar" />
+                @Html.ActionLink(Resources.Geral.Cancelar, "Perfil", new { @redirect = false }, new { @class = "orange3-button" })
+            </div>
+            <div class="clear"></div>
+        </div>
+    }
+</div>
+@section scripts{
+    @Scripts.Render("~/scripts/fileuploader")
+
+    <script type="text/javascript">
+        $('.file-uploader-container').CustomFileUpload({
+            URLUploadFile: "@Url.Action("GravarImagemForm", "Ficheiro")",
+            DropZone: $(".file-uploader-container"),
+            SingleFileUploads: true,
+            LimitMultiFileUploads: 1,
+            DoneFunction: function(e, data) { UploadFotoDone(e, data); }
+        });
+
+        var modifyButton = $(".photo .modify-button");
+        $(".photo").bind({
+            click: function(){
+                $(".file-uploader-container input[type='button']").click();            
+            },
+            mouseenter: function(){
+                modifyButton.css('display', 'inline-block');
+            },
+            mouseleave: function(){
+                modifyButton.hide();
+            }
+        });
+
+        function UploadFotoDone(e, data, container){
+            var fotoID = data[0].ID;
+            $('.photo img').attr("src", "@Url.Action("Avatar", "Ficheiro")/" + fotoID);
+            $('#AvatarID').val(fotoID);
+        }
+    </script>
+}

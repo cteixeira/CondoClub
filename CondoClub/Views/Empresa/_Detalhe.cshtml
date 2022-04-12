@@ -1,0 +1,104 @@
+﻿@using CondoClub.Web.Models;
+@using CondoClub.Web.Controllers;
+@using CondoClub.Web.Controllers.DadosMestre;
+@using System.Collections.Generic;
+
+@model Empresa
+
+<div class="form">
+    @Html.ValidationSummary()
+    @Html.HiddenFor(m => m.ID)
+    <div class="form-1column column-span-3">
+        @Html.LabelFor(m => m.Nome)
+        @Html.TextBoxFor(m => m.Nome)
+    </div>
+    <div class="form-3column">
+        <span class="photo">
+            <img alt="user" height="60" width="60" src="@Url.Action("Avatar", "Ficheiro",
+                new { id = Model.AvatarID, thumbnail = false })" />
+            <span class="orange1-button modify-button">@Resources.Geral.Alterar</span>
+        </span>
+        <div class="note">@Resources.Registo.AlterarAvatar</div>
+        <div class="toolbox-no-border" style="margin:0;">
+            @Html.HiddenFor(m => m.AvatarID)
+            <div style="display:none">
+                @{ Html.RenderPartial("_FileUploader", "orange1-button no-float"); }
+            </div>
+        </div>
+    </div>
+    <div class="form-3column">
+        @Html.LabelFor(m => m.Contribuinte)
+        @Html.TextBoxFor(m => m.Contribuinte)
+    </div>
+    <div class="form-3column">
+        @Html.LabelFor(m => m.Activo)
+        @Html.CheckBoxFor(m => m.Activo)
+    </div>
+    <div class="form-3column">
+        @Html.LabelFor(m => m.DataActivacao)
+        @Html.HiddenFor(m => m.DataActivacao)
+        <label style="font-weight:normal">@Model.DataActivacao</label>
+    </div>
+    <div class="form-1column column-span-3">
+        <label>@Resources.Empresa.LocalizarGoogleMaps</label>
+        <input id="searchAddress" type="text" />
+        <div class="google-map-supplier"></div>
+    </div>
+    <div class="form-3column">
+        @Html.LabelFor(m => m.Endereco)
+        @Html.TextBoxFor(m => m.Endereco)
+    </div>
+    <div class="form-3column">
+        @Html.LabelFor(m => m.Localidade)
+        @Html.TextBoxFor(m => m.Localidade)
+    </div>
+    <div class="form-3column">
+        @Html.LabelFor(m => m.Cidade)
+        @Html.TextBoxFor(m => m.Cidade)
+    </div>
+    <div class="form-3column">
+        @Html.LabelFor(m => m.CodigoPostal)
+        @Html.TextBoxFor(m => m.CodigoPostal)
+    </div>
+    <div class="form-3column">
+        @Html.LabelFor(m => m.Estado)
+        @Html.TextBoxFor(m => m.Estado)
+    </div>
+    <div class="form-3column">
+        @Html.LabelFor(m => m.PaisID)
+        @Html.DropDownListFor(m => m.PaisID, new PaisController().ConstroiDropDown(), "")
+    </div>
+    @Html.HiddenFor(m => m.Latitude)
+    @Html.HiddenFor(m => m.Longitude)
+    <div class="clear"></div>
+    @if (!Model.ID.HasValue)
+    {
+        <div class="toolbox-no-border">
+            <input type="submit" class="orange1-button" value="@Resources.Geral.Gravar" />
+            <input type="reset" id="resetnewrec" class="orange3-button" onclick="CloseNewRec();" value="@Resources.Geral.Cancelar" />
+        </div>
+    }
+    else
+    {
+        <div class="toolbox-no-border">
+            @if (Model.Permissoes.Contains(CondoClub.Regras.EmpresaPermissao.Gravar))
+            {
+                <input type="submit" class="orange1-button" value="@Resources.Geral.Gravar" />
+            }
+            @if (Model.Permissoes.Contains(CondoClub.Regras.EmpresaPermissao.Apagar))
+            {
+                @Ajax.ActionLink(Resources.Geral.Apagar, "Apagar",
+                    new { @id = Model.ID },
+                    new AjaxOptions { HttpMethod = "Delete", Confirm = Resources.Geral.TemCerteza },
+                    new { @class = "orange1-button" }
+                )
+            }
+            @Ajax.ActionLink(Resources.Geral.Cancelar, "_DetalheVisualizar",
+                new { @id = Model.ID },
+                new AjaxOptions { HttpMethod = "Get", UpdateTargetId = Model.ID.Value.ToString() },
+                new { @class = "orange3-button" }
+            )
+        </div>
+    }
+    <div class="clear"></div>
+</div>

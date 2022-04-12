@@ -1,0 +1,125 @@
+﻿@using CondoClub.Web.Models;
+@using CondoClub.Web.Controllers;
+
+@model Funcionario
+
+
+<div class="header">
+    <img class="image" alt="" src="@Url.Action("Avatar", "Ficheiro", 
+        new { id = Model.FotoID, thumbnail = true })"/>
+    <span class="title">@Model.Nome</span>
+    <span class="subtitle">@Model.Funcao</span>
+</div>
+<div class="content" style="display:none;">
+    <div class="form-readonly">
+        <div class="form-2column centered">
+            <span class="photo">
+                <img alt="user" height="265" width="265" src="@Url.Action("Avatar", "Ficheiro", 
+                    new { id = Model.FotoID, thumbnail = false })"/>
+            </span>
+        </div>
+        <div class="form-2column" style="padding-top:0px">
+            <div class="form-1column" style="padding-top:0px">
+                @Html.LabelFor(m => m.DataNascimento)
+                <label class="value">
+                    @if (Model.DataNascimento.HasValue)
+                    {
+                        @Html.DisplayFor(m => m.DataNascimento, "FormataData")
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(m => m.DataNascimento, "CampoVazio")
+                    }
+                </label>
+            </div>
+            <div class="form-1column">
+                @Html.LabelFor(m => m.Masculino)
+                <label class="value">
+                    @if (Model.Masculino)
+                    {
+                        @Resources.Funcionario.Masculino
+                    }
+                    else
+                    {
+                        @Resources.Funcionario.Feminino
+                    }
+                </label>
+            </div>
+            <div class="form-1column">
+                @Html.LabelFor(m => m.Identificacao)
+                <label class="value">
+                    @if (!string.IsNullOrEmpty(Model.Identificacao))
+                    {
+                        @Model.Identificacao
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(m => m.Identificacao, "CampoVazio")
+                    }
+                </label>
+            </div>
+            <div class="form-1column">
+                @Html.LabelFor(m => m.Funcao)
+                <label class="value">
+                    @if (!string.IsNullOrEmpty(Model.Funcao))
+                    {
+                        @Model.Funcao
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(m => m.Funcao, "CampoVazio")
+                    }
+                </label>
+            </div>
+            <div class="form-1column">
+                @Html.LabelFor(m => m.Horario)
+                <label class="value">
+                    @if (!string.IsNullOrEmpty(Model.Horario))
+                    {
+                        @Model.Horario
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(m => m.Horario, "CampoVazio")
+                    }
+                </label>
+            </div>
+            <div class="form-1column">
+                @Html.LabelFor(m => m.Telefone)
+                <label class="value">
+                    @if (!string.IsNullOrEmpty(Model.Telefone))
+                    {
+                        @Html.Raw(CondoClub.Web.Util.ConvertNumberToTel(Model.Telefone))
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(m => m.Telefone, "CampoVazio")
+                    }
+                </label>
+            </div>
+            <div class="form-1column">
+                @Html.LabelFor(m => m.Email)
+                <label class="value">
+                    @if (!string.IsNullOrEmpty(Model.Email))
+                    {
+                        @Html.Raw(CondoClub.Web.Util.ConvertEmailToMailTo(Model.Email))
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(m => m.Email, "CampoVazio")
+                    }
+                </label>
+            </div>
+        </div>
+    </div>
+    @if (Model.ID != null && (
+            Model.Permissoes.Contains(CondoClub.Regras.Enum.Permissao.Gravar) ||
+            Model.Permissoes.Contains(CondoClub.Regras.Enum.Permissao.Apagar)
+        ))
+    {
+        <div class="toolbox-no-border">
+            <input type="button" onclick="EditRec(@Model.ID)" class="orange1-button" value="@Resources.Geral.Editar" />
+        </div>
+        <div class="clear"></div>
+    }
+</div>

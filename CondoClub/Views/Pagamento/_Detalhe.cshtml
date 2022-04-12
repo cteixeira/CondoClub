@@ -1,0 +1,104 @@
+﻿@model CondoClub.Web.Models.Pagamento
+
+<div class="header">
+    <span class="title">@Model.Designacao</span>
+    @if (Model.Pago) {
+        <span class="subtitle">@Resources.Pagamento.Pago</span>
+    } else {
+        <span class="subtitle">@Resources.Pagamento.NaoPago</span>
+    }
+</div>
+<div class="content" style="display: none;">
+    <div class="form-readonly">
+        @if (CondoClub.Web.ControladorSite.Utilizador.Perfil == CondoClub.Regras.Enum.Perfil.CondoClub ||
+            CondoClub.Web.ControladorSite.Utilizador.Perfil == CondoClub.Regras.Enum.Perfil.Empresa) {
+            if (@Model.Origem == CondoClub.Regras.Enum.OrigemPagamento.Condominio) {
+            <div class="form-3column">
+                @Html.LabelFor(m => Model.CondominioDesignacao)
+                <label class="value">
+                    @Html.DisplayFor(m => Model.CondominioDesignacao)
+                </label>
+            </div>
+            } else if (@Model.Origem == CondoClub.Regras.Enum.OrigemPagamento.Fornecedor ||
+                @Model.Origem == CondoClub.Regras.Enum.OrigemPagamento.Publicidade) {
+            <div class="form-3column">
+                @Html.LabelFor(m => Model.FornecedorDesignacao)
+                <label class="value">
+                    @Html.DisplayFor(m => Model.FornecedorDesignacao)
+                </label>
+            </div>
+            }
+        }
+        <div class="form-3column">
+            @Html.LabelFor(m => Model.Valor)
+            <label class="value">
+                @Html.DisplayFor(m => Model.Valor, "FormataMoeda")
+            </label>
+        </div>
+        <div class="form-3column">
+            @Html.LabelFor(m => Model.DataEmissao)
+            <label class="value">
+                @Html.DisplayFor(m => Model.DataEmissao, "FormataData")
+            </label>
+        </div>
+        <div class="form-3column">
+            @Html.LabelFor(m => Model.FormaPagamentoDesignacao)
+            <label class="value">
+                @Html.DisplayFor(m => Model.FormaPagamentoDesignacao)
+            </label>
+        </div>
+        @if (Model.FormaPagamento == CondoClub.Regras.Enum.FormaPagamento.Boleto) {
+            <div class="form-1column">
+                @Html.LabelFor(m => Model.ReferenciaPagamento)
+                <label class="value">
+                    @Html.DisplayFor(m => Model.ReferenciaPagamento)
+                </label>
+            </div>
+        }
+        <div class="form-3column">
+            @Html.LabelFor(m => Model.DataPagamento)
+            <label class="value">
+                @if (Model.Pago) {
+                    @Html.DisplayFor(m => Model.DataPagamento, "FormataData")
+                } else {
+                    @Html.DisplayFor(m => Model.DataPagamento, "CampoVazio")
+                }
+            </label>
+        </div>
+        @if (Model.FormaPagamento == CondoClub.Regras.Enum.FormaPagamento.CartaoCredito) {
+            <div class="form-3column">
+                @Html.LabelFor(m => Model.NomeUtilizadorPagamento)
+                <label class="value">
+                    @if (Model.Pago) {
+                        @Html.DisplayFor(m => Model.NomeUtilizadorPagamento)
+                    } else {
+                        @Html.DisplayFor(m => Model.NomeUtilizadorPagamento, "CampoVazio")
+                    }
+                </label>
+            </div>
+        }
+    </div>
+        @if (Model.Permissoes.Contains(CondoClub.Regras.PagamentoPermissao.MarcarPago)) { 
+            <div class="toolbox-no-border">
+                @Ajax.ActionLink(Resources.Pagamento.MarcarPago, "_MarcarPago",
+                    new { @idCifrado = Model.IdCifrado},
+                    new AjaxOptions { HttpMethod = "Post",
+                            UpdateTargetId = @String.Concat(Model.Origem, "_", @Model.ID), 
+                            InsertionMode = System.Web.Mvc.Ajax.InsertionMode.Replace,
+                            Confirm = Resources.Pagamento.TemCertezaMarcarPago },
+                    new { @class = "orange1-button" }
+                )
+            </div>
+        }
+        @if (Model.Permissoes.Contains(CondoClub.Regras.PagamentoPermissao.Pagar)) { 
+            <div class="toolbox-no-border">
+                @Html.ActionLink(Resources.Pagamento.Pagar, "Validar", "Pagamento", new { idCifrado = Model.IdCifrado }, new { @class = "button-option orange1-button" })
+            </div>
+        }
+        @if (Model.Permissoes.Contains(CondoClub.Regras.PagamentoPermissao.ImprimirBoleto)) { 
+            <div class="toolbox-no-border">
+                @Html.ActionLink(Resources.Pagamento.ImprimirBoleto, "ImprimirBoleto", "Pagamento", new { idCifrado = Model.IdCifrado }, new { @class = "button-option orange1-button", @target = "_blank" })
+            </div>
+        }
+        <div class="clear"></div>
+</div>

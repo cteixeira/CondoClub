@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>@(!String.IsNullOrEmpty(ViewBag.Title) ? ViewBag.Title : Resources.Geral.NomeApp)</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        @Styles.Render("~/content/core")
+        @Scripts.Render("~/scripts/modernizr")
+    </head>
+    <body>
+        <div class="container main-content blank">
+            <div class="grid_1">&nbsp;</div>
+            <div class="grid_10">
+                @RenderBody()
+            </div>
+            <div class="grid_1">&nbsp;</div>
+            <div class="clear"></div>
+        </div>
+        <div class="container footer">
+            <div class="grid_12">
+                <strong>Ximob</strong>&nbsp;&copy; - Todos os direitos reservados     
+            </div>
+        </div>            
+        @Scripts.Render("~/scripts/core")
+        @Scripts.Render("~/scripts/jqueryval")
+        @RenderSection("scripts", required: false)
+    </body>
+</html>

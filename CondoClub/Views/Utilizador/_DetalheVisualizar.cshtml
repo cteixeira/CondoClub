@@ -1,0 +1,91 @@
+﻿@using CondoClub.Web.Models;
+@using CondoClub.Web.Controllers;
+
+@model Utilizador
+
+
+<div class="header">
+    <img class="image" alt="" src="@Url.Action("Avatar", "Ficheiro", 
+        new { id = Model.AvatarID, thumbnail = true })"/>
+    <span class="title">@Model.Nome</span>
+    <span class="subtitle">@Model.PerfilDesignacao</span>
+</div>
+<div class="content" style="display:none;">
+    <div class="form-readonly">
+        <div class="form-2column">
+            <span class="photo">
+                <img alt="user" height="60" width="60" src="@Url.Action("Avatar", "Ficheiro", 
+                    new { id = Model.AvatarID, thumbnail = false })"/>
+            </span>
+        </div>
+        <div class="form-2column">
+            @Html.LabelFor(m => m.Email)
+            <label class="value">
+                @if (!string.IsNullOrEmpty(Model.Email))
+                {
+                    @Model.Email
+                }
+                else
+                {
+                    @Html.DisplayFor(m => m.Email, "CampoVazio")
+                }
+            </label>
+        </div>
+        <div class="form-2column">
+            @Html.LabelFor(m => m.PerfilID)
+            <label class="value">
+                @if (!string.IsNullOrEmpty(Model.PerfilDesignacao))
+                {
+                    @Model.PerfilDesignacao
+                }
+                else
+                {
+                    @Html.DisplayFor(m => m.PerfilDesignacao, "CampoVazio")
+                }
+            </label>
+        </div>
+         @if (Model.PerfilID != (int)CondoClub.Regras.Enum.Perfil.CondoClub) { 
+        <div class="form-2column">
+            @Html.LabelFor(m => m.NomeInstituicao)
+            <label class="value">
+                @if (!string.IsNullOrEmpty(Model.NomeInstituicao)) {
+                    @Model.NomeInstituicao
+                } else {
+                    @Html.DisplayFor(m => m.NomeInstituicao, "CampoVazio")
+                }
+            </label>
+        </div>
+         }
+        @if (Model.PerfilID == (int)CondoClub.Regras.Enum.Perfil.Morador || Model.PerfilID == (int)CondoClub.Regras.Enum.Perfil.Síndico) { 
+        <div class="form-2column">
+            @Html.LabelFor(m => m.Fraccao)
+            <label class="value">
+                @if (!string.IsNullOrEmpty(Model.Fraccao))
+                {
+                    @Model.Fraccao
+                }
+                else
+                {
+                    @Html.DisplayFor(m => m.Fraccao, "CampoVazio")
+                }
+            </label>
+        </div>
+        }
+        <div class="form-2column">
+            @Html.LabelFor(m => m.Activo)
+            <label class="value">
+                @Html.CheckBoxFor(m => m.Activo, new { @disabled = "disabled" })
+            </label>
+        </div>
+    </div>
+    @if (Model.ID != null && (
+            Model.Permissoes.Contains(CondoClub.Regras.Enum.Permissao.Gravar) ||
+            Model.Permissoes.Contains(CondoClub.Regras.Enum.Permissao.Apagar)
+        )) {
+        <div class="toolbox-no-border">
+            <input type="button" onclick="EditRec(@Model.ID)" class="orange1-button" value="@Resources.Geral.Editar" />
+            <input type="button" onclick="EditPass(@Model.ID)" class="orange1-button" value="@Resources.Utilizador.AlterarPassword" />
+        </div>
+        <div class="clear"></div>
+    }
+</div>

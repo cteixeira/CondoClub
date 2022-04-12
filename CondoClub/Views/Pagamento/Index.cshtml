@@ -1,0 +1,171 @@
+﻿@using CondoClub.Web.Models;
+@model IEnumerable<Pagamento>
+@Styles.Render("~/content/datepicker")
+@{ var permissoes = (List<CondoClub.Regras.Enum.Permissao>)ViewData["Permissoes"]; }
+<div class="main-container">
+    <div class="header">
+        <div class="title">
+            <h5>@Resources.Pagamento.Pagamentos</h5>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+    @if (CondoClub.Web.ControladorSite.Utilizador.Perfil == CondoClub.Regras.Enum.Perfil.CondoClub ||
+                    CondoClub.Web.ControladorSite.Utilizador.Perfil == CondoClub.Regras.Enum.Perfil.Empresa) {
+        <div class="search form">
+            @using (Ajax.BeginForm("_Lista", null, new AjaxOptions {
+                UpdateTargetId = "lista",
+                InsertionMode = InsertionMode.Replace,
+                OnSuccess = "AfterSearch"
+            }, new { id = "formPesquisa" })) { 
+                <div class="form-1column">
+                    <b>@(Resources.Geral.Pesquisar + ":")</b>
+                    @{var placeholderText = CondoClub.Web.ControladorSite.Utilizador.Perfil == CondoClub.Regras.Enum.Perfil.CondoClub ? Resources.Pagamento.PesquisarCondoclub : Resources.Pagamento.PesquisarEmpresa;}
+                    @Html.TextBox("termoPesquisa", null, new { type = "search", placeholder = placeholderText })
+                </div>        
+                <div class="form-3column">
+                    <b>@(Resources.Pagamento.DataPagamentoInicio + ":")</b>
+                    @Html.TextBox("dataPagamentoInicio", "", new { @id = "calSearchDataInicio" })
+                </div>        
+                <div class="form-3column">
+                    <b>@(Resources.Pagamento.DataPagamentoFim + ":")</b>
+                    @Html.TextBox("dataPagamentoFim", "", new { @id = "calSearchDataFim" })
+                </div>
+                <div class="form-3column">
+                <b>@(Resources.Pagamento.EstadoPagamento + ":")</b>
+                    @Html.DropDownList("pago", new CondoClub.Web.Controllers.PagamentoController().ConstroiDropDownEstadoPagamento(), Resources.Pagamento.Todos)        
+                </div>
+                <!--opções---------------------->
+                <div class="toolbox-no-border">
+                    <input type="submit" class="button-option orange1-button" id="submitFiltro" value="@Resources.Geral.Pesquisar" />
+                    <input id="btnResetPesquisa" type="button" class="button-option orange1-button" value="@Resources.Geral.Reset" />
+                </div>
+                <div class="clear">
+                </div>
+            }
+        </div>
+    } else { 
+        <div style="height:5px;">&nbsp;</div>
+    }
+    <div id="lista">
+        @{ Html.RenderPartial("_Lista", Model); }
+    </div>
+    <div style="text-align: center;">
+        <a href="#" id="getMoreLink" onclick="GetMore(); return false;" class="link-orange"
+            style="display: none">
+            @Resources.Geral.CarregarMais
+        </a>
+        <div class="message-loading" style="display: none;" id="loader">
+            <img src="~/content/images/loader.gif" alt="loading" />
+        </div>
+    </div>
+    @using (Ajax.BeginForm("_Lista", null, new AjaxOptions {
+        UpdateTargetId = "lista",
+        InsertionMode = InsertionMode.InsertAfter,
+        LoadingElementId = "loader",
+        OnComplete = "GetMoreComplete"
+    },
+        new { id = "getMore" })) { 
+        @Html.Hidden("count")
+        @Html.Hidden("termoPesquisa", null, new { id = "getMoreTermoPesquisa" })
+        @Html.Hidden("dataPagamentoInicio", null, new { id = "getMoreDataPagamentoInicio" })
+        @Html.Hidden("dataPagamentoFim", null, new { id = "getMoreDataPagamentoFim" })
+        @Html.Hidden("pago", null, new { id = "getMoreDataPago" })
+    }
+</div>
+@section scripts{
+    @Scripts.Render("~/scripts/datepicker")
+    <script type="text/javascript">
+        SetCalendar('calSearchDataInicio', { changeMonth: true, changeYear: true });
+        SetCalendar('calSearchDataFim', { changeMonth: true, changeYear: true });
+
+        $('.block-list-group .header').live('click', function () {
+
+            var self = $(this);
+            $('.block-list-group .content:visible').not(self.next('.content')).hide();
+            $('html, body').animate({
+                scrollTop: self.offset().top - 10
+            }, 300);
+
+            $(this).nextAll('.block-list-group .content').slideToggle();
+        });
+        //---- ini GetMore ----
+        var can_load = true;
+        var cheking_scroll = false;
+        var iniRegistos =  @ViewData["nrPagamentosIni"];
+        var nextRegistos = @ViewData["nrPagamentosNext"];
+        var countRegistos = 0;
+        
+        (function ($) {
+
+            initGetMore();
+
+            $("#btnResetPesquisa").click(function () {
+                $(".search input[type='search'], .search input[type='text']").val('');
+                $(".search select").val('');
+                $("#formPesquisa").submit();
+            });
+
+        })(jQuery);
+
+        function AfterSearch(){
+            initGetMore();        
+        }
+
+        function initGetMore(){
+            countRegistos = $('.block-list-group').length;
+            if (iniRegistos > countRegistos){
+                can_load = false;
+                $('#getMoreLink').css('display', 'none');
+            }else{
+                can_load = true;
+                $('#getMoreLink').css('display', 'block');
+            }
+        }
+
+        function GetMore() {
+            if (can_load) {
+                can_load = false;
+                $('#getMoreLink').css('display', 'none');
+                countRegistos = $('.block-list-group').length;
+                var form = $("#formPesquisa");
+                $('#getMore').find('#count').val(countRegistos);
+                $('#getMore').find('#getMoreTermoPesquisa').val(form.find("#termoPesquisa").val());
+                $('#getMore').find('#getMoreDataPagamentoInicio').val(form.find("#dataPagamentoInicio").val());
+                $('#getMore').find('#getMoreDataPagamentoFim').val(form.find('#dataPagamentoFim').val());
+                $('#getMore').find('#getMoreDataPago').val(form.find('#pago').val());
+                $('#getMore').trigger('submit');
+            }
+        }
+
+
+        function GetMoreComplete() {
+            totReg = $('.block-list-group').length;
+            if (totReg > countRegistos && totReg % nextRegistos == 0) {
+                can_load = true;
+                $('#getMoreLink').css('display', 'block');
+            }
+        }
+
+        $(window).bind('scroll', function (e) {
+            if (!cheking_scroll && can_load && isOnScreen($('#getMoreLink'))) {
+                cheking_scroll = true;
+                setTimeout(function () { cheking_scroll = false; }, 500);
+                GetMore();
+            }
+        });
+
+        isOnScreen = function (element) {
+            var curPos = element.offset();
+
+            var curBottom = curPos.top + (element.height() / 2);
+            if (/webkit.*mobile/i.test(navigator.userAgent)) {
+                //corrigir bug do offset no iphone
+                curBottom -= 50;
+            }
+            var screenHeight = $(window).height()
+            return (curBottom > (screenHeight + $(window).scrollTop())) ? false : true;
+        }
+        //---- end GetMore ----
+    </script>
+}

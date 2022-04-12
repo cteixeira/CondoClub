@@ -1,0 +1,60 @@
+﻿@model CondoClub.Web.Models.PagamentoFinalizar
+<div class="main-container">
+    <div id="@Model.ID" class="block-list-group">
+        <div class="header">
+            <span class="title">@Model.Designacao</span>
+        </div>
+        <div class="content">
+            @using (Html.BeginForm("ConfirmarValidacao", "Pagamento", FormMethod.Post, new { id = "formValidar" })) {
+                <div class="form-readonly">
+                    @Html.ValidationSummary()
+                    @Html.HiddenFor(m => Model.ID)
+                    @Html.HiddenFor(m => Model.Origem)
+                    <div class="form-1column">
+                        @Html.LabelFor(m => Model.Valor)
+                        <label class="value">
+                            @Html.DisplayFor(m => Model.Valor, "FormataMoeda")
+                        </label>
+                    </div>
+                    <div class="form-1column">
+                        @Html.LabelFor(m => Model.DataEmissao)
+                        <label class="value">
+                            @Html.DisplayFor(m => Model.DataEmissao, "FormataData")
+                        </label>
+                    </div>
+                    <div class="form-3column">
+                        @Html.LabelFor(m => Model.Pago)
+                        @if (Model.Pago) {
+                            <label class="value">@Resources.Geral.Sim</label>
+                        } else {
+                            <label class="value">@Resources.Geral.Nao</label>
+                        }
+                    </div>
+                    @if (Model.Pago) { 
+                        <div class="form-1column">
+                            @Html.LabelFor(m => Model.DataPagamento)
+                            <label class="value">
+                                @Html.DisplayFor(m => Model.DataPagamento, "FormataData")
+                            </label>
+                        </div>
+                        <div class="form-1column">
+                            <b class="payment-result-message">@Resources.Pagamento.PagamentoComSucesso</b>
+                        </div>
+                        <div class="toolbox-no-border">
+                            @Html.ActionLink(Resources.Pagamento.Continuar, "Index", "Pagamento", null, new { @class = "button-option orange1-button" })
+                        </div>                        
+                    } else { 
+                        <div class="form-1column">
+                            <b class="payment-result-message">@Resources.Pagamento.PagamentoSemSucesso</b>
+                        </div>
+                        <div class="toolbox-no-border">
+                            @Html.ActionLink(Resources.Pagamento.TentarNovamente, "Validar", "Pagamento", new { idCifrado = Model.IdCifrado }, new { @class = "button-option orange1-button" })
+                        </div>
+                    }
+                </div>
+            }
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+</div>

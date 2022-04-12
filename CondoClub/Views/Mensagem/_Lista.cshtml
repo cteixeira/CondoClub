@@ -1,0 +1,31 @@
+﻿@model IEnumerable<CondoClub.Web.Models.MensagemGrupo>
+@if (Model != null && Model.Count() > 0) { 
+    foreach (var item in Model) {
+        <div class="block-list-group" id="thread_@item.Id" message-id="@item.Id">
+            <div class="header" id="header_@item.Id" onclick="GetDetalhe(this);">
+                <img class="image" src="@Url.Action("Avatar", "Ficheiro", new { id = item.UtilizadorAvatarID })" alt="" />
+                <span class="title">
+                    @item.TextoCabecalho
+                    @if (!String.IsNullOrEmpty(item.UltimaRespostaRemetente)) { 
+                        <span class="small-text"><b>@item.UltimaRespostaRemetente:</b> @item.UltimaRespostaTexto</span>
+                    }
+                </span>
+                <span class="subtitle">
+                    @if (item.NumeroMensagensNovas > 0) { 
+                        <span class="new-messages-number">
+                            @item.NumeroMensagensNovas
+                        </span>
+                    }
+                    @item.Data 
+                </span>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="loading" id="loading_@item.Id">
+                <img src="~/Content/images/loader.gif" alt="loading" />
+            </div>
+        </div>
+    }
+} else { 
+    <h5 class="block-list-group-empty">@Resources.Mensagem.SemMensagens</h5>
+}

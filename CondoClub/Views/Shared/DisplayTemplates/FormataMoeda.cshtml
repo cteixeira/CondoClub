@@ -1,0 +1,2 @@
+﻿@model decimal?
+@Html.Raw(Model != null ? String.Format(new System.Globalization.CultureInfo("pt-BR"), "{0:c}", Model).Replace("R$ ", "") : string.Empty)

@@ -1,0 +1,230 @@
+﻿@using CondoClub.Web.Models;
+@using CondoClub.Web.Controllers;
+
+@model IEnumerable<Comunicado>
+
+@{ var permissoes = (List<CondoClub.Regras.Enum.Permissao>)ViewData["Permissoes"]; }
+
+<!--Lista de comunicados-->
+<div class="main-container">
+
+    <div class="section-header"><h5>@Resources.Comunicado.Titulo</h5></div>
+    @if (permissoes.Contains(CondoClub.Regras.Enum.Permissao.Gravar)) {
+        <div class="section-options" style="display: none;">
+            <a href="#" onclick="$('#newrec').slideToggle(); return false;" class="link-orange">@Resources.Geral.Novo</a>
+        </div>
+    }
+    <div class="clear"></div>
+
+    <!--novo registo---------------------->
+    @if (permissoes.Contains(CondoClub.Regras.Enum.Permissao.Gravar)) {
+        <div id="newrec" style="display: block;">
+            @using (Ajax.BeginForm("Gravar",
+                new AjaxOptions { 
+                    UpdateTargetId = "lista", 
+                    InsertionMode = InsertionMode.InsertBefore, 
+                    OnSuccess = "AfterSave();" })) {
+                
+                Html.RenderPartial("_Novo", new Comunicado());
+            }
+
+            @*using (Html.BeginForm("Gravar", "Comunicado", FormMethod.Post, new { enctype = "multipart/form-data" })) {
+                Html.RenderPartial("_Novo", new Comunicado());
+            }*@
+        </div>
+    }
+
+    <div id="lista">@{ Html.RenderPartial("_Lista", Model); }</div>
+
+    <div style="text-align: center;">
+        <a href="#" id="getMoreLink" onclick="GetMore(); return false;" class="link-orange">@Resources.Comunicado.CarregarMais</a>
+        <div class="message-loading" style="display:none;" id="loader">
+            <img src="~/content/images/loader.gif" alt="loading" />
+        </div>
+    </div>
+
+    @using (Ajax.BeginForm("_Lista", null, new AjaxOptions { 
+        UpdateTargetId = "lista", 
+        InsertionMode = InsertionMode.InsertAfter,
+        LoadingElementId = "loader",
+        OnComplete = "GetMoreComplete"},
+        new { id = "getMore" })) { 
+        @Html.Hidden("count")
+    }
+
+    @using (Ajax.BeginForm("GravarComentario", null, 
+        new AjaxOptions { InsertionMode = InsertionMode.Replace  }, 
+        new { id = "saveNewCom" })) { 
+        @Html.Hidden("ComunicadoID")
+        @Html.Hidden("Comentario")
+        @Html.Hidden("Gosto")
+    }
+
+    @using (Ajax.BeginForm("Apagar", null, 
+        new AjaxOptions { HttpMethod = "delete" }, 
+        new { id = "del" })) { 
+        @Html.Hidden("id")
+    }
+
+    @using (Ajax.BeginForm("ApagarComentario", null, 
+        new AjaxOptions { HttpMethod = "delete" }, 
+        new { id = "delCom" })) { 
+        @Html.Hidden("id")
+    }
+    
+</div>
+    
+@section scripts{
+    @Scripts.Render("~/scripts/fileuploader")
+
+    <script type="text/javascript">
+
+        function ResetNewRec() {
+            if ($('#ImagemID').val() != '') {
+                $('#ImagemID').val('');
+                $('#fileName').html('');
+            }
+            if ($('#addVideo').is(':visible')) {
+                $('#Video').val('');
+                $('#addVideo').toggle();
+            }
+            //$('#newrec').slideToggle();
+        }
+
+        function AfterSave() {
+            $('#resetnewrec').trigger('click')
+        }
+
+        function Del(id) {
+            if (confirm('@Html.Raw(Resources.Geral.TemCerteza)')) {
+                $('#del').find('#id').val(id);
+                $('#del').trigger('submit');
+            }
+            return false;
+        }
+
+        function DelOk(id) {
+            $('#' + id).remove();
+        }
+
+        function DelCom(id) {
+            if (confirm('@Html.Raw(Resources.Geral.TemCerteza)')) {
+                $('#delCom').find('#id').val(id);
+                $('#delCom').trigger('submit');
+            }
+            return false;
+        }
+
+        function DelComOk(id) {
+            $('#com' + id).remove();
+        }
+
+        function SaveNewComent(id, gosto, comentario) {
+            $('#saveNewCom').attr('data-ajax-update', '#' + id);
+            $('#saveNewCom').find('#ComunicadoID').val(id);
+            $('#saveNewCom').find('#Gosto').val(gosto);
+            $('#saveNewCom').find('#Comentario').val(comentario);
+            $('#saveNewCom').trigger('submit');
+        }
+
+        function Like(obj, gosto) {
+            SaveNewComent($(obj).parents('.announcement').attr('id'), gosto)
+            return false;
+        }
+
+        $('.message-textbox input').live('keydown', function (e) {
+            switch (e.keyCode) {
+                case 13:
+                    e.preventDefault();
+                    if ($(this).val() != '')
+                        SaveNewComent($(this).parents('.announcement').attr('id'), null, $(this).val());
+            }
+        });
+
+        $('.file-uploader-container').CustomFileUpload({
+            URLUploadFile: "@Url.Action("GravarImagemComunicado", "Ficheiro")",
+            ButtonsToHideContainer: '#newAnnouncement .toolbox',
+            DropZone: $('.file-uploader-container .fileupload-dropzone'),
+            AlternativeButtonLabel: "@Resources.Comunicado.AdicionarImagem",
+            DoneFunction: function (e, data) {
+                if(data){
+                    $('#ImagemID').val(data[0].ID);
+                    $('#fileName').html('<span class="attachments"><img src="Ficheiro/ImagemComunicado/' + data[0].ID + '"></span>');
+                }
+            }
+        }); 
+
+        function SetFileName() {
+            if ($('#fileUp').val() == '') {
+                $('#fileName').html('');
+                return;
+            }
+                
+            arr = $('#fileUp').val().split('\\');
+            name = arr[arr.length - 1];
+            extension = name.substring(name.lastIndexOf('.') + 1).toLowerCase();
+
+            if (extension != 'png' && extension != 'jpg' && extension != 'jpeg') {
+                alert('@Html.Raw(Resources.Erro.FormatoImagemSuportado)');
+                name = '';
+                $('#fileUp').val('');
+            }
+            $('#fileName').html(name);
+        }
+
+        //---- ini GetMore ----
+        var can_load = true;
+        var cheking_scroll = false;
+        var iniCom = @ViewData["nrComunicadosIni"];
+        var nextCom = @ViewData["nrComunicadosNext"];
+        var countCom = 0;
+        
+        (function ($) {
+            countCom = $('.announcement').length;
+            if (iniCom > countCom){
+                can_load = false;
+                $('#getMoreLink').css('display', 'none');
+            }
+        })(jQuery);
+
+        function GetMore() {
+            if (can_load) {
+                can_load = false;
+                $('#getMoreLink').css('display', 'none');
+                countCom = $('.announcement').length;
+                $('#getMore').find('#count').val(countCom);
+                $('#getMore').trigger('submit');
+            }
+        }
+
+        function GetMoreComplete() {
+            totCom = $('.announcement').length
+            if (totCom > countCom && totCom % nextCom == 0) {
+                can_load = true;
+                $('#getMoreLink').css('display', 'block');
+            }
+        }
+
+        $(window).bind('scroll', function (e) {
+            if (!cheking_scroll && can_load && isOnScreen($('#getMoreLink'))) {
+                cheking_scroll = true;
+                setTimeout(function () { cheking_scroll = false; }, 500);
+                GetMore();
+            }
+        });
+
+        isOnScreen = function (element) {
+            var curPos = element.offset();
+
+            var curBottom = curPos.top + (element.height() / 2);
+            if (/webkit.*mobile/i.test(navigator.userAgent)) {
+                //corrigir bug do offset no iphone
+                curBottom -= 50;
+            }
+            var screenHeight = $(window).height()
+            return (curBottom > (screenHeight + $(window).scrollTop())) ? false : true;
+        }
+        //---- end GetMore ----
+
+    </script>
+}

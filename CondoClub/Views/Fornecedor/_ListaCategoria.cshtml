@@ -1,0 +1,46 @@
+﻿@using CondoClub.Web.Models
+
+@model Fornecedor
+
+@if (Model != null && Model.ID.HasValue) { 
+    <div class="separator10"></div>
+    <label>@Resources.Servico.Categorias</label>
+    <div class="separator15"></div> 
+    if (Model.Categorias.Count == 0)
+    {
+        <label class="value">@Resources.Servico.SemCategorias</label>
+    }
+    <table class="table inner">
+        @foreach (var c in Model.Categorias)
+        {
+            <tr id="detalheCategoria_@c.Key.FornecedorCategoriaID">
+                @{ Html.RenderPartial("_DetalheCategoriaVisualizar", c); }
+            </tr>
+        }
+        <tr class="newRecCategoria" style="display: none;">
+            <td class="form">
+                @using (Ajax.BeginForm("_DetalheCategoriaGravar", null,
+                        new AjaxOptions
+                        {
+                            InsertionMode = InsertionMode.Replace,
+                            UpdateTargetId = "categoriaContainer_" + Model.ID,
+                            OnSuccess = "AfterSaveFornecedorCategoria"
+                        },
+                        new { id = "formNovoFornecedorCategoria" }))
+                {
+
+                    Html.RenderPartial("_DetalheCategoria", new FornecedorCategoria { FornecedorID = Model.ID.Value });
+                }
+            </td>
+        </tr>
+    </table>
+    <div class="toolbox-no-border" style="margin-top:15px;">
+        @if (Model.ID != null && (
+            Model.Permissoes.Contains(CondoClub.Regras.Fornecedor.Permissao.Gravar) ||
+            Model.Permissoes.Contains(CondoClub.Regras.Fornecedor.Permissao.Apagar)
+        ))
+        {
+            <a href="#" onclick="ShowHideNewRecCategoria(this); return false;" class="link-orange">@Resources.Servico.AdicionarCategoria</a>
+        }
+    </div>
+}

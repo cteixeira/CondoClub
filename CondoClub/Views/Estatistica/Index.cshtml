@@ -1,0 +1,115 @@
+﻿@using CondoClub.Web.Models.Estatistica;
+@using CondoClub.Web.Controllers;
+@using CondoClub.Web;
+
+@model IEnumerable<Categoria>
+
+@Styles.Render("~/content/datepicker")
+
+@{ var permissoes = (List<CondoClub.Regras.Enum.Permissao>)ViewData["Permissoes"]; }
+
+<div class="main-container">
+    <div class="header">
+        <div class="title">
+            <h5>@Resources.Menu.Estatisticas</h5>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+
+
+    <div class="search form">
+        @using (Ajax.BeginForm("_Lista", null, new AjaxOptions {
+            UpdateTargetId = "lista",
+            InsertionMode = InsertionMode.Replace,
+            OnSuccess = "drawChart"
+        }, new { id = "formPesquisa" })) { 
+            
+            <div class="form-3column">
+                <b>@(Resources.Estatistica.Inicio + ":")</b>
+                @Html.TextBox("inicio", DateTime.Now.AddDays(-7).ToShortDateString(), new { @id = "calSearchInicio" })
+            </div>        
+            <div class="form-3column">
+                <b>@(Resources.Estatistica.Fim + ":")</b>
+                @Html.TextBox("fim", DateTime.Now.ToShortDateString(), new { @id = "calSearchFim" })
+            </div>
+            <div class="form-3column">
+                <b>@(Resources.Estatistica.TipoEstatistica + ":")</b>
+                @Html.DropDownList("tipoEstatistica", new EstatisticaController().ConstroiDropDownTipoEstatistica())
+            </div>
+            if (ControladorSite.Utilizador.Perfil == CondoClub.Regras.Enum.Perfil.CondoClub) {
+                <div class="form-1column">
+                    <b>@(Resources.Utilizador.Empresa + ":")</b>
+                    @Html.DropDownList("EmpresaID", new EmpresaController().ConstroiDropDown(), String.Empty)
+                </div>
+            }
+            <div class="clear"></div>
+            <!--opções---------------------->
+            <div class="toolbox-no-border">
+                <input type="submit" onclick="return Validacao();" class="button-option orange1-button" id="submitFiltro" value="@Resources.Geral.Pesquisar" />
+            </div>
+            <div class="clear">
+            </div>
+        }
+    </div>
+
+    <div id="lista">
+        @{ Html.RenderPartial("_Lista", Model); }
+    </div>
+
+</div>
+@section scripts{
+    @Scripts.Render("~/scripts/datepicker")
+
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+
+    <script type="text/javascript">
+        SetCalendar('calSearchInicio', { changeMonth: true, changeYear: true });
+        SetCalendar('calSearchFim', { changeMonth: true, changeYear: true });
+        google.load("visualization", "1", { packages: ["corechart"] });
+
+        function Validacao() {
+            if (!$("#calSearchInicio").val() || !$("#calSearchFim").val()) {
+                alert('@Html.Raw(Resources.Erro.DataObrigatoria)');
+                return false;
+            }
+            return true;
+        }
+
+        function drawChart() {
+
+            if (dataChart) {
+
+                //Prepara tabela com os dados para os gráficos
+                dataTbl = new google.visualization.DataTable();
+                dataTbl.addColumn('string', '@Html.Raw(Resources.Estatistica.TblCategoria)');
+                dataTbl.addColumn('date', '@Html.Raw(Resources.Estatistica.TblData)');
+                dataTbl.addColumn('number', '@Html.Raw(Resources.Estatistica.TblTotal)');
+
+                for (var i = 0; i < dataChart.length; i++) {
+                    dataTbl.addRow([dataChart[i].Designacao, new Date(dataChart[i].Data), dataChart[i].Total]);
+                }
+                
+                //line chart
+                var optionsLineChart = { title: '@Html.Raw(Resources.Estatistica.TituloGraficoEvolucao)' };
+                var dataLineChart = google.visualization.data.group(
+                    dataTbl, [1], [{ 'column': 2, 'aggregation': google.visualization.data.sum, 'type': 'number'}]
+                );
+                var lineChart = new google.visualization.LineChart(document.getElementById('lineChart'));
+                lineChart.draw(dataLineChart, optionsLineChart);
+                
+                //pie chart
+                var optionsPieChart = { title: '@Html.Raw(Resources.Estatistica.TituloGraficoPeso)' };
+                var dataPieChart = google.visualization.data.group(
+                    dataTbl, [0], [{ 'column': 2, 'aggregation': google.visualization.data.sum, 'type': 'number'}]
+                );
+
+                var pieChart = new google.visualization.PieChart(document.getElementById('pieChart'));
+                pieChart.draw(dataPieChart, optionsPieChart);
+
+                dataChart = null;
+            }
+        }
+
+    </script>
+}

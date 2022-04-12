@@ -1,0 +1,11 @@
+﻿@model string  
+<div class="file-uploader-container">
+    <input class="button-option @Model" type="button" value="@Resources.FileUploader.Seleccionar">
+    <div class="fileupload-dropzone" style="display:none">
+        <label class="drophere">@Resources.FileUploader.Largue</label>
+        <span class="processing" style="display:none";>
+            <label>@Resources.FileUploader.Processar</label>
+            <img src="~/Content/images/loader.gif"/>
+        </span>
+    </div>
+</div>

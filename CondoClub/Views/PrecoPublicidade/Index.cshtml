@@ -1,0 +1,124 @@
+﻿@using CondoClub.Web.Models;
+@using CondoClub.Web.Controllers;
+
+@model IEnumerable<PrecoPublicidade>
+
+@{ var permissoes = (List<CondoClub.Regras.Enum.Permissao>)ViewData["Permissoes"]; }
+
+
+<div class="main-container">
+    <div class="header">
+        <div class="title">
+            <h5>@Resources.Preco.PrecoPublicidade</h5>
+        </div>
+        <div class="options">
+            <a class="link-orange" href='@Url.Action("Index", "PrecoCondominio")'>@Resources.Preco.PrecoCondominio</a>
+            <span class="separator"></span>
+            <a class="link-orange" href='@Url.Action("Index", "PrecoFornecedor")'>@Resources.Preco.PrecoFornecedor</a>
+        @if (permissoes.Contains(CondoClub.Regras.Enum.Permissao.Gravar)) {
+            <span class="separator"></span>
+            <a href="#" class="link-orange" onclick="$('#new').slideToggle(''); return false;" style="">
+                @Resources.Geral.Novo
+            </a>
+        }
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="search form">
+        @using (Ajax.BeginForm("_Lista", null, new AjaxOptions {
+            UpdateTargetId = "lista",
+            InsertionMode = InsertionMode.Replace
+        }, new { id = "formPesquisa" })) {         
+            <div class="form-2column">
+                <b>@(Resources.Preco.Pais + ":")</b>
+                @Html.DropDownList("PaisID", new CondoClub.Web.Controllers.DadosMestre.PaisController().ConstroiDropDown(), "")
+            </div>        
+            <div class="form-2column">
+                <b>@(Resources.Preco.OpcaoPagamento + ":")</b>
+                @Html.DropDownList("ZonaPublicidadeID", new CondoClub.Web.Controllers.DadosMestre.ZonaPublicidadeController().ConstroiDropDown(), "")
+            </div>
+            <!--opções---------------------->
+            <div class="toolbox-no-border">
+                <input type="submit" class="button-option orange1-button" id="submitFiltro" value="@Resources.Geral.Pesquisar" />
+                <input id="btnResetPesquisa" type="button" class="button-option orange1-button" value="@Resources.Geral.Reset" />
+            </div>
+            <div class="clear"></div>
+        }
+    </div>
+    <div class="separator10"></div>
+    <!--novo registo---------------------->
+    @if (permissoes.Contains(CondoClub.Regras.Enum.Permissao.Gravar)) {
+        <div id="new" style="display: none;">
+            @using (Ajax.BeginForm("Gravar",
+                new AjaxOptions {
+                    UpdateTargetId = "lista",
+                    InsertionMode = InsertionMode.InsertBefore,
+                    OnSuccess = "AfterSave"
+                })) {
+                Html.RenderPartial("_Detalhe", new PrecoPublicidade());
+            }
+        </div>
+    }
+    <div id="lista">@{ Html.RenderPartial("_Lista", Model); }</div>
+
+    @using (Ajax.BeginForm("_DetalheEditar", null,
+        new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "#" },
+        new { id = "editRec" })) {
+        @Html.Hidden("id")
+    }
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+
+        ClearValidators();
+
+        $(function () {
+            $("#btnResetPesquisa").click(function () {
+                $(".search input[type='search']").val('');
+                $(".search select").val('');
+                $("#formPesquisa").submit();
+            });
+        });
+
+        $('.block-list-group .header').live('click', function () {
+            var self = $(this);
+            $('.block-list-group .content:visible').not(self.next('.content')).hide();
+            $('html, body').animate({
+                scrollTop: self.offset().top - 10
+            }, 300);
+            $(this).nextAll('.block-list-group .content').slideToggle();
+        });
+
+        function EditRec(id) {
+            $('#editRec').attr('data-ajax-update', '#' + id);
+            $('#editRec').attr('data-ajax-complete', "ResetValidators(" + id + ");");
+            $('#editRec').find('#id').val(id);
+            $('#editRec').trigger('submit');
+        }
+
+        function AfterSave(data) {
+            if (data.indexOf('alert(') == -1) {
+                $('#new').slideToggle('', function () {
+                    $('form', $(this))[0].reset();
+                    $("#lista .block-list-group:first").PulseAnimation();
+                });
+            }
+        }
+
+        function AfterUpdate(data, id) {
+            if (data.indexOf('alert(') == -1) {
+                $("#" + id).PulseAnimation();
+            }
+        }
+
+        function CloseNewRec() {
+            $('#new').slideToggle();
+        }
+
+        function AfterDelete(id) {
+            $("#" + id).hide('slow', function () { $(this).remove(); });
+        }
+
+    </script>
+}

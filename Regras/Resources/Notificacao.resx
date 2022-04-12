@@ -1,0 +1,231 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AtrasoPagamento" xml:space="preserve">
+    <value>O pagamento está atrasado, agradecemos a sua regularização. No caso de já ter procedido ao pagamento não considere esta mensagem.</value>
+  </data>
+  <data name="AvisoFinalPagamento" xml:space="preserve">
+    <value>O pagamento está muito atrasado, em caso de não regularização o seu acesso será bloqueado.</value>
+  </data>
+  <data name="AvisoPagamentoBoleto" xml:space="preserve">
+    <value>&lt;br/&gt;&lt;br/&gt;Boleto: {0}</value>
+  </data>
+  <data name="AvisoPagamentoCondominio" xml:space="preserve">
+    <value>Foi adicionado um novo registo para pagamento pela utilização do X.imob - &lt;a href="{0}/Pagamento" style="text-decoration: underline;"&gt;pagamento&lt;/a&gt;.</value>
+  </data>
+  <data name="AvisoPagamentoFornecedor" xml:space="preserve">
+    <value>Foi adicionado um novo registo para pagamento pela utilização do X.imob - &lt;a href="{0}/Pagamento" style="text-decoration: underline;"&gt;pagamento&lt;/a&gt;.</value>
+  </data>
+  <data name="AvisoPagamentoPublicidade" xml:space="preserve">
+    <value>A publicidade "{0}" foi aprovada.&lt;br/&gt;Foi adicionado um novo registo para pagamento - &lt;a href="{1}/Pagamento" style="text-decoration: underline;"&gt;pagamento&lt;/a&gt;.</value>
+  </data>
+  <data name="ComunicadoCondominioActivo" xml:space="preserve">
+    <value>Sejam bem-vindos ao &lt;strong&gt;X.imob&lt;/strong&gt;, esperamos que a vossa estadia seja a mais agradável possível! &lt;br/&gt;&lt;br/&gt;Para qualquer dúvida não hesite em nos contactar através do email de apoio &lt;a href="mailto:{0}" style="text-decoration: underline;"&gt;{0}&lt;/a&gt;.</value>
+  </data>
+  <data name="ComunicadoFornecedorActivo" xml:space="preserve">
+    <value>O fornecedor &lt;a href="Servico/Fornecedor/{0}" style="text-decoration: underline;"&gt;{0}&lt;/a&gt; já está presente no X.imob.&lt;br/&gt;"{1}"</value>
+  </data>
+  <data name="ComunicadoPublicidadeActiva" xml:space="preserve">
+    <value>O fornecedor &lt;a href="Servico/Fornecedor/{0}" style="text-decoration: underline;"&gt;{0}&lt;/a&gt; disponibilizou uma nova promoção.&lt;br/&gt;"{1}"</value>
+  </data>
+  <data name="ImprimirBoleto" xml:space="preserve">
+    <value>&lt;br&gt;&lt;a style="text-decoration: underline;" target="_blank" href="{0}/Pagamento/ImprimirBoleto/{1}"&gt;Imprimir Boleto&lt;/a&gt;</value>
+  </data>
+  <data name="Inactivacao" xml:space="preserve">
+    <value>Devido a pagamentos em atraso o seu acesso foi bloqueado. Contacte o suporte técnico &lt;a href="mailto:{0}" style="text-decoration: underline;"&gt;{0}&lt;/a&gt;.</value>
+  </data>
+  <data name="NovaAgenda" xml:space="preserve">
+    <value>Foi inserido o registo "{0}" nos contatos.</value>
+  </data>
+  <data name="NovaEmpresa" xml:space="preserve">
+    <value>Registou-se a administradora "{0}" que precisa da sua aprovação.</value>
+  </data>
+  <data name="NovaMensagem" xml:space="preserve">
+    <value>Tem uma nova mensagem no X.imob</value>
+  </data>
+  <data name="NovaMensagemTexto" xml:space="preserve">
+    <value>Recebeu uma nova mensagem de "{0}":</value>
+  </data>
+  <data name="NovaPublicidade" xml:space="preserve">
+    <value>O fornecedor "{0}" criou a publicidade "{1}" que precisa da sua aprovação.</value>
+  </data>
+  <data name="NovaPublicidadeActiva" xml:space="preserve">
+    <value>A publicidade "{0}" já está activa e a ser mostrada em todos os condomínios abrangidos.</value>
+  </data>
+  <data name="NovaReservaAprovada" xml:space="preserve">
+    <value>A sua reserva foi aprovada. {0}</value>
+  </data>
+  <data name="NovaReservaRecurso" xml:space="preserve">
+    <value>Foi efectuada uma nova reserva no condomínio {0} que precisa da sua aprovação - &lt;a href="Calendario/Reserva/{1}" style="text-decoration: underline;"&gt;{2} em {3}&lt;/a&gt;.</value>
+  </data>
+  <data name="NovaReservaReprovada" xml:space="preserve">
+    <value>A sua reserva NÃO foi aprovada.&lt;br/&gt;{0}. &lt;br/&gt;Contacte o administrador para mais informações.</value>
+  </data>
+  <data name="NovoCondominio" xml:space="preserve">
+    <value>Registou-se o condomínio "{0}" que precisa da sua aprovação.</value>
+  </data>
+  <data name="NovoFicheiro" xml:space="preserve">
+    <value>Foi adicionado o ficheiro &lt;a href="Ficheiro/Other/{0}" style="text-decoration: underline;"&gt;{1}&lt;/a&gt; à pasta "{2}" do arquivo.</value>
+  </data>
+  <data name="NovoFicheiroRaiz" xml:space="preserve">
+    <value>Foi adicionado o ficheiro &lt;a href="Ficheiro/Other/{0}" style="text-decoration: underline;"&gt;{1}&lt;/a&gt; ao arquivo.</value>
+  </data>
+  <data name="NovoFornecedor" xml:space="preserve">
+    <value>Registou-se o fornecedor "{0}" que precisa da sua aprovação.</value>
+  </data>
+  <data name="NovoFuncionario" xml:space="preserve">
+    <value>Foi inserido o novo funcionário "{0}", a sua função será "{1}" e o seu horário de trabalho "{2}".</value>
+  </data>
+  <data name="NovoMorador" xml:space="preserve">
+    <value>Gostaríamos de dar as boas-vindas a "{0}", novo morador do "{1}"</value>
+  </data>
+  <data name="NovoQuestionario" xml:space="preserve">
+    <value>Foi inserido um novo questionário "{0}", disponível de {1} até {2}</value>
+  </data>
+  <data name="NovoRegistoActivo" xml:space="preserve">
+    <value>O seu registo foi aprovado.&lt;br/&gt;&lt;br/&gt;Sejam bem-vindos ao &lt;strong&gt;X.imob&lt;/strong&gt;, esperamos que a vossa estadia seja a mais agradável possível! </value>
+  </data>
+  <data name="NovoVeiculo" xml:space="preserve">
+    <value>Foi inserido um novo automóvel com a matrícula "{0}", pertencente ao {1}.</value>
+  </data>
+  <data name="PagamentoCondominioEfectuado" xml:space="preserve">
+    <value>Confirmação de Pagamento da subscrição do X.imob</value>
+  </data>
+  <data name="PagamentoCondominioEfectuadoTexto" xml:space="preserve">
+    <value>O pagamento da subscrição do condominio "{0}" no período de "{1}" a "{2}" foi efetuado com sucesso.</value>
+  </data>
+  <data name="PagamentoFornecedorEfectuado" xml:space="preserve">
+    <value>Confirmação de Pagamento da subscrição do X.imob</value>
+  </data>
+  <data name="PagamentoFornecedorEfectuadoTexto" xml:space="preserve">
+    <value>O pagamento da subscrição do fornecedor "{0}" no período de "{1}" a "{2}" foi efetuado com sucesso.</value>
+  </data>
+  <data name="PagamentoPublicidadeEfectuado" xml:space="preserve">
+    <value>Confirmação de Pagamento de Publicidade</value>
+  </data>
+  <data name="PagamentoPublicidadeEfectuadoTexto" xml:space="preserve">
+    <value>O pagamento da publicidade "{0}" foi efetuado com sucesso.</value>
+  </data>
+  <data name="ReservaCancelada" xml:space="preserve">
+    <value>A sua reserva foi cancelada. {0}</value>
+  </data>
+  <data name="VerMensagem" xml:space="preserve">
+    <value>Ver mensagem no X.imob</value>
+  </data>
+</root>

@@ -1,0 +1,17 @@
+﻿@using CondoClub.Web.Models;
+@using CondoClub.Web.Controllers;
+@model Recurso
+@using (Ajax.BeginForm("Gravar",
+    null,
+    new AjaxOptions {
+        UpdateTargetId = Model.ID.ToString(),
+        InsertionMode = InsertionMode.Replace,
+        OnSuccess = "ResetValidators(); AfterUpdate(data, " + Model.ID.Value + ", xhr)"
+    },
+    new { id = "Gravar_" + @Model.ID })) {
+        @Html.Hidden("confirmar", false);
+        Html.RenderPartial("_Detalhe", Model);
+}
+<div class="form-readonly">
+    @{ Html.RenderPartial("_ListaHorario", Model); }
+</div>

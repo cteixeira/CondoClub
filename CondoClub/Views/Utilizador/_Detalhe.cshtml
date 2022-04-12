@@ -1,0 +1,101 @@
+﻿@using CondoClub.Web.Models;
+@using CondoClub.Web.Controllers;
+@using CondoClub.Web.Controllers.DadosMestre;
+@using System.Collections.Generic;
+
+@model Utilizador
+
+<div class="form">
+    @Html.ValidationSummary()
+    @Html.HiddenFor(m => m.ID)
+    <div class="form-1column column-span-3">
+        @Html.LabelFor(m => m.Nome)
+        @Html.TextBoxFor(m => m.Nome)
+    </div>
+    <div class="form-2column">
+        <span class="photo">
+            <img alt="user" height="60" width="60" src="@Url.Action("Avatar", "Ficheiro",
+                new { id = Model.AvatarID, thumbnail = false })" />
+            <span class="orange1-button modify-button">@Resources.Geral.Alterar</span>
+        </span>
+        <div class="note">@Resources.Registo.AlterarAvatar</div>
+        <div class="toolbox-no-border" style="margin:0;">
+            @Html.HiddenFor(m => m.AvatarID)
+            <div style="display:none">
+                @{ Html.RenderPartial("_FileUploader", "orange1-button no-float"); }
+            </div>
+        </div>
+    </div>
+    <div class="form-2column">
+        @Html.LabelFor(m => m.Email)
+        @Html.TextBoxFor(m => m.Email)
+    </div>
+    <div class="form-2column">
+        @Html.LabelFor(m => m.PerfilID)
+        @Html.DropDownListFor(m => m.PerfilID, new PerfilUtilizadorController().ConstroiDropDown(), "")
+    </div>
+    <div class="form-2column">
+        @Html.LabelFor(m => m.CondominioID)
+        @Html.DropDownListFor(m => m.CondominioID, new CondominioController().ConstroiDropDown(), "")
+    </div>
+    <div class="form-2column">
+        @Html.LabelFor(m => m.EmpresaID)
+        @Html.DropDownListFor(m => m.EmpresaID, new EmpresaController().ConstroiDropDown(), "")
+    </div>
+    <div class="form-2column">
+        @Html.LabelFor(m => m.FornecedorID)
+        @Html.DropDownListFor(m => m.FornecedorID, new FornecedorController().ConstroiDropDown(), "")
+    </div>
+    <div class="form-2column">
+        @Html.LabelFor(m => m.Fraccao)
+        @{ Html.EnableClientValidation(false); }
+        @Html.TextBoxFor(m => m.Fraccao)
+        @{ Html.EnableClientValidation(true); }
+    </div>
+    @if (!Model.ID.HasValue)
+    { 
+        <div class="form-2column">
+            @Html.LabelFor(m => m.Password)
+            @Html.PasswordFor(m => m.Password)
+        </div>
+        <div class="form-2column">
+            @Html.LabelFor(m => m.ConfirmarPassword)
+            @Html.PasswordFor(m => m.ConfirmarPassword)
+        </div>
+    }
+    <div class="form-2column">
+        @Html.LabelFor(m => m.Activo)
+        @Html.CheckBoxFor(m => m.Activo, new { @checked = Model.Activo })
+    </div>
+    <div class="clear"></div>
+    @if (!Model.ID.HasValue)
+    {
+        <div class="toolbox-no-border">
+            <input type="submit" class="orange1-button" value="@Resources.Geral.Gravar" />
+            <input type="reset" id="resetnewrec" class="orange3-button" onclick="CloseNewRec();" value="@Resources.Geral.Cancelar" />
+        </div>
+    }
+    else
+    {
+        <div class="toolbox-no-border">
+            @if (Model.Permissoes.Contains(CondoClub.Regras.Enum.Permissao.Gravar))
+            {
+                <input type="submit" class="orange1-button" value="@Resources.Geral.Gravar" />
+            }
+            @if (Model.Permissoes.Contains(CondoClub.Regras.Enum.Permissao.Apagar))
+            {
+                @Ajax.ActionLink(Resources.Geral.Apagar, "Apagar",
+                    new { @id = Model.ID },
+                    new AjaxOptions { HttpMethod = "Delete", Confirm = Resources.Geral.TemCerteza },
+                    new { @class = "orange1-button" }
+                )
+            }
+            @Ajax.ActionLink(Resources.Geral.Cancelar, "_DetalheVisualizar",
+                new { @id = Model.ID },
+                new AjaxOptions { HttpMethod = "Get", UpdateTargetId = Model.ID.Value.ToString() },
+                new { @class = "orange3-button" }
+            )
+        </div>
+    }
+    <div class="clear"></div>
+</div>

@@ -1,0 +1,24 @@
+﻿@using CondoClub.Web.Models;
+@using CondoClub.Web.Controllers.DadosMestre;
+
+@model FornecedorCategoria
+
+@Html.ValidationSummary()
+@Html.HiddenFor(m => m.FornecedorCategoriaID)
+@Html.HiddenFor(m => m.FornecedorID)
+<div class="form-1column">
+    @Html.LabelFor(m => m.CategoriaID)
+    @Html.DropDownListFor(m => m.CategoriaID, new CategoriaController().ConstroiDropDownCategoriasFilhas())
+</div>
+<div class="toolbox-no-border">
+    <input id="submitDetalheCategoria@Model.ID" type="submit" class="orange1-button" value="@Resources.Geral.Gravar" />
+    @if (Model.CategoriaID.HasValue) { 
+        @Ajax.ActionLink(Resources.Geral.Apagar, "_DetalheCategoriaApagar",
+            new { @id = Model.FornecedorCategoriaID },
+            new AjaxOptions { HttpMethod = "Delete", Confirm = Resources.Geral.TemCerteza },
+            new { @class = "orange2-button" }
+        )
+    }
+    <input type="button" class="orange3-button" onclick="CancelEditRecCategoria(this)" value="@Resources.Geral.Cancelar" />
+</div>
+<div class="clear" style="margin-bottom:10px;"></div>

@@ -1,0 +1,21 @@
+﻿@using CondoClub.Web.Models;
+
+@model CondominioConvite
+
+<div class="form invite new-message">
+    @Html.ValidationSummary()
+    <div class="form-1column">
+        @Html.LabelFor(m => m.Destinatarios)
+        @Html.TextAreaFor(m => m.Destinatarios, new { @class = "recipient" })
+        @*<input id="txtAdd" type="text" autocomplete="off"/>
+        <a id="add" class="link-orange" href="#">@Resources.Geral.Adicionar</a>*@
+    </div>
+    @*@Html.HiddenFor(m => m.Destinatarios)
+    <div id="recipients" class="form-1column recipients"></div>*@
+    <div class="clear"></div>
+    <div class="toolbox-no-border">
+        <input type="submit" class="orange1-button" value="@Resources.Geral.Enviar" />
+        <input type="reset" id="resetnewinv" class="orange3-button" value="@Resources.Geral.Cancelar"/>
+    </div>
+    <div class="clear"></div>
+</div>

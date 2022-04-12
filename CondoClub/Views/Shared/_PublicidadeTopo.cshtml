@@ -1,0 +1,33 @@
+﻿@using CondoClub.Web.Controllers;
+@using CondoClub.Web.Models;
+
+@{ IEnumerable<PublicidadeVisualizar> lista = PublicidadeController.ConstroiPublicidadeTopo(); }
+
+<div id="topslider" style="display:none;">
+    <ul class="bxslider">
+    @if (lista != null && lista.Count() > 0) {
+        foreach (PublicidadeVisualizar pub in lista) {
+	    <li ><a href="@Url.Action("Click", "Publicidade", new { id = pub.IDCifrado })"><img class="banner" alt="pub" src="@Url.Action("ImagemPublicidade", "Ficheiro", new { id = pub.ImagemID })" /></a></li>
+        }
+    } else { 
+        <img class="banner" alt="pub" src="~/Content/images/Banner.jpg" />
+    }
+    </ul>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var hasMoreThanOneImage = $(".bxslider img").length > 1 ? true: false;
+        var slider;
+        $('#topslider').show();
+        slider = $('.bxslider').bxSlider({
+            slideMargin: 10,
+            pager: hasMoreThanOneImage,
+            auto: hasMoreThanOneImage,
+            autoHover: true,
+            pause: 5000
+        });
+        $('#topslider a.bx-next,#topslider a.bx-prev').click(function (e) {
+            slider.startAuto();
+        });
+    });        
+</script>

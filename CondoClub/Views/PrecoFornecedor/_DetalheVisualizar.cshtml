@@ -1,0 +1,48 @@
+﻿@using CondoClub.Web.Models;
+@using CondoClub.Web.Controllers;
+
+@model PrecoFornecedor
+
+
+<div class="header">
+    <span class="title">@Model.PaisDesignacao - @Model.OpcaoPagamentoDesignacao - @Model.FraccoesAte</span>
+    <span class="subtitle">@Model.Valor</span>
+</div>
+<div class="content" style="display:none;">
+    <div class="form-readonly">
+        <div class="form-2column">
+            @Html.LabelFor(m => m.PaisID)
+            <label class="value">
+                @Model.PaisDesignacao
+            </label>
+        </div>
+        <div class="form-2column">
+            @Html.LabelFor(m => m.OpcaoPagamentoID)
+            <label class="value">
+                @Model.OpcaoPagamentoDesignacao
+            </label>
+        </div>
+        <div class="form-2column">
+            @Html.LabelFor(m => m.FraccoesAte)
+            <label class="value">
+                @Model.FraccoesAte
+            </label>
+        </div>
+        <div class="form-2column">
+            @Html.LabelFor(m => m.Valor)
+            <label class="value">
+                @Html.DisplayFor(m => m.Valor, "FormataMoeda")
+            </label>
+        </div>
+    </div>
+    @if (Model.ID != null && (
+            Model.Permissoes.Contains(CondoClub.Regras.Enum.Permissao.Gravar) ||
+            Model.Permissoes.Contains(CondoClub.Regras.Enum.Permissao.Apagar)
+        ))
+    {
+        <div class="toolbox-no-border">
+            <input type="button" onclick="EditRec(@Model.ID)" class="orange1-button" value="@Resources.Geral.Editar" />
+        </div>
+        <div class="clear"></div>
+    }
+</div>

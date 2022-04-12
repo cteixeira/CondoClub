@@ -1,0 +1,219 @@
+﻿@using CondoClub.Web.Models;
+@using CondoClub.Web.Controllers;
+@using CondoClub.Web.Controllers.DadosMestre;
+@using System.Collections.Generic;
+
+@model Fornecedor
+
+<div class="main-container">
+    <div class="header">
+        <div class="title">
+            <h5>@Resources.Utilizador.PerfilFornecedor</h5>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="separator10"></div>
+    @using (Html.BeginForm("GravarPerfil", "Fornecedor"))
+    {
+        <div class="form">
+            @Html.ValidationSummary()
+            @Html.SecuredHiddenField("ID", Model.ID)
+            @Html.SecuredHiddenField("RaioAccao", Model.RaioAccao)
+            @Html.SecuredHiddenField("Activo", Model.Activo)
+            @Html.SecuredHiddenField("DataActivacao", Model.DataActivacao)
+            @Html.SecuredHiddenField("Endereco", Model.Endereco)
+            @Html.SecuredHiddenField("Localidade", Model.Localidade)
+            @Html.SecuredHiddenField("Cidade", Model.Cidade)
+            @Html.SecuredHiddenField("CodigoPostal", Model.CodigoPostal)
+            @Html.SecuredHiddenField("Estado", Model.Estado)
+            @Html.SecuredHiddenField("PaisID", Model.PaisID)
+            @Html.SecuredHiddenField("Latitude", Model.Latitude)
+            @Html.SecuredHiddenField("Longitude", Model.Longitude)
+            <div class="form-1column column-span-3">
+                @Html.LabelFor(m => m.Nome)
+                @Html.TextBoxFor(m => m.Nome)
+            </div>
+            <div class="form-1column column-span-3">
+                @Html.LabelFor(m => m.Descricao)
+                @Html.TextAreaFor(m => m.Descricao, new { @class = "textarea-3rows" })
+            </div>
+            <div class="form-3column">
+                <span class="photo">
+                    <img alt="user" height="60" width="60" src="@Url.Action("Avatar", "Ficheiro",
+                        new { id = Model, thumbnail = false })" />
+                    <span class="orange1-button modify-button">@Resources.Geral.Alterar</span>
+                </span>
+                <div class="note">@Resources.Registo.AlterarAvatar</div>
+                <div class="toolbox-no-border" style="margin:0;">
+                    @Html.HiddenFor(m => m.AvatarID)
+                    <div style="display:none">
+                        @{ Html.RenderPartial("_FileUploader", "orange1-button no-float"); }
+                    </div>
+                </div>
+            </div>
+            <div class="form-3column">
+                @Html.LabelFor(m => m.Contribuinte)
+                @Html.TextBoxFor(m => m.Contribuinte)
+            </div>
+            <div class="form-3column">
+                @Html.LabelFor(m => m.OpcaoPagamentoID)
+                @Html.DropDownListFor(m => m.OpcaoPagamentoID, new OpcaoPagamentoController().ConstroiDropDown(), "")
+            </div>
+            <div class="form-3column">
+                @Html.LabelFor(m => m.FormaPagamentoID)
+                @Html.DropDownListFor(m => m.FormaPagamentoID, new FormaPagamentoController().ConstroiDropDown(), "")
+            </div>
+            <div class="form-3column">
+                @Html.LabelFor(m => m.Telefone)
+                @Html.TextBoxFor(m => m.Telefone)
+            </div>
+            <div class="form-3column">
+                @Html.LabelFor(m => m.Email)
+                @Html.TextBoxFor(m => m.Email)
+            </div>
+            <div class="form-3column">
+                @Html.LabelFor(m => m.URL)
+                @Html.TextBoxFor(m => m.URL)
+            </div>
+            <div class="form-3column">
+                @Html.LabelFor(m => m.RaioAccao)
+                <label class="readonly-value">@Model.RaioAccao</label>
+            </div>
+            <div class="form-3column">
+                @Html.LabelFor(m => m.ClassificacaoMedia)
+                <label class="readonly-value">@Model.ClassificacaoMedia</label>
+            </div>
+            <div class="form-3column">
+                @Html.LabelFor(m => m.TotalComentarios)
+                <label class="readonly-value">@Model.TotalComentarios</label>
+            </div>
+            <div class="form-1column">
+                <div class="google-map-supplier"></div>
+            </div>
+            <div class="form-3column">
+                @Html.LabelFor(m => m.Endereco)
+                <label class="readonly-value">
+                    @if (!string.IsNullOrEmpty(Model.Endereco))
+                    {
+                        @Model.Endereco
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(m => m.Endereco, "CampoVazio")
+                    }
+                </label>
+            </div>
+            <div class="form-3column">
+                @Html.LabelFor(m => m.Localidade)
+                <label class="readonly-value">
+                    @if (!string.IsNullOrEmpty(Model.Localidade))
+                    {
+                        @Model.Localidade
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(m => m.Localidade, "CampoVazio")
+                    }
+                </label>
+            </div>
+            <div class="form-3column">
+                @Html.LabelFor(m => m.Cidade)
+                <label class="readonly-value">
+                    @if (!string.IsNullOrEmpty(Model.Cidade))
+                    {
+                        @Model.Cidade
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(m => m.Cidade, "CampoVazio")
+                    }
+                </label>
+            </div>
+            <div class="form-3column">
+                @Html.LabelFor(m => m.CodigoPostal)
+                <label class="readonly-value">
+                    @if (!string.IsNullOrEmpty(Model.CodigoPostal))
+                    {
+                        @Model.CodigoPostal
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(m => m.CodigoPostal, "CampoVazio")
+                    }
+                </label>
+            </div>
+            <div class="form-3column">
+                @Html.LabelFor(m => m.Estado)
+                <label class="readonly-value">
+                    @if (!string.IsNullOrEmpty(Model.Estado))
+                    {
+                        @Model.Estado
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(m => m.Estado, "CampoVazio")
+                    }
+                </label>
+            </div>
+            <div class="form-3column">
+                @Html.LabelFor(m => m.PaisID)
+                <label class="readonly-value">
+                    @if (!string.IsNullOrEmpty(Model.PaisDesignacao))
+                    {
+                        @Model.PaisDesignacao
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(m => m.PaisDesignacao, "CampoVazio")
+                    }
+                </label>
+            </div>
+            <div class="clear"></div>
+            <div class="toolbox-no-border">
+                <input type="submit" class="orange1-button" value="@Resources.Geral.Gravar" />
+                @Html.ActionLink(Resources.Geral.Cancelar, "Perfil", new { @redirect = false }, new { @class = "orange3-button" })
+            </div>
+            <div class="clear"></div>
+        </div>
+    }
+</div>
+@section scripts{
+    @Scripts.Render("~/scripts/fileuploader")
+    @Scripts.Render("~/scripts/addresspicker")
+    
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBws9wlXadPEXoNj74kmzjXd_5Du7NvVIw&libraries=places&sensor=false"></script>
+
+    <script type="text/javascript">
+        $(".google-map-supplier").AddressPickerReadOnly({
+            Latitude: "@Model.Latitude",
+            Longitude: "@Model.Longitude"
+        });
+
+        $('.file-uploader-container').CustomFileUpload({
+            URLUploadFile: "@Url.Action("GravarImagemForm", "Ficheiro")",
+            DropZone: $(".file-uploader-container"),
+            SingleFileUploads: true,
+            LimitMultiFileUploads: 1,
+            DoneFunction: function(e, data) { UploadFotoDone(e, data); }
+        });
+
+        var modifyButton = $(".photo .modify-button");
+        $(".photo").bind({
+            click: function(){
+                $(".file-uploader-container input[type='button']").click();            
+            },
+            mouseenter: function(){
+                modifyButton.css('display', 'inline-block');
+            },
+            mouseleave: function(){
+                modifyButton.hide();
+            }
+        });
+
+        function UploadFotoDone(e, data, container){
+            var fotoID = data[0].ID;
+            $('.form .photo img').attr("src", "@Url.Action("Avatar", "Ficheiro")/" + fotoID);
+            $('#AvatarID').val(fotoID);
+        }
+    </script>
+}

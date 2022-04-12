@@ -1,0 +1,128 @@
+﻿@using CondoClub.Web.Models;
+@using CondoClub.Web.Controllers;
+
+@model Publicidade
+
+<div class="header">
+    <span class="title">@Model.HeaderLista</span>
+    <span class="subtitle">@Html.DisplayFor(m => m.DataCriacao, "FormataData")</span>
+</div>
+<div class="content" style="display:none;">
+     <div class="form-readonly">
+        <div class="form-1column">
+            @Html.LabelFor(m => m.ZonaID)
+            <label class="value">
+                @Model.ZonaDesignacao
+            </label>
+        </div>
+        @*<div class="form-2column">
+            @Html.LabelFor(m => m.RaioAccao)
+            <label class="value">
+                @Model.RaioAccao
+            </label>
+        </div>*@
+        <div class="form-3column">
+            @Html.LabelFor(m => m.Inicio)
+            <label class="value">
+                @Html.DisplayFor(m => m.Inicio, "FormataData")
+            </label>
+        </div>
+        <div class="form-3column">
+            @Html.LabelFor(m => m.Fim)
+            <label class="value">
+                @Html.DisplayFor(m => m.Fim, "FormataData")
+            </label>
+        </div>
+        <div class="form-3column">
+            @Html.LabelFor(m => m.Preco)
+            <label class="orange-bold">
+                @Html.DisplayFor(m => m.Preco, "FormataMoeda")
+            </label>
+        </div>
+        <div class="form-1column">
+            @Html.LabelFor(m => m.ImagemID)
+            <label class="value pub-image">
+                @if (Model.ImagemID != null) {
+                     <img alt="advertise" src="@Url.Action("ImagemPublicidade", "Ficheiro",
+                    new { id = Model.ImagemID })"
+                    class='@(Model.ZonaID == (int)CondoClub.Regras.Enum.ZonaPublicidade.Topo ? "top" : "side")' />
+                } else {
+                    @Html.DisplayFor(m => m.ImagemID, "CampoVazio")
+                }
+            </label>
+        </div>
+        <div class="form-1column">
+            @Html.LabelFor(m => m.Texto)
+            <label class="value">
+                @if (!string.IsNullOrEmpty(Model.Texto)) {
+                    @Model.Texto
+                } else {
+                    @Html.DisplayFor(m => m.Texto, "CampoVazio")
+                }
+            </label>
+        </div>
+        <div class="form-1column">
+           @Html.LabelFor(m => m.Url)
+            <label class="value">
+                 @if (!string.IsNullOrEmpty(Model.Url)){
+                    @Html.Raw(CondoClub.Web.Util.ConvertUrlsToLinks(Model.Url))
+                }else{
+                    @Html.DisplayFor(m => m.Url, "CampoVazio")
+                }
+            </label>
+        </div>
+        <div class="form-3column">
+            @Html.LabelFor(m => m.Aprovado)
+            <label class="value">
+                @if (Model.Aprovado) { 
+                    @Resources.Geral.Sim
+                } else { 
+                    @Resources.Geral.Nao
+                }
+            </label>
+        </div>
+        <div class="form-3column">
+            @Html.LabelFor(m => m.DataAprovacao)
+            <label class="value">
+                @if (Model.Aprovado) { 
+                    @Html.DisplayFor(m => m.DataAprovacao, "FormataData")
+                } else { 
+                    @Html.DisplayFor(m => m.DataAprovacao, "CampoVazio")
+                }
+            </label>
+        </div>
+        <div class="form-3column">
+            @Html.LabelFor(m => m.Pago)
+            <label class="value">
+                @if (Model.Pago) { 
+                    @Resources.Geral.Sim
+                } else { 
+                    @Resources.Geral.Nao
+                }
+            </label>
+        </div>
+     </div>
+     @if (Model.IdPublicidade != null && (
+            Model.Permissoes.Contains(CondoClub.Regras.PublicidadePermissao.Gravar) ||
+            Model.Permissoes.Contains(CondoClub.Regras.PublicidadePermissao.Apagar) || 
+            Model.Permissoes.Contains(CondoClub.Regras.PublicidadePermissao.Duplicar))
+        ){
+        <div class="toolbox-no-border">
+            @if (Model.Permissoes.Contains(CondoClub.Regras.PublicidadePermissao.Gravar)) {
+                <input type="button" onclick="EditRec(@Model.IdPublicidade)" class="orange1-button" value="@Resources.Geral.Editar" />
+            }
+             @if (Model.Permissoes.Contains(CondoClub.Regras.PublicidadePermissao.Duplicar)) {
+                @Ajax.ActionLink(Resources.Publicidade.Duplicar, "Duplicar",
+                    new { @id = Model.IdPublicidade },
+                    new AjaxOptions { 
+                        HttpMethod = "Post", 
+                        Confirm = Resources.Publicidade.TemCertezaDuplicar,
+                        UpdateTargetId = "formNew",
+                        OnSuccess="Duplicar_OnSucess"},
+                    new { @class = "orange2-button" }
+            )
+            }
+        </div>
+        <div class="clear"></div>
+     }
+</div>

@@ -1,0 +1,52 @@
+﻿@using System.Configuration;
+@using CondoClub.Web.Models;
+@using CondoClub.Web.Controllers;
+
+@model CondoClub.Regras.UtilizadorAutenticado
+
+<a class="logo" href="~/">&nbsp</a>
+<span class="user-info">
+    @if (Request.IsAuthenticated)
+    {
+        <span class="photo">
+            <img alt="user" src="@Url.Action("Avatar", "Ficheiro", new { id = Model.AvatarID })" />
+        </span>
+        <span class="text">
+            @Html.Label(Model.EntidadeNome, new { @class = "name" })
+            @Html.Label(Model.Nome, new { @class = "email" })
+        </span>
+        IEnumerable<UtilizadorController.OpcaoMenu> lista = UtilizadorController.ConstroiMenuTopo();
+        if (lista.Count() > 0)
+        {    
+            <span class="drop-menu">
+                <span class="down-image">&nbsp;</span>
+                <span class="drop-menu-buttons" style="display:none">
+                    @foreach (var opcao in lista)
+                    {   
+                        @Ajax.ActionLink(opcao.Designacao, opcao.Accao, opcao.Controlador, opcao.RouteValues, 
+                            new AjaxOptions { }, new { @class = opcao.CssClass });
+                    }
+                </span>
+            </span>
+        }
+    }
+    else if (!Request.Url.ToString().EndsWith("Utilizador/Login"))
+    { 
+        <div class="buttons-right">
+            <button onclick="location='@Url.Action("Login", "Utilizador")';">@Resources.Utilizador.Entrar</button>
+        </div>
+    }
+</span>
+<div class="clear"></div>
+@if (Model.Perfil == CondoClub.Regras.Enum.Perfil.CondoClub || Model.Perfil == CondoClub.Regras.Enum.Perfil.Empresa)
+{
+    <div class="top-hidden-bar" style="display:none">
+        @using (Ajax.BeginForm("AlterarContexto", "Utilizador", new AjaxOptions { }))
+        {
+            <input type="search" id="condominios" placeholder="@Resources.Utilizador.AlterarContextoPesquisa"/>
+            <input type="hidden" name="condominioID" id="condominioID" />
+            <input type="submit" class="orange2-button" value="@Resources.Geral.Confirmar" />
+            <input type="button" class="orange2-button" value="@Resources.Geral.Fechar" onclick="$('.top-hidden-bar').slideUp();" />
+        }
+    </div>
+}

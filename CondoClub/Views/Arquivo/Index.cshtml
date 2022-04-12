@@ -1,0 +1,138 @@
+﻿@using CondoClub.Web.Models;
+@using CondoClub.Web.Controllers;
+
+@model ConteudoDirectoria
+
+@{ var permissoes = (List<CondoClub.Regras.Enum.Permissao>)ViewData["Permissoes"];
+   var caminho = (List<DirectoriaLink>)ViewData["Caminho"]; }
+
+<div class="main-container">
+    <div class="header">
+        <div class="title">
+            <h5>@Resources.Menu.Arquivo</h5>
+        </div>
+        <div class="clear"></div>
+    </div>
+    @if (permissoes.Contains(CondoClub.Regras.Enum.Permissao.Gravar))
+    {
+        <div class="separator10"></div>
+        <span class="archive toolbox-no-border">
+            <a href="#" class="orange1-button" onclick="AbrirNovaDir(); return false;">
+                @Resources.Arquivo.NovaDirectoria
+            </a>
+            @{ Html.RenderPartial("_FileUploader", "orange1-button"); }
+            <div class="clear"></div>
+        </span>
+    }
+    <span class="breadcrumb">
+        @for (int i = 0; i < caminho.Count; ++i)
+        {
+            <a href="@caminho[i].URL" title="@caminho[i].Nome">
+                @caminho[i].Nome
+            </a>
+            if (i != (caminho.Count - 1))
+            {
+                <span>></span>
+            }
+        }
+    </span>
+    <span class="clear"></span>
+    <!--novo registo---------------------->
+    @if (permissoes.Contains(CondoClub.Regras.Enum.Permissao.Gravar))
+    {
+        <div id="newDir" style="display:none">
+            <div class="separator10"></div>
+            @using (Ajax.BeginForm("GravarDirectoria",
+                new AjaxOptions
+                {
+                    UpdateTargetId = "lista",
+                    InsertionMode = InsertionMode.InsertBefore,
+                    OnSuccess = "AfterSaveDir"
+                }))
+            {
+                Html.RenderPartial("_DetalheDirectoria", new ArquivoDirectoria());
+            }
+        </div>
+    }
+    <div class="search archive-search">
+        <input id="txtPesquisar" type="search" placeholder="@Resources.Geral.Pesquisar" />
+    </div>
+    <div class="archive-container">
+        <div class="title">
+            <span class="column-1">@Resources.Arquivo.ListaNome</span>
+            <span class="column-2">@Resources.Arquivo.ListaTamanho</span>
+            <span class="column-3">@Resources.Arquivo.ListaData</span>
+            <span class="column-4">@Resources.Arquivo.ListaUtilizador</span>
+        </div>
+        <div id="lista">
+            @{ Html.RenderPartial("_Lista", Model); }
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    @Scripts.Render("~/scripts/fileuploader")
+
+    <script type="text/javascript">
+        function AbrirNovaDir(){
+            $('#newDir').slideToggle('', function() {
+                $(".form-1column input[type='text']", $(this)).focus();
+            });
+        }
+
+        function OnGravar() {
+            $("#ArquivoDirectoriaPaiID").val($("#DirectoriaID").val());
+        }
+
+        function AfterSaveDir(data) {
+            if (data.indexOf('alert(') == -1) {
+                $('#newDir').slideToggle('', function () {
+                    $(".form-1column input[type='text']", $(this)).val('');
+                    $("#lista .line:first").PulseAnimation();
+                });
+            }
+        }
+
+        function AfterUpdate(data, id) {
+            if (data.indexOf('alert(') == -1) {
+                $("#" + id).PulseAnimation();
+            }
+        }
+
+        function CloseNewDir() {
+            $('#newDir').slideToggle();
+        }
+
+        function AfterDelete(id) {
+            $("#" + id).hide('slow', function () { $(this).remove(); });
+        }
+
+        $(function () {
+            $('#txtPesquisar').keyup(function () {
+                var keywords = RemoverAcentos($(this).val().toLowerCase());
+
+                $('#lista .line').each(function () {
+                    if (RemoverAcentos($('span:first', $(this)).text().toLowerCase()).indexOf(keywords) == -1) {
+                        $(this).hide();
+                    }
+                    else {
+                        $(this).show();
+                    }
+                });
+            });
+        });
+
+        /*** Ficheiros ***/
+        $('.file-uploader-container').CustomFileUpload({
+            URLUploadFile: "@Url.Action("GravarFicheiros", "Arquivo")",
+            ButtonsToHideContainer: $('.archive.toolbox-no-border'),
+            DoneFunction: function(e, data) { UploadFileDone(data); },
+            FormData: [{ name:'directoriaID', value:@Model.DirectoriaID }]
+        });        
+
+        function UploadFileDone(data){            
+            $("#lista").append(data.partialview);
+            $("#lista .line:last").PulseAnimation();
+        }
+    </script>
+}

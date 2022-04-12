@@ -1,0 +1,54 @@
+﻿@model CondoClub.Web.Models.CalendarioListaMes
+@if (Model.Dias != null) {
+    <div class="calendar-navigation  no-select">
+        <span class="prev-container">
+        @if (new DateTime(Model.Ano, Model.Mes, 1) > new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1)) { 
+            <span id="listaAnterior" class="prev">@Resources.Calendario.Anterior</span>
+        }
+        </span>
+        <label class="date">
+            @String.Format("{0} {1} {2}",
+                Resources.Calendario.ResourceManager.GetString(String.Concat("Mes", Model.Mes.ToString())),
+                Resources.Calendario.De,
+                Model.Ano
+        )
+        </label>
+        @Html.HiddenFor(m => m.Mes, new { id = "MesFiltro" })
+        @Html.HiddenFor(m => m.Ano, new { id = "AnoFiltro" })
+         <span class="next-container">
+        @if (new DateTime(Model.Ano, Model.Mes, 1) < new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(2)) { 
+            <span id="listaProximo" class="next">@Resources.Calendario.Proximo</span>
+        }
+        </span>
+    </div>
+    <ul class="calendar-header  no-select">
+        <li>@Resources.Calendario.Segunda</li>
+        <li>@Resources.Calendario.Terca</li>
+        <li>@Resources.Calendario.Quarta</li>
+        <li>@Resources.Calendario.Quinta</li>
+        <li>@Resources.Calendario.Sexta</li>
+        <li>@Resources.Calendario.Sabado</li>
+        <li>@Resources.Calendario.Domigo</li>
+    </ul>
+    <ul class="calendar-days  no-select">
+        @{
+        
+        int diaSemana = 1;
+        int primeiroDiaSemana = (int)Model.Dias.First().Data.DayOfWeek;
+        if (primeiroDiaSemana == 0) {
+            primeiroDiaSemana = 7;
+        }
+        while (diaSemana++ != primeiroDiaSemana) {                        
+            <li>&nbsp;</li>
+        }
+        foreach (CondoClub.Web.Models.CalendarioDia dia in Model.Dias) {
+            <li class="day @dia.CssClassDisponibilidade">
+                <input type="hidden" value="@dia.Data" />
+                <label class="date">@dia.Data.Day</label>
+                <label class="info">@dia.NumeroSlotsLivres @Resources.Calendario.Livres</label>            
+            </li>                                            
+        }
+          
+        }
+    </ul>
+}

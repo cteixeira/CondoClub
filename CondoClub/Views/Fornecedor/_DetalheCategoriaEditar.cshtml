@@ -1,0 +1,13 @@
+﻿@using CondoClub.Web.Models;
+@using CondoClub.Web.Controllers;
+
+@model FornecedorCategoria
+
+<td class="form">
+    @using (Ajax.BeginForm("_DetalheCategoriaGravar", null,
+        new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "detalheCategoria_" + @Model.FornecedorCategoriaID },
+        new { id = "formDetalheCategoria_" + @Model.FornecedorCategoriaID })) 
+    {       
+        Html.RenderPartial("_DetalheCategoria", Model);
+    }
+</td>

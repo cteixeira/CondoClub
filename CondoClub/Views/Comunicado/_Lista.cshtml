@@ -1,0 +1,8 @@
+﻿@model IEnumerable<CondoClub.Web.Models.Comunicado>
+
+@foreach (var item in Model) {
+    <div class="announcement" id="@item.ID">
+        @{ Html.RenderPartial("_Detalhe", item); }
+    </div>
+}
+

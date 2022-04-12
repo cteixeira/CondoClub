@@ -1,0 +1,16 @@
+﻿@{
+    Layout = "~/Views/Shared/_Blank.cshtml";
+}
+
+<div class="logo-blank">
+    <a class="logo" href="~/"><img src="~/Content/images/logo_grande.png" /></a>
+</div>
+<div>
+    <h4 class="centered">
+        @Html.Raw(Resources.Registo.CondicoesGeraisTitulo)
+    </h4>
+    <div style="text-align:justify">
+        @Html.Raw(Resources.Registo.CondicoesGeraisMensagem)
+    </div>
+    <div class="separator30"></div>
+</div>

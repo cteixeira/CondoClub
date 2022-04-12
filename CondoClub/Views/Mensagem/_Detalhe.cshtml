@@ -1,0 +1,39 @@
+﻿@model IEnumerable<CondoClub.Web.Models.Mensagem>
+
+<div class="detail-container" id="detalhe_@Model.First(m => !m.RespostaID.HasValue).MensagemID">
+    <div class="content">
+    @foreach (var item in Model) {
+        <span class="message @if(!item.Visto){@Html.Raw("new-messages")}">
+            <img class="user-image" src="@Url.Action("Avatar", "Ficheiro", new { id = item.RemetenteAvatarID })" alt="" />
+            <span class="user-info">@item.RemetenteNome</span>
+            <span class="date">@item.DataEnvio</span>
+            <span class="clear"></span>
+            <p>@Html.Raw(item.Texto)
+                <span class="attachments">
+                    @foreach (var f in item.Ficheiros) {
+                        @Html.ActionLink(String.Concat(f.Nome, ".", f.Extensao), "SeleccionaMensagemFicheiro",
+                        new { id = CondoClub.Regras.Util.UrlEncode(CondoClub.Regras.Util.Cifra(f.ID.ToString())) },
+                        new { @target = "_blank" });
+                    }
+                </span>
+            </p>
+        </span>
+    }
+    </div>
+    <div class="new-message">
+        @Html.ValidationSummary()
+        <div class="message-textarea">
+            @{ 
+                var newMessage = new CondoClub.Web.Models.Mensagem();
+                @Html.TextArea("Texto", new { id="Texto"});
+            }
+        </div>
+        <div class="attachments"></div>
+        <div class="toolbox">
+            <input type="submit" class="button-option orange1-button" value="@Resources.Mensagem.ResponderTodos" onclick="ResponderMensagem(this)" />
+            @*@{ Html.RenderPartial("_FileUploader", "orange2-button"); }*@
+            <input type="button" class="button-option orange3-button" value="@Resources.Geral.Cancelar" onclick="$(this).parents('.block-list-group:first').find('.header').click();" />
+            <span class="clear"></span>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,27 @@
+﻿@using CondoClub.Web.Controllers;
+
+@{ IEnumerable<UtilizadorController.OpcaoMenu> lista = UtilizadorController.ConstroiMenu(false); }
+@if (lista.Count() > 0)
+{
+    <div class="grid_4 main-menu">
+        <div class="grid_4 menu-header alpha omega">
+            @Resources.Menu.LabelMenu
+        </div>
+        <div class="menu-item-container">
+            @{  string cssClass = "alpha";
+                foreach (var opcao in lista)
+                {
+                    <div class="grid_2 @cssClass menu-item @opcao.CssClassCor" topbar-cssclass="@opcao.CssClassCor">
+                        <a href="@Url.Action(opcao.Accao, opcao.Controlador)"></a>
+                        <label class="title">@opcao.Designacao</label>
+                        <label class="description">@opcao.Descricao</label>
+                        <label class="notification-number">@opcao.NumeroNovidades</label>
+                        <span class="icon @opcao.CssClass"></span>
+                    </div>
+            
+                    cssClass = cssClass.Equals("alpha") ? "omega": "alpha";
+                }
+            }
+        </div>
+    </div>
+}

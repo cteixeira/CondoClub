@@ -1,0 +1,222 @@
+﻿@using System.Configuration;
+@using CondoClub.Web.Controllers;
+@using CondoClub.Web.Controllers.DadosMestre;
+@using CondoClub.Web.Models;
+
+@model FornecedorRegisto
+
+@{
+    Layout = "~/Views/Shared/_Blank.cshtml";
+}
+
+<div class="logo-blank">
+    <a class="logo" href="~/"><img src="~/Content/images/logo_grande.png" /></a>
+</div>
+<div>
+    <h4>@(Resources.Registo.MensagemFornecedor + ":")</h4>
+@using (Html.BeginForm("RegistarFornecedor", "Registo"))
+{
+    <div class="form new-regist">
+        <div>
+            @Html.ValidationSummary()
+            @Html.HiddenFor(m => m.IDCifrado)
+            @Html.HiddenFor(m => m.Latitude)
+            @Html.HiddenFor(m => m.Longitude)
+        </div>
+        <div class="form-1column column-span-3">
+            @Html.LabelFor(m => m.Nome)
+            @Html.TextBoxFor(m => m.Nome)
+        </div>
+        <div class="form-1column column-span-3">
+            @Html.LabelFor(m => m.Descricao)
+            @Html.TextAreaFor(m => m.Descricao, new { @class = "textarea-3rows" })
+        </div>
+        <div class="form-1column column-span-3">
+            <div class="form-2column">
+                <span class="photo">
+                    <img alt="user" height="60" width="60" src="@Url.Action("Avatar", "Ficheiro",
+                        new { id = Model.AvatarID, thumbnail = false })" />
+                    <span class="orange1-button modify-button">@Resources.Geral.Alterar</span>
+                </span>
+                <div class="note">@Resources.Registo.AlterarAvatar</div>
+                <div class="toolbox-no-border" style="margin:0;">
+                    @Html.HiddenFor(m => m.AvatarID)
+                    <div style="display:none">
+                        @{ Html.RenderPartial("_FileUploader", "orange1-button no-float"); }
+                    </div>
+                </div>
+            </div>
+            <div class="form-2column">
+                @Html.LabelFor(m => m.Contribuinte)
+                @Html.TextBoxFor(m => m.Contribuinte)
+            </div>
+        </div>
+        <div class="form-3column">
+            @Html.LabelFor(m => m.OpcaoPagamentoID)
+            @Html.DropDownListFor(m => m.OpcaoPagamentoID, new OpcaoPagamentoController().ConstroiDropDown(), "")
+        </div>
+        <div class="form-3column">
+            @Html.LabelFor(m => m.FormaPagamentoID)
+            @Html.DropDownListFor(m => m.FormaPagamentoID, new FormaPagamentoController().ConstroiDropDown(), "")
+        </div>
+        <div class="form-3column">
+            @Html.LabelFor(m => m.Telefone)
+            @Html.TextBoxFor(m => m.Telefone)
+        </div>
+        <div class="form-2column">
+            @Html.LabelFor(m => m.Email)
+            @Html.TextBoxFor(m => m.Email)
+        </div>
+        <div class="form-2column">
+            @Html.LabelFor(m => m.URL)
+            @Html.TextBoxFor(m => m.URL)
+        </div>
+        @*<div class="form-3column">
+            @Html.LabelFor(m => m.RaioAccao)
+            @Html.TextBoxFor(m => m.RaioAccao)
+            <div class="note">@Resources.Servico.InfluenciaPreco</div>
+        </div>*@
+        <div class="form-1column column-span-3">
+            <label>@Resources.Empresa.LocalizarGoogleMaps</label>
+            <input id="searchAddress" type="text" />
+            <div class="google-map-supplier"></div>
+        </div>
+        <div class="form-1column column-span-3">
+            @Html.LabelFor(m => m.Endereco)
+            @Html.TextBoxFor(m => m.Endereco)
+        </div>
+        <div class="form-3column">
+            @Html.LabelFor(m => m.Localidade)
+            @Html.TextBoxFor(m => m.Localidade)
+        </div>
+        <div class="form-3column">
+            @Html.LabelFor(m => m.Cidade)
+            @Html.TextBoxFor(m => m.Cidade)
+        </div>
+        <div class="form-3column">
+            @Html.LabelFor(m => m.CodigoPostal)
+            @Html.TextBoxFor(m => m.CodigoPostal)
+        </div>
+        <div class="form-1column column-span-3">
+            <div class="form-2column">
+                @Html.LabelFor(m => m.Estado)
+                @Html.TextBoxFor(m => m.Estado)
+            </div>
+            <div class="form-2column">
+                @Html.LabelFor(m => m.PaisID)
+                @Html.DropDownListFor(m => m.PaisID, new PaisController().ConstroiDropDown(), "")
+            </div>
+        </div>
+        <div class="form-1column column-span-3">
+            @Html.Hidden("CategoriasID")
+            <div class="form-2column">
+                <label>@Resources.Registo.AdicioneCategoria</label>
+                @Html.DropDownList("categorias", new CategoriaController().ConstroiDropDownCategoriasFilhas(), "")
+            </div>
+            <div class="form-2column">
+                <label></label>
+                <a href="#" onclick="AddCategoria(); return false;" class="link-orange">@Resources.Geral.Adicionar</a>
+            </div>
+        </div>
+        <div id="divCategoriasAdicionadas" class="form-1column column-span-3"></div>
+        <div class="separator30"></div>
+        <div class="form-1column column-span-3">
+            <span class="checkbox2">
+                @Html.CheckBoxFor(m => m.AceitarCondicoesGerais)
+                <label>@Html.Raw(String.Format(Resources.Registo.AceitarCondicoesGerais, Url.Action("CondicoesGerais")))</label>
+            </span>
+        </div>
+        <div class="toolbox margin-top-20">
+            <input class="orange1-button" type="submit" value="@Resources.Geral.Avancar" />
+        </div>
+        <div class="clear"></div>
+    </div>
+}
+</div>
+@section scripts{
+    @Scripts.Render("~/scripts/fileuploader")
+    @Scripts.Render("~/scripts/addresspicker")
+
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBws9wlXadPEXoNj74kmzjXd_5Du7NvVIw&libraries=places&sensor=false"></script>
+    <script type="text/javascript">
+        $.validator.setDefaults({ ignore: ":hidden:not(#CategoriasID)" });
+
+        $('.google-map-supplier').AddressPicker({
+            Latitude: "@Model.Latitude",
+            Longitude: "@Model.Longitude"
+        });
+
+        $('.file-uploader-container').CustomFileUpload({
+            URLUploadFile: "@Url.Action("GravarImagemForm", "Ficheiro")",
+            DropZone: $("#new .file-uploader-container"),
+            SingleFileUploads: true,
+            LimitMultiFileUploads: 1,
+            DoneFunction: function(e, data) { UploadFotoDone(e, data); }
+        });
+
+        var modifyButton = $(".photo .modify-button");
+        $(".photo").bind({
+            click: function(){
+                $(".file-uploader-container input[type='button']").click();            
+            },
+            mouseenter: function(){
+                modifyButton.css('display', 'inline-block');
+            },
+            mouseleave: function(){
+                modifyButton.hide();
+            }
+        });
+
+        function UploadFotoDone(e, data, container){
+            var fotoID = data[0].ID;
+            $('.photo img').attr("src", "@Url.Action("Avatar", "Ficheiro")/" + fotoID);
+            $('#AvatarID').val(fotoID);
+        }
+
+        @*Categorias*@
+        var CategoriasID = $("#CategoriasID");
+        var categorias = $("#categorias");
+        
+        $(function(){
+            reporCategorias();
+        });
+
+        function AddCategoria(){
+            var catSeleccionada = categorias.val();
+            var categoriasID = CategoriasID.val();
+
+            if(categoriasID.indexOf(catSeleccionada) != -1)
+                return;
+
+            CategoriasID.val(categoriasID + ";" + catSeleccionada);
+            adicionarCategoria(catSeleccionada, categorias.find("option:selected").text());
+            categorias.val("");
+        }
+        
+        function reporCategorias(){
+            var catArray = CategoriasID.val().split(';');
+            for(var i = 0; i<catArray.length; ++i){
+                if(catArray[i]){
+                    var selctedCat = categorias.find('option[value=' + catArray[i] + ']');
+                    adicionarCategoria(selctedCat.val(), selctedCat.text());
+                }
+            }
+        }
+
+        function adicionarCategoria(catValue, catText){
+            $("#divCategoriasAdicionadas").append("<label id='" + catValue + 
+                "'><b class='remove-categoria'>X</b>" + catText + "<label>");
+        }
+
+        $(".remove-categoria").live("click", function(){
+            var parent = $(this).parent();
+            RemoveCategoria(parent.prop("id"));
+            parent.remove();
+        });
+
+        function RemoveCategoria(id){
+            CategoriasID.val(CategoriasID.val().replace(";" + id, "").replace(id, ""));
+        }
+
+    </script>
+}

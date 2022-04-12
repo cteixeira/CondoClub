@@ -1,0 +1,10 @@
+﻿@model CondoClub.Web.Models.RecursoHorario
+<td colspan="4" class="form">
+    @using (Ajax.BeginForm("_DetalheHorarioGravar", null,
+        new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "detalheHorario_" + @Model.RecursoHorarioID },
+        new { id = "formDetalheHorario_" + @Model.RecursoHorarioID })) {
+        
+        @Html.Hidden("confirmar", false);        
+        Html.RenderPartial("_DetalheHorario", Model);
+    }
+</td>

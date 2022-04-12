@@ -1,0 +1,78 @@
+﻿@using CondoClub.Web.Models;
+@using CondoClub.Web.Controllers;
+
+@model Utilizador
+
+
+<div class="main-container">
+    <div class="header">
+        <div class="title">
+            <h5>@Resources.Utilizador.Perfil</h5>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="separator10"></div>
+    <div class="form-readonly" style="padding: 5px;">
+        <div class="form-3column">
+            <img class="image" height="60" width="60" alt="" src="@Url.Action("Avatar", "Ficheiro",
+                new { id = Model.AvatarID, thumbnail = true })"/>
+        </div>
+        <div class="form-3column">
+            @Html.LabelFor(m => m.Nome)
+            <label class="value">
+                @if (!string.IsNullOrEmpty(Model.Nome))
+                {
+                    @Model.Nome
+                }
+                else
+                {
+                    @Html.DisplayFor(m => m.Nome, "CampoVazio")
+                }
+            </label>
+        </div>
+        <div class="form-3column">
+            @Html.LabelFor(m => m.Email)
+            <label class="value">
+                @if (!string.IsNullOrEmpty(Model.Email))
+                {
+                    @Html.Raw(CondoClub.Web.Util.ConvertEmailToMailTo(Model.Email))
+                }
+                else
+                {
+                    @Html.DisplayFor(m => m.Email, "CampoVazio")
+                }
+            </label>
+        </div>
+        @if (Model.PerfilID != (int)CondoClub.Regras.Enum.Perfil.CondoClub &&
+                Model.PerfilID != (int)CondoClub.Regras.Enum.Perfil.Empresa &&
+                Model.PerfilID != (int)CondoClub.Regras.Enum.Perfil.Fornecedor &&
+                Model.PerfilID != (int)CondoClub.Regras.Enum.Perfil.Portaria)
+        {
+            <div class="form-3column">
+                @Html.LabelFor(m => m.Fraccao)
+                <label class="value">
+                    @if (!string.IsNullOrEmpty(Model.Fraccao))
+                    {
+                        @Model.Fraccao
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(m => m.Fraccao, "CampoVazio")
+                    }
+                </label>
+            </div>
+        }
+        <div class="clear"></div>
+        <div class="toolbox-no-border">
+            @using (Html.BeginForm("EditarPerfil", "Utilizador"))
+            {
+                <input type="submit" class="orange1-button" value="@Resources.Geral.Editar" />
+            }
+            @using (Html.BeginForm("EditarPassword", "Utilizador"))
+            {
+                <input type="submit" class="orange1-button" value="@Resources.Utilizador.AlterarPassword" />
+            }
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>

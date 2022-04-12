@@ -1,0 +1,257 @@
+﻿@model CondoClub.Web.Models.CalendarioIndexModel
+
+@{ var recursoSeleccionado = (long?)ViewData["RecursoSeleccionadoID"]; }
+@{ var permissoes = (List<CondoClub.Regras.RecursoPermissao>)ViewData["Permissoes"]; }
+<div class="main-container">
+    <div class="header">
+            <div class="title"><h5>@Resources.Menu.Calendario</h5></div>
+            @if (permissoes.Contains(CondoClub.Regras.RecursoPermissao.VisualizarEditarRecursos)) {
+                <div class="options">
+                    <a class="link-orange" href='@Url.Action("ListaReserva", "Recurso")'>@Resources.Recurso.ListaReservas</a>
+                    <span class="separator"></span>
+                    <a class="link-orange" href='@Url.Action("Index", "Recurso")'>@Resources.Recurso.Configurar</a>
+                </div>
+            }
+            <div class="clear"></div>
+    </div>
+    <div class="form">
+    <div class="form-1column">
+        <label>@Resources.Recurso.Recursos</label>
+        @Html.DropDownListFor(x => recursoSeleccionado, new CondoClub.Web.Controllers.RecursoController().ConstroiDropDown(true, recursoSeleccionado), new { id = "RecursoSeleccionadoID" })
+    </div>
+    <div class="form-1column">
+        <label>@Resources.Calendario.Legenda</label>
+        <span class="calendar-legend">
+            <span class="green">@Resources.Calendario.Livre</span>
+            <span class="yellow">@Resources.Calendario.QuaseCompleto</span>
+            <span class="red">@Resources.Calendario.Completo</span>
+            <span class="blue">@Resources.Calendario.Reserva</span>
+            <span class="gray">@Resources.Calendario.Indisponivel</span>
+        </span>
+    </div>
+    <div class="clear"></div>
+    </div>
+    <div id="calendarContainer" class="calendar-container">
+        @if (Model.ApresentaLista) {
+            Html.RenderPartial("_Lista", Model.ListaMes);
+        } else {
+            Html.RenderPartial("_Detalhe", Model.DetalheDiaMes);
+        }
+    </div>
+</div>
+
+@using (Ajax.BeginForm("_Lista", null, new AjaxOptions {
+    UpdateTargetId = "calendarContainer",
+    InsertionMode = InsertionMode.Replace
+},
+    new { id = "calendarioLista" })) { 
+    @Html.Hidden("Recurso")
+    @Html.Hidden("Mes")
+    @Html.Hidden("Ano")
+}
+
+@using (Ajax.BeginForm("_Detalhe", null, new AjaxOptions {
+    UpdateTargetId = "calendarContainer",
+    InsertionMode = InsertionMode.Replace
+},
+    new { id = "calendarioDetalhe" })) { 
+    @Html.Hidden("Recurso")
+    @Html.Hidden("Data")
+}
+
+@using (Ajax.BeginForm("_Reservar", null, new AjaxOptions {
+    UpdateTargetId = "calendarContainer",
+    InsertionMode = InsertionMode.Replace,
+    Confirm = Resources.Calendario.ConfirmacaoReserva
+},
+    new { id = "reservar" })) { 
+    @Html.Hidden("Recurso")
+    @Html.Hidden("Inicio")
+}
+
+@using (Ajax.BeginForm("_CancelarReserva", null, new AjaxOptions {
+    UpdateTargetId = "calendarContainer",
+    InsertionMode = InsertionMode.Replace,
+    Confirm = Resources.Calendario.ConfirmarCancelarReserva
+},
+    new { id = "cancelarReserva" })) {
+    @Html.Hidden("Recurso")
+    @Html.Hidden("Reserva")
+    @Html.Hidden("Data")
+}
+
+@using (Ajax.BeginForm("_AprovarReserva", null, new AjaxOptions {
+    UpdateTargetId = "calendarContainer",
+    InsertionMode = InsertionMode.Replace,
+    Confirm = Resources.Calendario.ConfirmarAprovarReserva
+},
+    new { id = "aprovarReserva" })) {
+    @Html.Hidden("Recurso")
+    @Html.Hidden("Reserva")
+    @Html.Hidden("Data")
+}
+
+@using (Ajax.BeginForm("_ReprovarReserva", null, new AjaxOptions {
+    UpdateTargetId = "calendarContainer",
+    InsertionMode = InsertionMode.Replace,
+    Confirm = Resources.Calendario.ConfirmarCancelarAprovacao
+},
+    new { id = "reprovarReserva" })) { 
+    @Html.Hidden("Recurso")
+    @Html.Hidden("Reserva")
+    @Html.Hidden("Data")
+    @Html.Hidden("Comentario")
+}
+@section scripts{
+    <script type="text/javascript">
+
+        $('#listaAnterior').live('click', function () {
+            var mes = $('#Mes').val();
+            var ano = $('#Ano').val();
+            var recurso = $('#RecursoSeleccionadoID').val();
+            if (mes == 1) {
+                mes = 12;
+                --ano;
+            } else {
+                --mes;
+            }
+            GetLista(mes, ano, recurso);
+        });
+
+        $('#listaProximo').live('click', function () {
+            var mes = $('#MesFiltro').val();
+            var ano = $('#AnoFiltro').val();
+            var recurso = $('#RecursoSeleccionadoID').val();
+            if (mes == 12) {
+                mes = 1;
+                ++ano;
+            } else {
+                ++mes;
+            }
+            GetLista(mes, ano, recurso);
+        });
+
+        $('#detalheAnterior').live('click', function () {
+            var recurso = $('#RecursoSeleccionadoID').val();
+            var data = new Date($('#DataFiltro').val());
+            data.setDate(data.getDate() - 1);
+            GetDetalhe(data.toISOString(), recurso);
+        });
+
+        $('#detalheProximo').live('click', function () {
+            var data = new Date($('#DataFiltro').val());
+            var recurso = $('#RecursoSeleccionadoID').val();
+            data.setDate(data.getDate() + 1);
+            GetDetalhe(data.toISOString(), recurso);
+        });
+
+        $('#RecursoSeleccionadoID').live('change', function () {
+            var recurso = $('#RecursoSeleccionadoID').val();
+            if ($('#MesFiltro').length > 0 && $('#AnoFiltro').length > 0) {
+                var mes = $('#MesFiltro').val();
+                var ano = $('#AnoFiltro').val();
+                GetLista(mes, ano, recurso);
+            } else {
+                var data = new Date($('#DataFiltro').val());
+                var mes = data.getMonth() + 1;
+                var ano = data.getFullYear();
+                GetLista(mes, ano, recurso);
+            }
+        });
+
+        $('.day:not(.gray)').live('click', function () {
+            var data = $(this).find('input[type="hidden"]').val()
+            var recurso = $('#RecursoSeleccionadoID').val();
+            GetDetalhe(data, recurso);
+        });
+
+        $('#voltarCalendario').live('click', function () {
+            var recurso = $('#RecursoSeleccionadoID').val();
+            var data = new Date($('#DataFiltro').val());
+            var mes = data.getMonth() + 1;
+            var ano = data.getFullYear();
+            GetLista(mes, ano, recurso);
+        });
+
+        function GetLista(mes, ano, recurso) {
+            $('#calendarioLista').find('#Mes').val(mes);
+            $('#calendarioLista').find('#Ano').val(ano);
+            $('#calendarioLista').find('#Recurso').val(recurso);
+            $('#calendarioLista').trigger('submit');
+        }
+
+        function GetDetalhe(data, recurso) {
+            $('#calendarioDetalhe').find('#Data').val(data);
+            $('#calendarioDetalhe').find('#Recurso').val(recurso);
+            $('#calendarioDetalhe').trigger('submit');
+        }
+
+        function ReservarSlot(sender) {
+            var inicio = $(sender).parents('li:first').find('input[type="hidden"].inicio').val();
+            var recurso = $('#RecursoSeleccionadoID').val();
+            $('#reservar').find('#Recurso').val(recurso);
+            $('#reservar').find('#Inicio').val(inicio);
+
+            $('#reservar').trigger('submit');
+        }
+
+        function CancelarReservar(sender) {
+            var reserva = $(sender).parents('li:first').find('input[type="hidden"].reserva').val();
+            var recurso = $('#RecursoSeleccionadoID').val();
+            var data = new Date($('#DataFiltro').val());
+
+            $('#cancelarReserva').find('#Recurso').val(recurso);
+            $('#cancelarReserva').find('#Reserva').val(reserva);
+            $('#cancelarReserva').find('#Data').val(data.toISOString());
+
+            $('#cancelarReserva').trigger('submit');
+        }
+
+        function AprovarReserva(sender) {
+            var reserva = $(sender).parents('li:first').find('input[type="hidden"].reserva').val();
+            var recurso = $('#RecursoSeleccionadoID').val();
+            var data = new Date($('#DataFiltro').val());
+
+            $('#aprovarReserva').find('#Recurso').val(recurso);
+            $('#aprovarReserva').find('#Reserva').val(reserva);
+            $('#aprovarReserva').find('#Data').val(data.toISOString());
+
+            $('#aprovarReserva').trigger('submit');
+        }
+
+        function ReprovarReserva(sender) {
+            var reserva = $(sender).parents('li:first').find('input[type="hidden"].reserva').val();
+            var recurso = $('#RecursoSeleccionadoID').val();
+            var data = new Date($('#DataFiltro').val());
+
+            $('#reprovarReserva').find('#Recurso').val(recurso);
+            $('#reprovarReserva').find('#Reserva').val(reserva);
+            $('#reprovarReserva').find('#Data').val(data.toISOString());
+            ShowHideCancelComment();
+        }
+
+        function ReprovarReservaConfirmar() {
+            var comentario = $('#newMessage textarea').val();
+            $('#reprovarReserva').find('#Comentario').val(comentario);
+            $('#reprovarReserva').trigger('submit');
+            return false;
+        }
+
+        function ShowHideCancelComment() {
+            var $newmsg = $('#newMessage');
+            $newmsg.slideToggle('fast', function () {
+                if (!$newmsg.is(':visible')) {
+                    $(this).find('textarea').val('');
+                    $('.validation-summary-errors').addClass('validation-summary-valid');
+                    $('.validation-summary-errors').removeClass('validation-summary-errors');
+                } else {
+                    $('textarea').focus();
+                }
+            });
+
+            return false;
+        }
+
+    </script>
+
+}

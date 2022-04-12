@@ -1,0 +1,13 @@
+﻿@model CondoClub.Web.Models.QuestionarioResposta
+
+<div class="user-image">
+    <img src="@Url.Action("Avatar", "Ficheiro", new { id = Model.MoradorAvatarID })" alt="" />
+</div>
+<div class="reply-message">
+    <div style="float:left; width: 94%;">
+        @Html.Label(Model.MoradorNome, new { @class = "user" })
+        <br />@Html.DisplayFor(m => Model.OutraOpcao)
+        <br />@Html.Label(String.Concat(Model.DataHora.ToShortDateString(), " ", Model.DataHora.ToShortTimeString()), new { @class = "date" })
+    </div>
+    <div class="clear"></div>
+</div>

@@ -1,0 +1,37 @@
+﻿@using CondoClub.Web.Models;
+@using CondoClub.Web.Controllers;
+@model RecursoHorario
+
+@Html.ValidationSummary()
+@Html.HiddenFor(m => m.RecursoHorarioID)
+@Html.HiddenFor(m => m.RecursoID)
+<div class="form-2column">
+    @Html.LabelFor(m => m.DiaSemana)
+    @Html.DropDownListFor(m => m.DiaSemana, new RecursoController().ConstroiDropDownDiasSemana())
+</div>
+<div class="form-2column">
+    @Html.LabelFor(m => m.Inicio)
+    @Html.TextBoxFor(m => m.Inicio, "{0:t}")
+    <div class="note12" style="margin-bottom:5px;">@Resources.Recurso.InicioInfo</div>
+</div>
+<div class="form-2column">
+    @Html.LabelFor(m => m.NumeroSlots)
+    @Html.TextBoxFor(m => m.NumeroSlots)
+    <div class="note12" style="margin-bottom:5px;">@Resources.Recurso.NumeroSlotsInfo</div>
+</div>
+<div class="form-2column">
+    @Html.LabelFor(m => m.DuracaoSlot)
+    @Html.TextBoxFor(m => m.DuracaoSlot)
+    <div class="note12" style="margin-bottom:5px;">@Resources.Recurso.DuracaoSlotInfo</div>
+</div>
+<div class="toolbox-no-border">
+    <input id="submitDetalheHorario@Model.ID" type="submit" class="orange1-button" value="@Resources.Geral.Gravar" />
+    @if (Model.RecursoHorarioID.HasValue) { 
+        @Ajax.ActionLink(Resources.Geral.Apagar, "_DetalheHorarioApagar",
+                new { @id = Model.RecursoHorarioID },
+                new AjaxOptions { HttpMethod = "Delete", Confirm = Resources.Recurso.TemCertezaApagarReservasSeraoCanceladas },
+                new { @class = "orange2-button" })
+    }
+    <input type="button" class="orange3-button" onclick="CancelEditRecHorario(this)" value="@Resources.Geral.Cancelar" />
+</div>
+<div class="clear"></div>

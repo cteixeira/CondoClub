@@ -1,0 +1,66 @@
+﻿@model CondoClub.Web.Models.CalendarioDetalheDia
+
+<div id="newMessage" class="new-message">
+    <div class="message-textarea">
+        <textarea placeholder="@Resources.Calendario.InserirMotivoCancelamento"></textarea>
+    </div>
+    <div class="toolbox">
+        <input id="confirmarCancelar" type="button" class="button-option orange1-button" value="@Resources.Geral.Confirmar" onclick="return ReprovarReservaConfirmar()"/>
+        <input id="resetnewrec" type="button" class="button-option orange3-button" value="@Resources.Geral.Cancelar" onclick="return ShowHideCancelComment();" />
+        <span class="clear"></span>
+    </div>
+</div>
+<div class="calendar-navigation no-select">
+    <span class="prev-container">
+    @if (Model.Data > new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1) && Model.Data.Date > DateTime.Now.Date) {
+        <span id="detalheAnterior">@Resources.Calendario.Anterior</span>
+    }
+    </span>
+    <label class="date">
+        @String.Format("{0}, {1} {2} {3} {4}",
+                Resources.Calendario.ResourceManager.GetString(String.Concat("DiaSemana", ((int)Model.Data.DayOfWeek + 1).ToString())),
+                Model.Data.Day,
+                Resources.Calendario.De,
+                Resources.Calendario.ResourceManager.GetString(String.Concat("Mes", Model.Data.Month.ToString())),
+                Model.Data.Year
+        ) 
+        
+    </label>
+    @Html.Hidden("DataFiltro", Model.Data.ToString("yyyy-MM-ddTHH:mm:ssZ"))
+    <span class="next-container">
+    @if (Model.Data < new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month)).AddMonths(2)) { 
+        <span id="detalheProximo">@Resources.Calendario.Proximo</span>
+    }
+    </span>
+</div>
+@if (Model.Slots != null && Model.Slots.Count > 0) { 
+    <ul class="calendar-slots no-select">
+        @foreach (CondoClub.Web.Models.CalendarioSlot slot in Model.Slots) {
+            <li class="@slot.CssClassDisponibilidade">
+                @Html.HiddenFor(o => slot.Inicio, new { @class = "inicio"})
+                @Html.HiddenFor(o => slot.ReservaID, new { @class = "reserva" })
+                <span class="time">@slot.Horario</span><span class="text">@slot.DesignacaoSlot</span>
+                <span class="slot-actions">
+                @if (slot.Permissoes.Contains(CondoClub.Regras.RecursoPermissao.ReservarSlot)) {
+                    <span onclick="ReservarSlot(this);">@Resources.Recurso.Reservar</span>
+                }
+                @if (slot.Permissoes.Contains(CondoClub.Regras.RecursoPermissao.CancelarReserva)) { 
+                    <span onclick="CancelarReservar(this)">@Resources.Recurso.CancelarReserva</span>
+                }
+                @if (slot.Permissoes.Contains(CondoClub.Regras.RecursoPermissao.AprovarReserva)) { 
+                    <span onclick="AprovarReserva(this)">@Resources.Recurso.Aprovar</span>
+                    <span onclick="ReprovarReserva(this)">@Resources.Recurso.CancelarAprovacao</span>
+                }
+                </span>
+                <div class="clear"></div>
+            </li>    
+        }    
+    </ul>
+} else { 
+    <label class="calendar-slots-empty  no-select">@Resources.Calendario.ReservaNaoDisponivelDia</label>
+}
+<div class="calendar-navigation  no-select">
+    <span class="prev-container back-calendar">
+        <span id="voltarCalendario">@Resources.Calendario.VoltarCalendario</span>
+    </span>
+</div>

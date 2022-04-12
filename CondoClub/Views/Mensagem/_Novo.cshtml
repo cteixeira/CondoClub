@@ -1,0 +1,22 @@
+﻿@model CondoClub.Web.Models.MensagemNova
+<div id="newMessage" class="new-message">
+    @Html.ValidationSummary()
+    <input type="hidden" id="Files" />
+    <div class="message-to">
+        <input id="messageTo" type="text" placeholder="@Resources.Mensagem.Para" />
+        <span class="search-receivers">&nbsp;</span>
+        @Html.HiddenFor(m => m.Destinatarios)
+    </div>
+    <div class="message-receivers clearfix" id="receivers">
+    </div>
+    <div class="message-textarea">
+        @Html.TextAreaFor(m => m.Texto, new { placeholder = Resources.Mensagem.Texto})
+    </div>
+    <div class="attachments clearfix"></div>
+    <div class="toolbox">
+        <input id="btnGravar" type="submit" class="button-option orange1-button" value="@Resources.Geral.Enviar" />
+        @{ Html.RenderPartial("_FileUploader", "orange2-button"); }
+        <input id="resetnewrec" type="button" class="button-option orange3-button" value="@Resources.Geral.Cancelar" onclick="return ShowHideNewRec();" />
+        <span class="clear"></span>
+    </div>
+</div>

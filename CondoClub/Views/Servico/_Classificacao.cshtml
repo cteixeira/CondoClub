@@ -1,0 +1,34 @@
+﻿@model CondoClub.Web.Models.ServicoFornecedor
+
+@if (Model.Permissoes.Contains(CondoClub.Regras.Fornecedor.Permissao.AdicionarClassificacao)) {
+    
+    <div class="new-message" id="newcomm">
+        <div class="message-textarea">
+             @Html.TextArea("Comm", null, new { placeholder = Resources.Servico.Comentario })
+        </div>
+        <div class="toolbox">
+            <div id="rating" class="rating-stars-large rating-star0">
+		        <span id="1" class="rating-submit rating-submit-star1"></span>
+		        <span id="2" class="rating-submit rating-submit-star2"></span>
+		        <span id="3" class="rating-submit rating-submit-star3"></span>
+		        <span id="4" class="rating-submit rating-submit-star4"></span>
+		        <span id="5" class="rating-submit rating-submit-star5"></span>
+	        </div>
+            <input type="button" onclick="SaveClass();" class="button-option orange1-button" value="@Resources.Geral.Partilhar" />
+            <div class="clear"></div>
+        </div>
+    </div>
+}
+
+<hr />
+<div class="menu">
+    <ul class="actions">
+        <li><span class="rating-stars-large @Model.CssClassificacaoMedia"></span></li>
+    </ul>
+    <ul class="info">
+        <li>@(String.Concat(Model.TotalComentarios.ToString(), " ", Resources.Servico.Comentarios))</li>
+    </ul>   
+</div>
+<hr />
+
+<div id="lista">@{ Html.RenderPartial("_ClassificacaoLista", Model.Classificacoes); }</div>

@@ -1,0 +1,61 @@
+﻿@model CondoClub.Web.Models.PagamentoValidar
+<div class="main-container">
+    <div id="@Model.ID" class="block-list-group">
+        <div class="header">
+            <span class="title">@Model.Designacao</span>
+        </div>
+        <div class="content">
+            @using (Html.BeginForm("ConfirmarValidacao", "Pagamento", FormMethod.Post, new { id = "formValidar"})) {
+                <div class="form-readonly">
+                    @Html.ValidationSummary()
+                    @Html.HiddenFor(m => Model.ID)
+                    @Html.HiddenFor(m => Model.Origem)
+                    <div class="form-1column">
+                        @Html.LabelFor(m => Model.Valor)
+                        <label class="value">
+                            @Html.DisplayFor(m => Model.Valor, "FormataMoeda")
+                        </label>
+                    </div>
+                    <div class="form-1column">
+                        @Html.LabelFor(m => Model.DataEmissao)
+                        <label class="value">
+                            @Html.DisplayFor(m => Model.DataEmissao, "FormataData")
+                        </label>
+                    </div>
+                    <div class="form-3column">
+                        @Html.LabelFor(m => Model.TipoCartao)
+                        <label class="value">
+                            @Html.DropDownListFor(m => m.TipoCartao, new CondoClub.Web.Controllers.PagamentoController().ConstroiDropDownTipoCartao(), String.Empty)
+                        </label>
+                    </div>
+                </div>
+        
+                <div class="toolbox-no-border">
+                    <label class="note12">@Resources.Pagamento.NotaContinuar</label>
+                    <input type="submit" class="button-option orange1-button" id="submitPagar" value="@Resources.Pagamento.Continuar" />
+                    @Html.ActionLink(Resources.Geral.Voltar, "Index", "Pagamento", null, new { @class = "button-option orange3-button" })
+                    <div class="message-loading" style="display: none;" id="loader">
+                        <img src="~/content/images/loader.gif" alt="loading" />
+                    </div>
+                </div>
+            }
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script type="text/javascript">
+
+        $(function () {
+            $('#submitPagar').click(function () {
+                if ($('#formValidar').valid()) {
+                    $(this).fadeOut('fast', function () {
+                        $('#loader').fadeIn('fast');
+                    });
+                }
+            });
+        })
+    
+    
+    </script>
+}

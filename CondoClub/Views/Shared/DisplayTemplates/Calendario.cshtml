@@ -1,0 +1,6 @@
+﻿@model DateTime?
+@Html.TextBox(
+    "", 
+    Model != null ? string.Format("{0:d}", Model) : @ViewData["Value"] != null ? string.Format("{0:d}", @ViewData["Value"]) : string.Empty,
+    new { @id = @ViewData["CalID"], @onchange = @ViewData["ScriptOnChange"] }
+)

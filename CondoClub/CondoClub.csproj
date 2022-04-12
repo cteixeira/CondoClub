@@ -1,0 +1,1335 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{9FD87E89-0B4C-4526-83AC-83ACD238D04E}</ProjectGuid>
+    <ProjectTypeGuids>{E3E379DF-F4C6-4180-9B81-6769533ABE47};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CondoClub.Web</RootNamespace>
+    <AssemblyName>CondoClub</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <MvcProjectUpgradeChecked>true</MvcProjectUpgradeChecked>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\packages\ICSharpCode.SharpZipLib.dll.0.85.4.369\lib\net20\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Ionic.Zip">
+      <HintPath>..\packages\NPOI.1.2.5\lib\net40\Ionic.Zip.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="NPOI">
+      <HintPath>..\packages\NPOI.1.2.5\lib\net40\NPOI.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.4.5.6\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Net.Http.2.0.20710.0\lib\net40\System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.4.0.20710.0\lib\net40\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Net.Http.2.0.20710.0\lib\net40\System.Net.Http.WebRequest.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.4.0.20710.0\lib\net40\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.4.0.20710.0\lib\net40\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.4.0.20710.0\lib\net40\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.0.0\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.2.0.20710.0\lib\net40\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.1.0\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.1.0\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\AuthConfig.cs" />
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\ContentTypeConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="ControladorSite.cs" />
+    <Compile Include="Controllers\CalendarioController.cs" />
+    <Compile Include="Controllers\CondominioController.cs" />
+    <Compile Include="Controllers\ComunicadoController.cs" />
+    <Compile Include="Controllers\EstatisticaController.cs" />
+    <Compile Include="Controllers\EmpresaController.cs" />
+    <Compile Include="Controllers\FornecedorController.cs" />
+    <Compile Include="Controllers\MoradorController.cs" />
+    <Compile Include="Controllers\PagamentoController.cs" />
+    <Compile Include="Controllers\PrecoCondominioController.cs" />
+    <Compile Include="Controllers\PrecoFornecedorController.cs" />
+    <Compile Include="Controllers\PrecoPublicidadeController.cs" />
+    <Compile Include="Controllers\PublicidadeController.cs" />
+    <Compile Include="Controllers\QuestionarioController.cs" />
+    <Compile Include="Controllers\ErroController.cs" />
+    <Compile Include="Controllers\FuncionarioController.cs" />
+    <Compile Include="Controllers\RecursoController.cs" />
+    <Compile Include="Controllers\RegistoController.cs" />
+    <Compile Include="Controllers\ServicoController.cs" />
+    <Compile Include="Controllers\DadosMestreController.cs" />
+    <Compile Include="Controllers\DefaultController.cs" />
+    <Compile Include="Controllers\AgendaController.cs" />
+    <Compile Include="Controllers\ArquivoController.cs" />
+    <Compile Include="Controllers\FicheiroController.cs" />
+    <Compile Include="Controllers\MensagemController.cs" />
+    <Compile Include="Controllers\UtilizadorController.cs" />
+    <Compile Include="Controllers\VeiculoController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CondominioModels.cs" />
+    <Compile Include="Models\ComunicadoModels.cs" />
+    <Compile Include="Models\EstatisticaModels.cs" />
+    <Compile Include="Models\EmpresaModels.cs" />
+    <Compile Include="Models\MoradorModels.cs" />
+    <Compile Include="Models\PagamentoModels.cs" />
+    <Compile Include="Models\PrecoModels.cs" />
+    <Compile Include="Models\PublicidadeModels.cs" />
+    <Compile Include="Models\QuestionarioModels.cs" />
+    <Compile Include="Models\FicheiroModels.cs" />
+    <Compile Include="Models\FornecedorModels.cs" />
+    <Compile Include="Models\DadosMestreModels.cs" />
+    <Compile Include="Models\AgendaModels.cs" />
+    <Compile Include="Models\ArquivoModels.cs" />
+    <Compile Include="Models\FuncionarioModels.cs" />
+    <Compile Include="Models\MensagemModels.cs" />
+    <Compile Include="Models\RecursoModels.cs" />
+    <Compile Include="Models\RegistoModels.cs" />
+    <Compile Include="Models\UtilizadorModels.cs" />
+    <Compile Include="Models\VeiculoModels.cs" />
+    <Compile Include="Models\_Atributos.cs" />
+    <Compile Include="Models\_AtributosLocalizados.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\Agenda.Designer.cs">
+      <DependentUpon>Agenda.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Resources\Agenda.pt-br.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Agenda.pt-br.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Arquivo.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Arquivo.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Arquivo.pt-br.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Arquivo.pt-br.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Calendario.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Calendario.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Calendario.pt-br.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Calendario.pt-br.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Comunicado.Designer.cs">
+      <DependentUpon>Comunicado.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\Comunicado.pt-br.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Comunicado.pt-br.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Condominio.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Condominio.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Condominio.pt-br.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Condominio.pt-br.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Estatistica.pt-br.Designer.cs">
+      <DependentUpon>Estatistica.pt-br.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\Estatistica.Designer.cs">
+      <DependentUpon>Estatistica.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\Empresa.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Empresa.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Empresa.pt-br.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Empresa.pt-br.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Erro.pt-br.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Erro.pt-br.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\FileUploader.pt-br.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FileUploader.pt-br.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Funcionario.pt-br.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Funcionario.pt-br.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Geral.pt-br.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Geral.pt-br.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Mensagem.pt-br.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Mensagem.pt-br.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Menu.pt-br.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Menu.pt-br.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Morador.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Morador.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Morador.pt-br.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Morador.pt-br.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Pagamento.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Pagamento.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Pagamento.pt-br.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Pagamento.pt-br.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Preco.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Preco.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Preco.pt-br.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Preco.pt-br.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Publicidade.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Publicidade.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Publicidade.pt-br.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Publicidade.pt-br.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Questionario.Designer.cs">
+      <DependentUpon>Questionario.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\FileUploader.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FileUploader.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Funcionario.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Funcionario.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Questionario.pt-br.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Questionario.pt-br.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\RecuperarPassword.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RecuperarPassword.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\RecuperarPassword.pt-br.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RecuperarPassword.pt-br.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Recurso.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Recurso.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Recurso.pt-br.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Recurso.pt-br.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Registo.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Registo.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Registo.pt-br.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Registo.pt-br.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Servico.Designer.cs">
+      <DependentUpon>Servico.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\Erro.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Erro.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Geral.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Geral.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Localizacao.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Localizacao.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Mensagem.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Mensagem.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Menu.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Menu.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\MenuFundo.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MenuFundo.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Servico.pt-br.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Servico.pt-br.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Utilizador.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Utilizador.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Utilizador.pt-br.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Utilizador.pt-br.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Veiculo.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Veiculo.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Veiculo.pt-br.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Veiculo.pt-br.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Util.cs" />
+    <Compile Include="Utils\SecuredValueHashComputer.cs" />
+    <Compile Include="Utils\SecuredValueHtmlHelper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\base.css" />
+    <Content Include="Content\CondoClub.css" />
+    <Content Include="Content\images\arrowdown.png" />
+    <Content Include="Content\images\arrowup.png" />
+    <Content Include="Content\images\avatar_300.jpg" />
+    <Content Include="Content\images\avatar_50.png" />
+    <Content Include="Content\colors.css" />
+    <Content Include="Content\images\avatar_multi_50.png" />
+    <Content Include="Content\images\Banner.jpg" />
+    <Content Include="Content\images\bxslider\bx_loader.gif" />
+    <Content Include="Content\images\bxslider\controls.png" />
+    <Content Include="Content\images\empty-sidebanner.png" />
+    <Content Include="Content\images\empty-topbanner.png" />
+    <Content Include="Content\images\icones\attach_15.png" />
+    <Content Include="Content\images\icones\black\advertising.png" />
+    <Content Include="Content\images\icones\black\agenda.png" />
+    <Content Include="Content\images\icones\black\calendar.png" />
+    <Content Include="Content\images\icones\black\classification.png" />
+    <Content Include="Content\images\icones\black\companies.png" />
+    <Content Include="Content\images\icones\black\condominium.png" />
+    <Content Include="Content\images\icones\black\files.png" />
+    <Content Include="Content\images\icones\black\home.png" />
+    <Content Include="Content\images\icones\black\messages.png" />
+    <Content Include="Content\images\icones\black\payment.png" />
+    <Content Include="Content\images\icones\black\price.png" />
+    <Content Include="Content\images\icones\black\residents.png" />
+    <Content Include="Content\images\icones\black\services.png" />
+    <Content Include="Content\images\icones\black\staff.png" />
+    <Content Include="Content\images\icones\black\statistics.png" />
+    <Content Include="Content\images\icones\black\suppliers.png" />
+    <Content Include="Content\images\icones\black\survey.png" />
+    <Content Include="Content\images\icones\black\vehicles.png" />
+    <Content Include="Content\images\icones\black_20\editar.png" />
+    <Content Include="Content\images\icones\black_20\enquetes.png" />
+    <Content Include="Content\images\btn_gps.png" />
+    <Content Include="Content\images\btn_gps_black.png" />
+    <Content Include="Content\images\btn_phone.png" />
+    <Content Include="Content\images\btn_phone_black.png" />
+    <Content Include="Content\images\icones\color\advertising.png" />
+    <Content Include="Content\images\icones\color\agenda.png" />
+    <Content Include="Content\images\icones\color\calendar.png" />
+    <Content Include="Content\images\icones\color\classification.png" />
+    <Content Include="Content\images\icones\color\companies.png" />
+    <Content Include="Content\images\icones\color\condominium.png" />
+    <Content Include="Content\images\icones\color\files.png" />
+    <Content Include="Content\images\icones\color\home.png" />
+    <Content Include="Content\images\icones\color\messages.png" />
+    <Content Include="Content\images\icones\color\payment.png" />
+    <Content Include="Content\images\icones\color\price.png" />
+    <Content Include="Content\images\icones\color\residents.png" />
+    <Content Include="Content\images\icones\color\services.png" />
+    <Content Include="Content\images\icones\color\staff.png" />
+    <Content Include="Content\images\icones\color\statistics.png" />
+    <Content Include="Content\images\icones\color\suppliers.png" />
+    <Content Include="Content\images\icones\color\survey.png" />
+    <Content Include="Content\images\icones\color\vehicles.png" />
+    <Content Include="Content\images\icones\file_types\7z.png" />
+    <Content Include="Content\images\icones\file_types\bmp.png" />
+    <Content Include="Content\images\icones\file_types\delete.png" />
+    <Content Include="Content\images\icones\file_types\desconhecido.png" />
+    <Content Include="Content\images\icones\file_types\doc.png" />
+    <Content Include="Content\images\icones\file_types\docx.png" />
+    <Content Include="Content\images\icones\file_types\empty_folder.png" />
+    <Content Include="Content\images\icones\file_types\folder.png" />
+    <Content Include="Content\images\icones\file_types\gif.png" />
+    <Content Include="Content\images\icones\file_types\jpeg.png" />
+    <Content Include="Content\images\icones\file_types\jpg.png" />
+    <Content Include="Content\images\icones\file_types\modify.png" />
+    <Content Include="Content\images\icones\file_types\open.png" />
+    <Content Include="Content\images\icones\file_types\pdf.png" />
+    <Content Include="Content\images\icones\file_types\png.png" />
+    <Content Include="Content\images\icones\file_types\pps.png" />
+    <Content Include="Content\images\icones\file_types\ppsx.png" />
+    <Content Include="Content\images\icones\file_types\ppt.png" />
+    <Content Include="Content\images\icones\file_types\pptx.png" />
+    <Content Include="Content\images\icones\file_types\rar.png" />
+    <Content Include="Content\images\icones\file_types\txt.png" />
+    <Content Include="Content\images\icones\file_types\xls.png" />
+    <Content Include="Content\images\icones\file_types\xlsx.png" />
+    <Content Include="Content\images\icones\file_types\zip.png" />
+    <Content Include="Content\images\icones\orange_25\avancar.png" />
+    <Content Include="Content\images\icones\orange_25\internet_25.png" />
+    <Content Include="Content\images\icones\orange_25\market.png" />
+    <Content Include="Content\images\icones\white\advertising.png" />
+    <Content Include="Content\images\icones\white\agenda.png" />
+    <Content Include="Content\images\icones\white\calendar.png" />
+    <Content Include="Content\images\icones\white\classification.png" />
+    <Content Include="Content\images\icones\white\companies.png" />
+    <Content Include="Content\images\icones\white\condominium.png" />
+    <Content Include="Content\images\icones\white\files.png" />
+    <Content Include="Content\images\icones\white\home.png" />
+    <Content Include="Content\images\icones\white\messages.png" />
+    <Content Include="Content\images\icones\white\payment.png" />
+    <Content Include="Content\images\icones\white\price.png" />
+    <Content Include="Content\images\icones\white\residents.png" />
+    <Content Include="Content\images\icones\white\services.png" />
+    <Content Include="Content\images\icones\white\services_1.png" />
+    <Content Include="Content\images\icones\white\staff.png" />
+    <Content Include="Content\images\icones\white\statistics.png" />
+    <Content Include="Content\images\icones\white\suppliers.png" />
+    <Content Include="Content\images\icones\white\survey.png" />
+    <Content Include="Content\images\icones\white\vehicles.png" />
+    <Content Include="Content\images\logo_orange.png" />
+    <Content Include="Content\images\logo_orange_30.png" />
+    <Content Include="Content\images\logo_para_cielo.gif" />
+    <Content Include="Content\images\logo_white.png" />
+    <Content Include="Content\images\icones\black_25\adicionar.png" />
+    <Content Include="Content\images\icones\black_25\agenda.png" />
+    <Content Include="Content\images\icones\black_25\ajuda.png" />
+    <Content Include="Content\images\icones\black_25\alarme.png" />
+    <Content Include="Content\images\icones\black_25\avancar.png" />
+    <Content Include="Content\images\icones\black_25\boleto.png" />
+    <Content Include="Content\images\icones\black_25\cadeado.png" />
+    <Content Include="Content\images\icones\black_25\calendario.png" />
+    <Content Include="Content\images\icones\black_25\camera.png" />
+    <Content Include="Content\images\icones\black_25\cancel.png" />
+    <Content Include="Content\images\icones\black_25\check.png" />
+    <Content Include="Content\images\icones\black_25\comunicado.png" />
+    <Content Include="Content\images\icones\black_25\condominio.png" />
+    <Content Include="Content\images\icones\black_25\configuracao.png" />
+    <Content Include="Content\images\icones\black_25\controles.png" />
+    <Content Include="Content\images\icones\black_25\delete.png" />
+    <Content Include="Content\images\icones\black_25\desligar.png" />
+    <Content Include="Content\images\icones\black_25\down.png" />
+    <Content Include="Content\images\icones\black_25\download.png" />
+    <Content Include="Content\images\icones\black_25\editar.png" />
+    <Content Include="Content\images\icones\black_25\empresa.png" />
+    <Content Include="Content\images\icones\black_25\enquetes.png" />
+    <Content Include="Content\images\icones\black_25\estatistica.png" />
+    <Content Include="Content\images\icones\black_25\expansao.png" />
+    <Content Include="Content\images\icones\black_25\facebook.png" />
+    <Content Include="Content\images\icones\black_25\ficheiros.png" />
+    <Content Include="Content\images\icones\black_25\fornecedor.png" />
+    <Content Include="Content\images\icones\black_25\funcionario.png" />
+    <Content Include="Content\images\icones\black_25\gmail.png" />
+    <Content Include="Content\images\icones\black_25\hierarquia.png" />
+    <Content Include="Content\images\icones\black_25\ideia.png" />
+    <Content Include="Content\images\icones\black_25\imagem.png" />
+    <Content Include="Content\images\icones\black_25\imagens.png" />
+    <Content Include="Content\images\icones\black_25\info.png" />
+    <Content Include="Content\images\icones\black_25\inicio.png" />
+    <Content Include="Content\images\icones\black_25\internet.png" />
+    <Content Include="Content\images\icones\black_25\like.png" />
+    <Content Include="Content\images\icones\black_25\livro.png" />
+    <Content Include="Content\images\icones\black_25\marcador.png" />
+    <Content Include="Content\images\icones\black_25\mensagem_enviar.png" />
+    <Content Include="Content\images\icones\black_25\mensagem_ida.png" />
+    <Content Include="Content\images\icones\black_25\mensagem_nao_lida.png" />
+    <Content Include="Content\images\icones\black_25\navegacao.png" />
+    <Content Include="Content\images\icones\black_25\pagamento.png" />
+    <Content Include="Content\images\icones\black_25\path.png" />
+    <Content Include="Content\images\icones\black_25\pesquisar.png" />
+    <Content Include="Content\images\icones\black_25\pino.png" />
+    <Content Include="Content\images\icones\black_25\publicidade.png" />
+    <Content Include="Content\images\icones\black_25\recarregar.png" />
+    <Content Include="Content\images\icones\black_25\reproduzir.png" />
+    <Content Include="Content\images\icones\black_25\salvar.png" />
+    <Content Include="Content\images\icones\black_25\servicos.png" />
+    <Content Include="Content\images\icones\black_25\teclado.png" />
+    <Content Include="Content\images\icones\black_25\telefone.png" />
+    <Content Include="Content\images\icones\black_25\tempo.png" />
+    <Content Include="Content\images\icones\black_25\twitter.png" />
+    <Content Include="Content\images\icones\black_25\unlike.png" />
+    <Content Include="Content\images\icones\black_25\upload.png" />
+    <Content Include="Content\images\icones\black_25\usuario.png" />
+    <Content Include="Content\images\icones\black_25\veiculo.png" />
+    <Content Include="Content\images\icones\black_25\video.png" />
+    <Content Include="Content\images\icones\black_25\voltar.png" />
+    <Content Include="Content\images\cancel_14.png" />
+    <Content Include="Content\images\loader.gif" />
+    <Content Include="Content\images\logo_grande.png" />
+    <Content Include="Content\images\loader_round_16x16.gif" />
+    <Content Include="Content\images\logo_white_30.png" />
+    <Content Include="Content\images\logo_white_50.png" />
+    <Content Include="Content\images\stars_large.gif" />
+    <Content Include="Content\images\stars_medium.gif" />
+    <Content Include="Content\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\images\User.png" />
+    <Content Include="Content\images\UserOptions.png" />
+    <Content Include="Content\images\icones\white_25\adicionar.png" />
+    <Content Include="Content\images\icones\white_25\agenda.png" />
+    <Content Include="Content\images\icones\white_25\ajuda.png" />
+    <Content Include="Content\images\icones\white_25\alarme.png" />
+    <Content Include="Content\images\icones\white_25\avancar.png" />
+    <Content Include="Content\images\icones\white_25\boleto.png" />
+    <Content Include="Content\images\icones\white_25\cadeado.png" />
+    <Content Include="Content\images\icones\white_25\calendario.png" />
+    <Content Include="Content\images\icones\white_25\camera.png" />
+    <Content Include="Content\images\icones\white_25\cancel.png" />
+    <Content Include="Content\images\icones\white_25\check.png" />
+    <Content Include="Content\images\icones\white_25\comunicado.png" />
+    <Content Include="Content\images\icones\white_25\condominio.png" />
+    <Content Include="Content\images\icones\white_25\configuracao.png" />
+    <Content Include="Content\images\icones\white_25\controles.png" />
+    <Content Include="Content\images\icones\white_25\delete.png" />
+    <Content Include="Content\images\icones\white_25\desligar.png" />
+    <Content Include="Content\images\icones\white_25\down.png" />
+    <Content Include="Content\images\icones\white_25\download.png" />
+    <Content Include="Content\images\icones\white_25\editar.png" />
+    <Content Include="Content\images\icones\white_25\empresa.png" />
+    <Content Include="Content\images\icones\white_25\enquetes.png" />
+    <Content Include="Content\images\icones\white_25\estatistica.png" />
+    <Content Include="Content\images\icones\white_25\expansao.png" />
+    <Content Include="Content\images\icones\white_25\facebook.png" />
+    <Content Include="Content\images\icones\white_25\ficheiros.png" />
+    <Content Include="Content\images\icones\white_25\fornecedor.png" />
+    <Content Include="Content\images\icones\white_25\funcionario.png" />
+    <Content Include="Content\images\icones\white_25\gmail.png" />
+    <Content Include="Content\images\icones\white_25\hierarquia.png" />
+    <Content Include="Content\images\icones\white_25\ideia.png" />
+    <Content Include="Content\images\icones\white_25\imagem.png" />
+    <Content Include="Content\images\icones\white_25\imagens.png" />
+    <Content Include="Content\images\icones\white_25\info.png" />
+    <Content Include="Content\images\icones\white_25\inicio.png" />
+    <Content Include="Content\images\icones\white_25\internet.png" />
+    <Content Include="Content\images\icones\white_25\like.png" />
+    <Content Include="Content\images\icones\white_25\livro.png" />
+    <Content Include="Content\images\icones\white_25\marcador.png" />
+    <Content Include="Content\images\icones\white_25\mensagem_nao_lida.png" />
+    <Content Include="Content\images\icones\white_25\mensagem_enviar.png" />
+    <Content Include="Content\images\icones\white_25\mensagem_lida.png" />
+    <Content Include="Content\images\icones\white_25\navegacao.png" />
+    <Content Include="Content\images\icones\white_25\pagamento.png" />
+    <Content Include="Content\images\icones\white_25\path.png" />
+    <Content Include="Content\images\icones\white_25\pesquisar.png" />
+    <Content Include="Content\images\icones\white_25\pino.png" />
+    <Content Include="Content\images\icones\white_25\publicidade.png" />
+    <Content Include="Content\images\icones\white_25\recarregar.png" />
+    <Content Include="Content\images\icones\white_25\reproduzir.png" />
+    <Content Include="Content\images\icones\white_25\salvar.png" />
+    <Content Include="Content\images\icones\white_25\servicos.png" />
+    <Content Include="Content\images\icones\white_25\teclado.png" />
+    <Content Include="Content\images\icones\white_25\telefone.png" />
+    <Content Include="Content\images\icones\white_25\tempo.png" />
+    <Content Include="Content\images\icones\white_25\twitter.png" />
+    <Content Include="Content\images\icones\white_25\unlike.png" />
+    <Content Include="Content\images\icones\white_25\upload.png" />
+    <Content Include="Content\images\icones\white_25\usuario.png" />
+    <Content Include="Content\images\icones\white_25\veiculo.png" />
+    <Content Include="Content\images\icones\white_25\video.png" />
+    <Content Include="Content\images\icones\white_25\voltar.png" />
+    <Content Include="Content\jquery.bxslider.css" />
+    <Content Include="Content\jquery.ui.core.css" />
+    <Content Include="Content\jquery.ui.datepicker.css" />
+    <Content Include="Content\jquery.ui.theme.css" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\images\cancel.png" />
+    <Content Include="Scripts\addresspicker.js" />
+    <Content Include="Scripts\custom-fileupload.js" />
+    <Content Include="Scripts\CustomValidators.js" />
+    <Content Include="Scripts\invitepicker.js" />
+    <Content Include="Scripts\jquery-1.8.3-vsdoc.js" />
+    <Content Include="Scripts\jquery-1.8.3.js" />
+    <Content Include="Scripts\jquery-1.8.3.min.js" />
+    <Content Include="Scripts\jquery.bxslider.js" />
+    <Content Include="Scripts\jquery.bxslider.min.js" />
+    <Content Include="Scripts\jquery.fileupload.js" />
+    <Content Include="Scripts\jquery.iframe-transport.js" />
+    <Content Include="Scripts\jquery.ui.autocomplete.js" />
+    <Content Include="Scripts\jquery.ui.autocomplete.min.js" />
+    <Content Include="Scripts\jquery.ui.core.js" />
+    <Content Include="Scripts\jquery.ui.core.min.js" />
+    <Content Include="Scripts\jquery.ui.datepicker.js" />
+    <Content Include="Scripts\jquery.ui.datepicker.min.js" />
+    <Content Include="Scripts\jquery.ui.menu.js" />
+    <Content Include="Scripts\jquery.ui.menu.min.js" />
+    <Content Include="Scripts\jquery.ui.position.js" />
+    <Content Include="Scripts\jquery.ui.position.min.js" />
+    <Content Include="Scripts\jquery.ui.widget.js" />
+    <Content Include="Scripts\jquery.ui.widget.min.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\peoplepicker.js" />
+    <Content Include="Scripts\Main.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\respond.js" />
+    <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\_references.js" />
+    <Content Include="Views\Shared\DisplayTemplates\FormataData.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\FormataHora.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\Hora.cshtml" />
+    <Content Include="Views\Shared\Erro.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Shared\_MenuPrincipal.cshtml" />
+    <Content Include="Views\Shared\_MenuTopo.cshtml" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="bin\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Agenda\Index.cshtml" />
+    <Content Include="Views\Agenda\_DetalheVisualizar.cshtml" />
+    <Content Include="Views\Agenda\_Lista.cshtml" />
+    <Content Include="Views\Utilizador\Login.cshtml" />
+    <Content Include="Views\Utilizador\LoginAdministrativo.cshtml" />
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Regras\Regras.csproj">
+      <Project>{EA486557-5DF6-4D20-91D2-EFCAA7EEDE8D}</Project>
+      <Name>Regras</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Agenda.pt-br.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Agenda.pt-br.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Agenda.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Agenda.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Arquivo.pt-br.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Arquivo.pt-br.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Arquivo.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Arquivo.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Calendario.pt-br.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Calendario.pt-br.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Calendario.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Calendario.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Comunicado.pt-br.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Comunicado.pt-br.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Comunicado.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Comunicado.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Condominio.pt-br.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Condominio.pt-br.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Condominio.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Condominio.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Estatistica.pt-br.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Estatistica.pt-br.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Estatistica.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Estatistica.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Empresa.pt-br.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Empresa.pt-br.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Empresa.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Empresa.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Erro.pt-br.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Erro.pt-br.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\FileUploader.pt-br.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>FileUploader.pt-br.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Funcionario.pt-br.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Funcionario.pt-br.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Geral.pt-br.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Geral.pt-br.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Mensagem.pt-br.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Mensagem.pt-br.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Menu.pt-br.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Menu.pt-br.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Morador.pt-br.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Morador.pt-br.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Morador.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Morador.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Pagamento.pt-br.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Pagamento.pt-br.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Pagamento.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Pagamento.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Preco.pt-br.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Preco.pt-br.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Preco.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Preco.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Publicidade.pt-br.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Publicidade.pt-br.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Publicidade.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Publicidade.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Questionario.pt-br.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Questionario.pt-br.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Questionario.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Questionario.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\FileUploader.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>FileUploader.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Funcionario.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Funcionario.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\RecuperarPassword.pt-br.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RecuperarPassword.pt-br.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\RecuperarPassword.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RecuperarPassword.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Recurso.pt-br.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Recurso.pt-br.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Recurso.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Recurso.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Registo.pt-br.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Registo.pt-br.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Registo.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Registo.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Servico.pt-br.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Servico.pt-br.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Servico.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Servico.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Erro.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Erro.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Geral.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Geral.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Localizacao.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Localizacao.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Mensagem.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Mensagem.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Menu.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Menu.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\MenuFundo.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>MenuFundo.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Utilizador.pt-br.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Utilizador.pt-br.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Utilizador.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Utilizador.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Veiculo.pt-br.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Veiculo.pt-br.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Veiculo.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Veiculo.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Calendario.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Comunicado\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Comunicado\_Lista.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_MenuPrincipalInterior.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_Blank.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Comunicado\_Novo.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Mensagem\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_MosaicoMoradores.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Mensagem\_Detalhe.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Comunicado\_Detalhe.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_MenuFundo.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Agenda\_Detalhe.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Agenda\_DetalheEditar.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Mensagem\_Lista.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Mensagem\_Novo.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Arquivo\_DetalheFicheiro.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Arquivo\_Lista.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Arquivo\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_FileUploader.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\DisplayTemplates\ImagemComunicado.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\ImagemComunicado.mobile.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Servico\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_PublicidadeDireita.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_PublicidadeDireita.mobile.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Servico\_ListaCategoria.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Servico\_ListaServico.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Servico\_DetalheServico.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Servico\Pesquisa.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Veiculo\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Veiculo\_Detalhe.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Veiculo\_Lista.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Veiculo\_DetalheEditar.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Veiculo\_DetalheVisualizar.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Servico\Fornecedor.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\DisplayTemplates\CampoVazio.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Funcionario\Index.cshtml" />
+    <Content Include="Views\Funcionario\_DetalheEditar.cshtml" />
+    <Content Include="Views\Funcionario\_DetalheVisualizar.cshtml" />
+    <Content Include="Views\Funcionario\_Lista.cshtml" />
+    <Content Include="Views\Funcionario\_Detalhe.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Servico\_ClassificacaoLista.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Servico\_ClassificacaoDetalhe.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Servico\_Classificacao.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\DisplayTemplates\Calendario.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Arquivo\_DetalheDirectoria.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Arquivo\_DetalheVisualizarDirectoria.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Arquivo\_DetalheVisualizarFicheiro.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Arquivo\_DetalheEditarDirectoria.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Arquivo\_DetalheEditarFicheiro.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Erro\PaginaNaoEncontrada.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Erro\Geral.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\PublishProfiles\condoclubweb - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\condoclubweb - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\Transporte.pubxml" />
+    <Content Include="Views\Questionario\_DetalheEditar.cshtml" />
+    <Content Include="Views\Questionario\_DetalheVisualizar.cshtml" />
+    <Content Include="Views\Questionario\_Lista.cshtml" />
+    <Content Include="Views\Questionario\_Detalhe.cshtml" />
+    <Content Include="Views\Questionario\Index.cshtml" />
+    <Content Include="Views\Questionario\_DetalheVotar.cshtml" />
+    <Content Include="Views\Questionario\_DetalheResultado.cshtml" />
+    <Content Include="Views\Questionario\_Resultado.cshtml" />
+    <Content Include="Views\Questionario\_DetalheResultadoResposta.cshtml" />
+    <Content Include="Views\Condominio\_Detalhe.cshtml" />
+    <Content Include="Views\Condominio\_DetalheEditar.cshtml" />
+    <Content Include="Views\Condominio\_DetalheVisualizar.cshtml" />
+    <Content Include="Views\Condominio\_Lista.cshtml" />
+    <Content Include="Views\Condominio\Index.cshtml" />
+    <Content Include="Views\Calendario\Index.cshtml" />
+    <Content Include="Views\Calendario\_Lista.cshtml" />
+    <Content Include="Views\Calendario\_Detalhe.cshtml" />
+    <Content Include="Views\Registo\Condominio.cshtml" />
+    <Content Include="Views\Morador\_Detalhe.cshtml" />
+    <Content Include="Views\Morador\_DetalheEditar.cshtml" />
+    <Content Include="Views\Morador\_DetalheVisualizar.cshtml" />
+    <Content Include="Views\Morador\_Lista.cshtml" />
+    <Content Include="Views\Morador\Index.cshtml" />
+    <Content Include="Views\Registo\Utilizador.cshtml" />
+    <Content Include="Views\Registo\Sucesso.cshtml" />
+    <Content Include="Views\Recurso\Index.cshtml" />
+    <Content Include="Views\Recurso\_Lista.cshtml" />
+    <Content Include="Views\Recurso\_Detalhe.cshtml" />
+    <Content Include="Views\Recurso\_DetalheEditar.cshtml" />
+    <Content Include="Views\Recurso\_DetalheVisualizar.cshtml" />
+    <Content Include="Views\Registo\Fornecedor.cshtml" />
+    <Content Include="Views\Registo\Empresa.cshtml" />
+    <Content Include="Views\Recurso\_DetalheHorarioVisualizar.cshtml" />
+    <Content Include="Views\Recurso\_DetalheHorarioEditar.cshtml" />
+    <Content Include="Views\Recurso\_ListaHorario.cshtml" />
+    <Content Include="Views\Recurso\_DetalheHorario.cshtml" />
+    <Content Include="Views\Condominio\_Convite.cshtml" />
+    <Content Include="Views\Morador\_Convite.cshtml" />
+    <Content Include="Views\Recurso\ListaReserva.cshtml" />
+    <Content Include="Views\Recurso\_ListaReserva.cshtml" />
+    <Content Include="Views\Recurso\_ListaReservaFiltro.cshtml" />
+    <Content Include="Views\Utilizador\Perfil.cshtml" />
+    <Content Include="Views\Utilizador\EditarPerfil.cshtml" />
+    <Content Include="Views\Empresa\_Convite.cshtml" />
+    <Content Include="Views\Empresa\_Detalhe.cshtml" />
+    <Content Include="Views\Empresa\_DetalheEditar.cshtml" />
+    <Content Include="Views\Empresa\_DetalheVisualizar.cshtml" />
+    <Content Include="Views\Empresa\_Lista.cshtml" />
+    <Content Include="Views\Empresa\Index.cshtml" />
+    <Content Include="Views\Fornecedor\_Convite.cshtml" />
+    <Content Include="Views\Fornecedor\_Detalhe.cshtml" />
+    <Content Include="Views\Fornecedor\_DetalheEditar.cshtml" />
+    <Content Include="Views\Fornecedor\_DetalheVisualizar.cshtml" />
+    <Content Include="Views\Fornecedor\_Lista.cshtml" />
+    <Content Include="Views\Fornecedor\Index.cshtml" />
+    <Content Include="Views\Pagamento\Index.cshtml" />
+    <Content Include="Views\Pagamento\_Lista.cshtml" />
+    <Content Include="Views\Pagamento\Finalizar.cshtml" />
+    <Content Include="Views\Pagamento\Validar.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\FormataMoeda.cshtml" />
+    <Content Include="Views\Fornecedor\_ListaCategoria.cshtml" />
+    <Content Include="Views\Fornecedor\_DetalheCategoria.cshtml" />
+    <Content Include="Views\Fornecedor\_DetalheCategoriaEditar.cshtml" />
+    <Content Include="Views\Fornecedor\_DetalheCategoriaVisualizar.cshtml" />
+    <Content Include="Views\Fornecedor\Classificacao.cshtml" />
+    <Content Include="Views\Fornecedor\_ListaClassificacao.cshtml" />
+    <Content Include="Views\Fornecedor\_DetalheClassificacao.cshtml" />
+    <Content Include="Views\Condominio\Perfil.cshtml" />
+    <Content Include="Views\Condominio\EditarPerfil.cshtml" />
+    <Content Include="Views\Empresa\Perfil.cshtml" />
+    <Content Include="Views\Empresa\EditarPerfil.cshtml" />
+    <Content Include="Views\Fornecedor\Perfil.cshtml" />
+    <Content Include="Views\Fornecedor\EditarPerfil.cshtml" />
+    <Content Include="Views\Utilizador\Index.cshtml" />
+    <Content Include="Views\Utilizador\_Lista.cshtml" />
+    <Content Include="Views\Utilizador\_DetalheVisualizar.cshtml" />
+    <Content Include="Views\Utilizador\_DetalheEditar.cshtml" />
+    <Content Include="Views\Utilizador\_Detalhe.cshtml" />
+    <Content Include="Views\Publicidade\Index.cshtml" />
+    <Content Include="Views\Publicidade\_Lista.cshtml" />
+    <Content Include="Views\Publicidade\_DetalheVisualizar.cshtml" />
+    <Content Include="Views\Publicidade\_Detalhe.cshtml" />
+    <Content Include="Views\Publicidade\_DetalheEditar.cshtml" />
+    <Content Include="Views\Utilizador\EditarPassword.cshtml" />
+    <Content Include="Views\Utilizador\_DetalheEditarPassword.cshtml" />
+    <Content Include="Views\Registo\CondicoesGerais.cshtml" />
+    <Content Include="Views\Pagamento\_Detalhe.cshtml" />
+    <Content Include="Views\Utilizador\RecuperarPassword.cshtml" />
+    <Content Include="Views\Utilizador\RecuperarPasswordSucesso.cshtml" />
+    <Content Include="Views\Shared\_PublicidadeTopo.cshtml" />
+    <Content Include="Views\Shared\_PublicidadeTopo.mobile.cshtml" />
+    <Content Include="Views\Shared\_MosaicoMoradores.mobile.cshtml" />
+    <Content Include="Views\Estatistica\Index.cshtml" />
+    <Content Include="Views\Estatistica\_Lista.cshtml" />
+    <Content Include="Views\PrecoCondominio\Index.cshtml" />
+    <Content Include="Views\PrecoCondominio\_Lista.cshtml" />
+    <Content Include="Views\PrecoCondominio\_Detalhe.cshtml" />
+    <Content Include="Views\PrecoFornecedor\Index.cshtml" />
+    <Content Include="Views\PrecoFornecedor\_Lista.cshtml" />
+    <Content Include="Views\PrecoFornecedor\_Detalhe.cshtml" />
+    <Content Include="Views\PrecoPublicidade\Index.cshtml" />
+    <Content Include="Views\PrecoPublicidade\_Lista.cshtml" />
+    <Content Include="Views\PrecoPublicidade\_Detalhe.cshtml" />
+    <Content Include="Views\PrecoCondominio\_DetalheEditar.cshtml" />
+    <Content Include="Views\PrecoCondominio\_DetalheVisualizar.cshtml" />
+    <Content Include="Views\PrecoFornecedor\_DetalheEditar.cshtml" />
+    <Content Include="Views\PrecoFornecedor\_DetalheVisualizar.cshtml" />
+    <Content Include="Views\PrecoPublicidade\_DetalheEditar.cshtml" />
+    <Content Include="Views\PrecoPublicidade\_DetalheVisualizar.cshtml" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>49536</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:49536/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

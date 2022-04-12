@@ -1,0 +1,336 @@
+﻿@using CondoClub.Web.Models;
+@model IEnumerable<Publicidade>
+
+@{ var permissoes = (List<CondoClub.Regras.Enum.Permissao>)ViewData["Permissoes"]; }
+@Styles.Render("~/content/datepicker")
+<div class="main-container">
+    <div class="header">
+        <div class="title">
+            <h5>@Resources.Publicidade.Publicidades</h5>
+        </div>
+        @if (permissoes.Contains(CondoClub.Regras.Enum.Permissao.Gravar)){
+            <div class="options">
+                <a href="#" class="link-orange" onclick="$('#new').slideToggle(''); return false;">
+                    @Resources.Geral.Novo
+                </a>
+            </div>
+        }
+        <div class="clear"></div>
+    </div>
+    <div class="search">
+        @using (Ajax.BeginForm("_Lista", null, new AjaxOptions {
+            UpdateTargetId = "lista",
+            InsertionMode = InsertionMode.Replace,
+            OnSuccess = "AfterSearch"
+        }, new { id = "formPesquisa" })) { 
+            <div class="filter-column1">
+                <b>@(Resources.Geral.Pesquisar + ":")</b>
+                @{var placeholderText = CondoClub.Web.ControladorSite.Utilizador.Perfil == CondoClub.Regras.Enum.Perfil.CondoClub ? Resources.Publicidade.PesquisarNomeCondoClub : Resources.Publicidade.PesquisarNomeFornecedor;}
+                @Html.TextBox("termoPesquisa", null, new { type = "search", placeholder = placeholderText })
+            </div>        
+            <div class="filter-column2">
+                <b>@(Resources.Publicidade.Estado + ":")</b>
+                @Html.DropDownList("aprovado", new CondoClub.Web.Controllers.PublicidadeController().ConstroiDropDownEstadoPublicidade(), Resources.Publicidade.Todos)        
+            </div>
+            <div class="clear"></div>
+            <!--opções---------------------->
+            <div class="toolbox-no-border">
+                <input type="submit" class="button-option orange1-button" id="submitFiltro" value="@Resources.Geral.Pesquisar" />
+                <input id="btnResetPesquisa" type="button" class="button-option orange1-button" value="@Resources.Geral.Reset" />
+            </div>
+            <div class="clear">
+            </div>
+        }
+    </div>
+    <div class="separator10"></div>
+        <!--novo registo---------------------->
+    @if (permissoes.Contains(CondoClub.Regras.Enum.Permissao.Gravar)) {
+        <div id="new" style="display: none;">
+            @using (Ajax.BeginForm("Gravar",
+                null,
+                new AjaxOptions {
+                    UpdateTargetId = "lista",
+                    InsertionMode = InsertionMode.InsertBefore,
+                    OnSuccess = "AfterSave"
+                },
+                new { id="formNew" })) {
+                Html.RenderPartial("_Detalhe", new Publicidade());
+            }
+        </div>
+    }
+
+    <div id="lista">@{ Html.RenderPartial("_Lista", Model); }</div>
+
+    <div style="text-align: center;">
+        <a href="#" id="getMoreLink" onclick="GetMore(); return false;" class="link-orange"
+            style="display: none">
+            @Resources.Geral.CarregarMais
+        </a>
+        <div class="message-loading" style="display: none;" id="loader">
+            <img src="~/content/images/loader.gif" alt="loading" />
+        </div>
+    </div>
+    @using (Ajax.BeginForm("_Lista", null, new AjaxOptions {
+        UpdateTargetId = "lista",
+        InsertionMode = InsertionMode.InsertAfter,
+        LoadingElementId = "loader",
+        OnComplete = "GetMoreComplete"
+    },
+        new { id = "getMore" })) { 
+        @Html.Hidden("count")
+        @Html.Hidden("termoPesquisa", null, new { id = "getMoreTermoPesquisa" })
+        @Html.Hidden("aprovado", null, new { id = "getMoreAprovado" })
+    }
+    @using (Ajax.BeginForm("_DetalheEditar", null,
+        new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "#" },
+        new { id = "editRec" })) {
+        @Html.Hidden("id")
+    }
+     @using (Ajax.BeginForm("_CalcularPreco", null,
+        new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "#" },
+        new { id = "calcularPreco" })) {
+        @Html.Hidden("PublicidadeID");
+        @Html.Hidden("ZonaID");
+        @Html.Hidden("Inicio");
+        @Html.Hidden("Fim");
+     }
+</div>
+@section scripts{
+    @Scripts.Render("~/scripts/fileuploader")
+    @Scripts.Render("~/scripts/datepicker")
+    <script type="text/javascript">
+        
+        (function ($) {
+            
+            SetCalendar('calInicio_', { changeMonth: true, changeYear: true});
+            SetCalendar('calFim_', { changeMonth: true, changeYear: true });
+            $('#ZonaID').live('change', function(){ return CalcularPreco(this); });
+            ResetValidators();
+            CalcularPreco($("#formNew").find("#ZonaID"));
+
+        })(jQuery);
+
+        $('.block-list-group .header').live('click', function () {
+            var self = $(this);
+            $('.block-list-group .content:visible').not(self.next('.content')).hide();
+            $('html, body').animate({
+                scrollTop: self.offset().top - 10
+            }, 300);
+
+            $(this).nextAll('.block-list-group .content').slideToggle();
+        });
+
+        function EditRec(id) {
+            $('#editRec').attr('data-ajax-update', '#' + id);
+            $('#editRec').attr('data-ajax-complete', "ResetValidators(" + id + "); BeforeUpdate(" + id + ");");
+            $('#editRec').find('#id').val(id);
+            $('#editRec').trigger('submit');
+        }
+
+        function AfterSave(data) {
+            if (data.indexOf('alert(') == -1) {
+                $('#resetnewrec').trigger('click');
+                $('#new').find(".pub-image img").attr("src", "Content/images/empty-topbanner.png").attr("class", "");
+                $('#new').find('input[type="text"], textarea, input[type="hidden"]').val('');
+            }
+        }
+
+        function AfterUpdate(data, id) {
+            if (data.indexOf('alert(') == -1) {
+                $("#" + id).PulseAnimation();
+            }
+        }
+
+        function BeforeUpdate(id){
+            SetCalendar('calInicio_' + id, { changeMonth: true, changeYear: true });
+            SetCalendar('calFim_' + id, { changeMonth: true, changeYear: true });
+            $("#" + id + " .file-uploader-container").CustomFileUpload({
+                URLUploadFile: "@Url.Action("GravarImagemPublicidade", "Ficheiro")",
+                DropZone: $("#" + id + " .file-uploader-container"),
+                SingleFileUploads: true,
+                LimitMultiFileUploads: 1,
+                DoneFunction: function(e, data) { UploadFotoDone(e, data, $("#" + id)); },
+                AlternativeButtonLabel: "@Resources.Geral.MaisFoto"
+            });
+
+            BindClickPhoto($("#" + id));
+            $("#" + id).find("select[name='ZonaID']").trigger('change');
+        }
+
+        function UploadFotoDone(e, data, container){
+            if(data){
+                container.find(".pub-image img").attr("src", "@Url.Action("ImagemPublicidade", "Ficheiro")/" + data[0].ID);
+                container.find("#ImagemID").val(data[0].ID);
+            }
+        }
+
+        function AfterDelete(id) {
+            $("#" + id).hide('slow', function () { $(this).remove(); });
+        }
+
+        function CloseNewRec() {
+            $('#new').slideToggle();
+        }
+
+        $(function(){
+            BindClickPhoto($("#new"));
+            createFileUploaderNewRec();
+            $('#new').find("select[name='ZonaID']").trigger('change');
+
+            $("#btnResetPesquisa").click(function () {
+                $(".search input[type='search']").val('');
+                $(".search select").val('');
+                $("#formPesquisa").submit();
+            });
+        });
+
+        function BindClickPhoto(container){
+            var modifyButton = container.find(".pub-image .modify-button");
+            container.find(".pub-image").bind({
+                click: function(){
+                    container.find(".file-uploader-container input[type='button']").click();            
+                },
+                mouseenter: function(){
+                    modifyButton.css('display', 'inline-block');
+                },
+                mouseleave: function(){
+                    modifyButton.hide();
+                }
+            });
+        }
+
+        function createFileUploaderNewRec(){
+            $('.file-uploader-container').CustomFileUpload({
+                URLUploadFile: "@Url.Action("GravarImagemPublicidade", "Ficheiro")",
+                DropZone: $(".file-uploader-container"),
+                SingleFileUploads: true,
+                LimitMultiFileUploads: 1,
+                AlternativeButtonLabel: '@Resources.Publicidade.AdicionarImagem',
+                DoneFunction:function(e, data) { UploadFotoDone(e, data, $('#new')); }
+            });
+        }
+
+        $("select[name='ZonaID']").live('change', function(e){
+            var $sender = $(e.target);
+            var $senderForm = $sender.parents('form:first');
+            var imagemID = $senderForm.find('#ImagemID');
+            if($sender.val() == @((int)CondoClub.Regras.Enum.ZonaPublicidade.Topo)){
+                var $image =  $senderForm.find('#imagePreview');
+                $image.attr('class', 'top');
+                if(!imagemID.val()){
+                    $image.attr('src', 'Content/images/empty-topbanner.png'); 
+                }
+            }else{
+                var $image =  $senderForm.find('#imagePreview');
+                $image.attr('class', 'side');
+                if(!imagemID.val()){
+                     $image.attr('src', 'Content/images/empty-sidebanner.png'); 
+                }
+            }    
+        });
+
+        function Duplicar_OnSucess(data){
+            if (data.indexOf('alert(') == -1) {
+                $("#new").slideDown('fast', function(){
+                    $('html, body').animate({
+                        scrollTop: $("#new").offset().top
+                    }, 500);
+                });         
+                //inicar novamente os controlos de novo registo
+                SetCalendar('calInicio_', { changeMonth: true, changeYear: true });
+                SetCalendar('calFim_', { changeMonth: true, changeYear: true });
+                createFileUploaderNewRec();
+                BindClickPhoto($("#new"));
+                $('#new').find("select[name='ZonaID']").trigger('change');
+                $('.block-list-group .content:visible').slideUp('fast');
+            }
+        }
+
+        function CalcularPreco(sender){
+            var senderForm = $(sender).parents('form:first');
+            var publicidadeID = senderForm.find("#IdPublicidade").val();
+            var zonaID = senderForm.find("#ZonaID").val();
+            var inicio = senderForm.find("[name='Inicio']").val();
+            var fim = senderForm.find("[name='Fim']").val();
+            if(zonaID && inicio && fim){
+                $('#calcularPreco').find("#PublicidadeID").val(publicidadeID);
+                $('#calcularPreco').find("#ZonaID").val(zonaID);
+                $('#calcularPreco').find("#Inicio").val(inicio);
+                $('#calcularPreco').find("#Fim").val(fim);
+                $('#calcularPreco').attr('data-ajax-update', '#lblPreco_' + publicidadeID);
+                $('#calcularPreco').trigger('submit');
+            }
+        }
+        
+        //---- ini GetMore ----
+        var can_load = true;
+        var cheking_scroll = false;
+        var iniRegistos =  @ViewData["nrPagamentosIni"];
+        var nextRegistos = @ViewData["nrPagamentosNext"];
+        var countRegistos = 0;
+        
+        (function ($) {
+
+            initGetMore();
+
+        })(jQuery);
+
+        function AfterSearch(){
+            initGetMore();        
+        }
+
+        function initGetMore(){
+            countRegistos = $('.block-list-group').length;
+            if (iniRegistos > countRegistos){
+                can_load = false;
+                $('#getMoreLink').css('display', 'none');
+            }else{
+                can_load = true;
+                $('#getMoreLink').css('display', 'block');
+            }
+        }
+
+        function GetMore() {
+            if (can_load) {
+                can_load = false;
+                $('#getMoreLink').css('display', 'none');
+                countRegistos = $('.block-list-group').length;
+                var form = $("#formPesquisa");
+                $('#getMore').find('#count').val(countRegistos);
+                $('#getMore').find('#getMoreTermoPesquisa').val(form.find("#termoPesquisa").val());
+                $('#getMore').find('#getMoreAprovado').val(form.find('#aprovado').val());
+                $('#getMore').trigger('submit');
+            }
+        }
+
+
+        function GetMoreComplete() {
+            totReg = $('.block-list-group').length;
+            if (totReg > countRegistos && totReg % nextRegistos == 0) {
+                can_load = true;
+                $('#getMoreLink').css('display', 'block');
+            }
+        }
+
+        $(window).bind('scroll', function (e) {
+            if (!cheking_scroll && can_load && isOnScreen($('#getMoreLink'))) {
+                cheking_scroll = true;
+                setTimeout(function () { cheking_scroll = false; }, 500);
+                GetMore();
+            }
+        });
+
+        isOnScreen = function (element) {
+            var curPos = element.offset();
+
+            var curBottom = curPos.top + (element.height() / 2);
+            if (/webkit.*mobile/i.test(navigator.userAgent)) {
+                //corrigir bug do offset no iphone
+                curBottom -= 50;
+            }
+            var screenHeight = $(window).height()
+            return (curBottom > (screenHeight + $(window).scrollTop())) ? false : true;
+        }
+        //---- end GetMore ----
+    </script>
+}

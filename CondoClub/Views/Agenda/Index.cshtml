@@ -1,0 +1,110 @@
+﻿@using CondoClub.Web.Models;
+@using CondoClub.Web.Controllers;
+
+@model IEnumerable<Agenda>
+
+@{ var permissoes = (List<CondoClub.Regras.Enum.Permissao>)ViewData["Permissoes"]; }
+
+<div class="main-container">
+    <div class="header">
+        <div class="title">
+            <h5>@Resources.Menu.Agenda</h5>
+        </div>
+        @if (permissoes.Contains(CondoClub.Regras.Enum.Permissao.Gravar))
+        {
+            <div class="options">
+                <a href="#" class="link-orange" onclick="$('#new').slideToggle(''); return false;" style="">
+                    @Resources.Geral.Novo
+                </a>
+            </div>
+        }
+        <div class="clear"></div>
+    </div>
+    <div class="search">
+        <input id="txtPesquisar" type="search" placeholder="@Resources.Geral.Pesquisar" />
+    </div>
+    <div class="separator10"></div>
+    <!--novo registo---------------------->
+    @if (permissoes.Contains(CondoClub.Regras.Enum.Permissao.Gravar))
+    {
+        <div id="new" style="display: none;">
+            @using (Ajax.BeginForm("Gravar",
+                new AjaxOptions
+                {
+                    UpdateTargetId = "lista",
+                    InsertionMode = InsertionMode.InsertBefore,
+                    OnSuccess = "AfterSave"
+                }))
+            {
+                Html.RenderPartial("_Detalhe", new Agenda());
+            }
+        </div>
+    }
+
+    <div id="lista">@{ Html.RenderPartial("_Lista", Model); }</div>
+
+    @using (Ajax.BeginForm("_DetalheEditar", null,
+        new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "#" },
+        new { id = "editRec" }))
+    {
+        @Html.Hidden("id")
+    }
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        $('.block-list-group .header').live('click', function () {
+            var self = $(this);
+            $('.block-list-group .content:visible').not(self.next('.content')).hide();
+            $('html, body').animate({
+                scrollTop: self.offset().top - 10
+            }, 300);
+            $(this).nextAll('.block-list-group .content').slideToggle();
+        });
+
+        function EditRec(id) {
+            $('#editRec').attr('data-ajax-update', '#' + id);
+            $('#editRec').attr('data-ajax-complete', "ResetValidators(" + id + ");");
+            $('#editRec').find('#id').val(id);
+            $('#editRec').trigger('submit');
+        }
+
+        function AfterSave(data) {
+            if (data.indexOf('alert(') == -1) {
+                $('#new').slideToggle('', function () {
+                    $(".form-2column input", $(this)).val('');
+                    $("#lista .block-list-group:first").PulseAnimation();
+                });
+            }
+        }
+
+        function AfterUpdate(data, id) {
+            if (data.indexOf('alert(') == -1) {
+                $("#" + id).PulseAnimation();
+            }
+        }
+
+        function CloseNewRec() {
+            $('#new').slideToggle();
+        }
+
+        function AfterDelete(id) {
+            $("#" + id).hide('slow', function () { $(this).remove(); });
+        }
+
+        $(function () {
+            $('#txtPesquisar').keyup(function () {
+                var keywords = RemoverAcentos($(this).val().toLowerCase());
+
+                $('#lista .block-list-group .header').each(function () {
+                    if (RemoverAcentos($('span', $(this)).text().toLowerCase()).indexOf(keywords) == -1) {
+                        $(this).parent().hide();
+                    }
+                    else {
+                        $(this).parent().show();
+                    }
+                });
+            });
+        });
+    </script>
+}

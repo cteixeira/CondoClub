@@ -1,0 +1,21 @@
+﻿@using CondoClub.Web.Controllers;
+@using CondoClub.Web.Models;
+
+@{ IEnumerable<PublicidadeVisualizar> lista = ViewData["ListaPublicidadeDireita"] as IEnumerable<PublicidadeVisualizar>; }
+
+@foreach (PublicidadeVisualizar pub in lista) {
+    <div class="pub">
+        <a href="@Url.Action("Click", "Publicidade", new { id = pub.IDCifrado })">
+        @if(pub.ImagemID.HasValue){
+            <img alt="pub" src="@Url.Action("ImagemPublicidade", "Ficheiro", new { id = pub.ImagemID })" /> 
+        }else{
+            <span class="text-pub">
+                <label class="pub-title">@pub.Titulo</label>
+                <label class="pub-text">
+                @pub.Texto     
+                </label>
+            </span>
+        }
+        </a>
+    </div>        
+}

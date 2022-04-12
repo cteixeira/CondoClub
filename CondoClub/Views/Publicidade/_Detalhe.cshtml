@@ -1,0 +1,103 @@
+﻿@using CondoClub.Web.Models;
+@using CondoClub.Web.Controllers;
+@model Publicidade
+<div class="form">
+    @Html.ValidationSummary()
+    @Html.HiddenFor(m => m.IdPublicidade)
+@if (CondoClub.Web.ControladorSite.Utilizador.Perfil == CondoClub.Regras.Enum.Perfil.CondoClub) { 
+        <div class="form-1column">
+            @Html.LabelFor(m => m.FornecedorDesignacao)
+            <label class="readonly-value">
+                @Model.FornecedorDesignacao
+            </label>
+        </div>
+}
+    <div class="form-2column">
+        @Html.LabelFor(m => m.Titulo)
+        @Html.TextBoxFor(m => m.Titulo)
+    </div>
+    <div class="form-2column">
+        @Html.LabelFor(m => m.ZonaID)
+        @Html.DropDownListFor(m => m.ZonaID, new CondoClub.Web.Controllers.DadosMestre.ZonaPublicidadeController().ConstroiDropDown())
+        <div class="note">@Resources.Servico.InfluenciaPreco</div>
+    </div>
+    @*<div class="form-2column">
+        @Html.LabelFor(m => m.RaioAccao)
+        @Html.TextBoxFor(m => m.RaioAccao)
+        <div class="note">@Resources.Servico.InfluenciaPreco</div>
+    </div>*@
+    <div class="form-3column">
+        @Html.LabelFor(m => m.Inicio)
+        @Html.DisplayFor(m => m.Inicio, "Calendario", new { CalID = "calInicio_" + Model.IdPublicidade, ScriptOnChange = "CalcularPreco(this);" })
+        <div class="note">@Resources.Servico.InfluenciaPreco</div>
+    </div>
+    <div class="form-3column">
+        @Html.LabelFor(m => m.Fim)
+        @Html.DisplayFor(m => m.Fim, "Calendario", new { CalID = "calFim_" + Model.IdPublicidade, ScriptOnChange = "CalcularPreco(this);" })
+        <div class="note">@Resources.Servico.InfluenciaPreco</div>
+    </div>
+    <div class="form-3column">
+        @Html.LabelFor(m => m.Preco)
+        <label id="lblPreco_@Model.IdPublicidade" class="orange-bold">@Html.DisplayFor(m => m.Preco, "FormataMoeda")</label>
+    </div>
+    <div class="form-1column">
+        @Html.LabelFor(m => m.ImagemID)
+        <span class="pub-image">
+            @if (Model.ImagemID.HasValue) { 
+                <img id="imagePreview" alt="advertise" src="@Url.Action("ImagemPublicidade", "Ficheiro",
+                    new { id = Model.ImagemID })" 
+                    class='@(Model.ZonaID == (int)CondoClub.Regras.Enum.ZonaPublicidade.Topo ? "top" : "side")' />
+            } else { 
+                <img id="imagePreview" alt="advertise" src="~/Content/images/empty-topbanner.png" />
+            }
+            <span class="orange1-button modify-button">@Resources.Publicidade.CarregarImagem</span>
+        </span>
+        <div class="note">@Resources.Publicidade.AlterarImagem</div>
+        <div class="note12" style="font-weight:bold;">@Resources.Publicidade.NotaTamanhoImagens</div>
+        <div class="toolbox-no-border" style="margin:0;">
+            @Html.HiddenFor(m => m.ImagemID)
+            <div style="display:none">
+                @{ Html.RenderPartial("_FileUploader", "orange1-button no-float"); }
+            </div>
+        </div>
+    </div>
+    <div class="form-1column">
+        @Html.LabelFor(m => m.Texto)
+        @Html.TextBoxFor(m => m.Texto)
+    </div>
+    <div class="form-1column">
+        @Html.LabelFor(m => m.Url)
+        @Html.TextBoxFor(m => m.Url)
+    </div>
+@if (Model.Permissoes.Contains(CondoClub.Regras.PublicidadePermissao.Aprovar)) { 
+    <div class="form-2column">
+        @Html.LabelFor(m => m.Aprovado)  
+        @Html.CheckBoxFor(m => m.Aprovado)
+    </div>
+}
+    @if (!Model.IdPublicidade.HasValue) {
+        <div class="toolbox-no-border">
+            <input type="submit" class="orange1-button" value="@Resources.Geral.Gravar" />
+            <input type="reset" id="resetnewrec" class="orange3-button" onclick="CloseNewRec();" value="@Resources.Geral.Cancelar" />
+        </div>
+    } else {
+        <div class="toolbox-no-border">
+            @if (Model.Permissoes.Contains(CondoClub.Regras.PublicidadePermissao.Gravar)) {
+                <input type="submit" class="orange1-button" value="@Resources.Geral.Gravar" />
+            }
+            @if (Model.Permissoes.Contains(CondoClub.Regras.PublicidadePermissao.Apagar)) {
+                @Ajax.ActionLink(Resources.Geral.Apagar, "Apagar",
+                     new { @id = Model.IdPublicidade },
+                new AjaxOptions { HttpMethod = "Delete", Confirm = Resources.Geral.TemCerteza },
+                new { @class = "orange2-button" }
+            )
+            }
+            @Ajax.ActionLink(Resources.Geral.Cancelar, "_DetalheVisualizar",
+                new { @id = Model.IdPublicidade },
+                new AjaxOptions { HttpMethod = "Get", UpdateTargetId = Model.IdPublicidade.Value.ToString() },
+                new { @class = "orange3-button" }
+            )
+        </div>
+    }
+    <div class="clear"></div>
+</div>

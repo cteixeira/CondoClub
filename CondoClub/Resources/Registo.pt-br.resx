@@ -1,0 +1,168 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AceitarCondicoesGerais" xml:space="preserve">
+    <value>Li e aceito as Condições Gerais do X.imob (&lt;a href="{0}" target="_blank" class="link-orange"&gt;clique aqui para consultar&lt;/a&gt;)&lt;/label&gt;</value>
+  </data>
+  <data name="AdicioneCategoria" xml:space="preserve">
+    <value>Seleccione todas as categorias do seu negócio</value>
+  </data>
+  <data name="AlterarAvatar" xml:space="preserve">
+    <value>(Clique na imagem para alterar)</value>
+  </data>
+  <data name="ConcluirRegisto" xml:space="preserve">
+    <value>Concluir Cadastro</value>
+  </data>
+  <data name="CondicoesGeraisMensagem" xml:space="preserve">
+    <value>O &lt;b&gt;Ximob.com.br&lt;/b&gt; é um serviço interativo oferecido a Condomínios por meio de página eletrônica na internet que oferece possibilidades de interatividade entre Administradoras, Síndicos e Condôminos, bem como postagem de arquivos, informações, acesso a prestadores de serviços, e-commerce entre outros serviços, a partir da integração de diversas fontes de informação. O acesso ao &lt;b&gt;Ximob.com.br&lt;/b&gt; representa a aceitação expressa e irrestrita dos termos de uso abaixo descritos. Se você não concorda com os termos, por favor, não acesse nem utilize este website.&lt;br/&gt;O visitante poderá usar este site apenas para finalidades lícitas. Este espaço não poderá ser utilizado para publicar, enviar, distribuir ou divulgar conteúdos ou informações de caráter difamatório, obsceno ou ilícito, inclusive informações de propriedade exclusiva pertencentes a outras pessoas ou empresas, bem como marcas registradas ou informações protegidas por direitos autorais, sem a expressa autorização do detentor desses direitos. Ainda, o visitante não poderá usar o &lt;b&gt;Ximob.com.br&lt;/b&gt; para obter ou divulgar informações pessoais, inclusive endereços na Internet, sobre os usuários do site.&lt;br/&gt;O &lt;b&gt;Ximob.com.br&lt;/b&gt; empenha-se em manter a qualidade, atualidade e autenticidade das informações do site, mas seus criadores e colaboradores não se responsabilizam por eventuais falhas nos serviços ou inexatidão das informações oferecidas. O usuário não deve ter como pressuposto que tais serviços e informações são isentos de erros ou serão adequados aos seus objetivos particulares. Os criadores e colaboradores tampouco assumem o compromisso de atualizar as informações, e reservam-se o direito de alterar as condições de uso ou preços dos serviços e produtos oferecidos no site a qualquer momento.&lt;br/&gt;O acesso ao site &lt;b&gt;Ximob.com.br&lt;/b&gt; é gratuito, mas sua utilização requer a aceitação de encargos referentes ao preços dos serviços e informações a serem prestados. O usuário deverá antes de se cadastrar e logar verificar estes preços e aceitar aquele que melhor lhe convier. O &lt;b&gt;Ximob.com.br&lt;/b&gt; poderá criar áreas de acesso exclusivo aos seus clientes ou para terceiros especialmente autorizados.&lt;br/&gt;Os criadores e colaboradores do &lt;b&gt;Ximob.com.br&lt;/b&gt; poderão a seu exclusivo critério e em qualquer tempo, modificar ou desativar o site, bem como limitar, cancelar ou suspender seu uso ou o acesso, assim como estes Termos de Uso poderão ser alterados a qualquer tempo. Visite regularmente esta página e consulte  os Termos de Uso vigentes. Algumas disposições destes Termos podem ser substituídas por informativos ou avisos legais expressos localizados em determinadas páginas deste site.&lt;br/&gt;Erros e Falhas - Os documentos, informações, imagens e gráficos publicados neste site podem conter imprecisões técnicas ou erros tipográficos. Em nenhuma hipótese o &lt;b&gt;Ximob.com.br&lt;/b&gt; e/ou seus respectivos fornecedores serão responsáveis por qualquer dano direto ou indireto decorrente da impossibilidade de uso, perda de dados ou lucros, resultante do acesso e desempenho do site, dos serviços oferecidos ou de informações disponíveis neste site. O acesso aos serviços, materiais, informações e facilidades contidas neste website não garante a sua qualidade.&lt;br/&gt;Limitação da responsabilidade - Os materiais são fornecidos neste website sem nenhuma garantia explícita ou implícita de comercialização ou adequação a qualquer objetivo específico. Em nenhum caso o &lt;b&gt;Ximob.com.br&lt;/b&gt; ou os seus colaboradores serão responsabilizados por quaisquer danos, incluindo lucros cessantes, interrupção de negócio, ou perda de informação que resultem do uso ou da incapacidade de usar os materiais. O &lt;b&gt;Ximob.com.br&lt;/b&gt; não garante a precisão ou integridade das informações, textos, gráficos, links e outros itens dos materiais.&lt;br/&gt;O &lt;b&gt;Ximob.com.br&lt;/b&gt; não se responsabiliza pelo conteúdo dos artigos e informações aqui publicadas, uma vez que os textos são de autoria de terceiros e não traduzem, necessariamente, a opinião do website.&lt;br/&gt;O &lt;b&gt;Ximob.com.br&lt;/b&gt; tampouco é responsável pela violação de direitos autorais decorrente de informações, documentos e materiais publicados neste website, comprometendo-se a retirá-los do ar assim que notificado da infração.&lt;br/&gt;Informações enviadas pelos usuários e colaboradores.&lt;br/&gt;Qualquer material, informação, artigos ou outras comunicações que forem transmitidas, enviadas  ou publicadas neste site serão considerados informação não confidencial, e qualquer violação aos direitos dos seus criadores não será de responsabilidade do &lt;b&gt;Ximob.com.br&lt;/b&gt;. É terminantemente proibido transmitir, trocar ou publicar, através deste website, qualquer material de cunho obsceno, difamatório ou ilegal, bem como textos ou criações de terceiros sem a autorização do autor. O &lt;b&gt;Ximob.com.br&lt;/b&gt; reserva-se o direito de restringir o acesso às informações enviadas por terceiros aos seus usuários.&lt;br/&gt;O &lt;b&gt;Ximob.com.br&lt;/b&gt; poderá, mas não é obrigado, a monitorar, revistar e restringir o acesso a qualquer área no site onde usuários transmitem e trocam informações entre si, incluindo, mas não limitado a, salas de chat, centro de mensagens ou outros fóruns de debates, enquetes de pesquisas, podendo retirar do ar ou retirar o acesso a qualquer destas informações ou comunicações.  Porém, o &lt;b&gt;Ximob.com.br&lt;/b&gt; não é responsável pelo conteúdo de qualquer uma das informações trocadas entre os usuários, sejam elas lícitas ou ilícitas.&lt;br/&gt;Links para sites de terceiros - Os sites apontados não estão sob o controle do &lt;b&gt;Ximob.com.br&lt;/b&gt; que não é responsável pelo conteúdo de qualquer outro website indicado ou acessado por meio do &lt;b&gt;Ximob.com.br&lt;/b&gt; reserva-se o direito de eliminar qualquer link ou direcionamento a outros sites ou serviços a qualquer momento. O &lt;b&gt;Ximob.com.br&lt;/b&gt; não endossa firmas ou produtos indicados, acessados ou divulgados através deste website, tampouco pelos anúncios aqui publicados, reservando-se o direito de publicar este alerta em suas páginas eletrônicas sempre que considerar necessário.&lt;br/&gt;Direitos autorais e propriedade intelectual - Os documentos, conteúdos e criações contidos neste website pertencem aos seus criadores e colaboradores. A autoria dos conteúdo, material e imagens exibidos no &lt;b&gt;Ximob.com.br&lt;/b&gt; é protegida por leis nacionais e internacionais. Não podem ser copiados, reproduzidos, modificados, publicados, atualizados, postados, transmitidos ou distribuídos de qualquer maneira sem autorização prévia e por escrito do &lt;b&gt;Ximob.com.br&lt;/b&gt;.&lt;br/&gt;As imagens contidas neste website são aqui incorporadas apenas para fins de visualização, e, salvo autorização expressa por escrito, não podem ser gravadas ou baixadas via download. A reprodução ou armazenamento de materiais recuperados a partir deste serviço sujeitará os infratores às penas da lei.&lt;br/&gt;O nome do site &lt;b&gt;Ximob.com.br&lt;/b&gt;, seu logotipo, o nome de domínio para acesso na Internet, bem como todos os elementos característicos da tecnologia desenvolvida e aqui apresentada, sob a forma da articulação de bases de dados, constituem marcas registradas e propriedades intelectuais privadas e todos os direitos decorrentes de seu registro são assegurados por lei. Alguns direitos de uso podem ser cedidos por &lt;b&gt;Ximob.com.br&lt;/b&gt; em contrato ou licença especial, que pode ser cancelada a qualquer momento se não cumpridos os seus termos.&lt;br/&gt;As marcas registradas do &lt;b&gt;Ximob.com.br&lt;/b&gt; só podem ser usadas publicamente com autorização expressa. O uso destas marcas registradas em publicidade e promoção de produtos deve ser adequadamente informado.&lt;br/&gt;Reclamações sobre violação de direitos autorais – O &lt;b&gt;Ximob.com.br&lt;/b&gt; respeita a propriedade intelectual de outras pessoas ou empresas e solicitamos aos nossos membros que façam o mesmo. Toda e qualquer violação de direitos autorais deverá ser notificada ao &lt;b&gt;Ximob.com.br&lt;/b&gt; e acompanhada dos documentos e informações que confirmam a autoria. A notificação poderá ser enviada pelos e-mails constantes do site ou via postal para o seguinte endereço: &lt;a class="link-orange" href="mailto:suporte@Ximob.com.br"&gt;suporte@Ximob.com.br&lt;/a&gt;.&lt;br/&gt;Leis aplicáveis - Este site é controlado e operado pela Administração da Ximob a partir de seu escritório na cidade de Natal, Estado do Rio Grande do Norte  e não garante que o conteúdo ou materiais possam ser autorizados e disponíveis para uso em outras localidades. Seu acesso é proibido em territórios onde o conteúdo seja considerado ilegal. Aqueles que optarem por acessar este site a partir de outras localidades o farão por iniciativa própria e serão responsáveis pelo cumprimento das leis locais aplicáveis. O acesso ao &lt;b&gt;Ximob.com.br&lt;/b&gt; representa a aceitação expressa e irrestrita dos termos de uso acima descritos.</value>
+  </data>
+  <data name="CondicoesGeraisTitulo" xml:space="preserve">
+    <value>&lt;b&gt;&lt;i&gt;Termos de Uso&lt;/i&gt;&lt;/b&gt;</value>
+  </data>
+  <data name="MensagemCondominio" xml:space="preserve">
+    <value>Preencha os campos seguintes com os dados do seu condomínio</value>
+  </data>
+  <data name="MensagemEmpresa" xml:space="preserve">
+    <value>Preencha os campos seguintes com os dados da sua administradora de condomínios</value>
+  </data>
+  <data name="MensagemFornecedor" xml:space="preserve">
+    <value>Preencha os campos seguintes com os dados do seu serviço</value>
+  </data>
+  <data name="MensagemSucesso" xml:space="preserve">
+    <value>Os dados enviados serão validados em nosso sistema e breve você receberá uma validação no email cadastrado.&lt;br /&gt;&lt;br /&gt;Seja Bem Vindo,&lt;br /&gt;X.imob</value>
+  </data>
+  <data name="MensagemUtilizador" xml:space="preserve">
+    <value>Preencha os campos com os seus Dados Pessoais</value>
+  </data>
+  <data name="RegisteCondominio" xml:space="preserve">
+    <value>Cadastre um Condomínio</value>
+  </data>
+  <data name="RegisteEmpresa" xml:space="preserve">
+    <value>Cadastre  uma Administradora de Condomínios</value>
+  </data>
+  <data name="RegisteFornecedor" xml:space="preserve">
+    <value>Cadastre um Fornecedor de Produto e/ou Serviço</value>
+  </data>
+  <data name="Sucesso" xml:space="preserve">
+    <value>Sucesso!</value>
+  </data>
+  <data name="VoltarInicio" xml:space="preserve">
+    <value>Voltar ao início</value>
+  </data>
+</root>

@@ -1,0 +1,240 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Agenda" xml:space="preserve">
+    <value>Contatos</value>
+  </data>
+  <data name="AgendaDescricao" xml:space="preserve">
+    <value>Telefones úteis</value>
+  </data>
+  <data name="Arquivo" xml:space="preserve">
+    <value>Arquivo</value>
+  </data>
+  <data name="ArquivoDescricao" xml:space="preserve">
+    <value>Salve e compartilhe seus arquivos</value>
+  </data>
+  <data name="Calendario" xml:space="preserve">
+    <value>Calendário</value>
+  </data>
+  <data name="CalendarioDescricao" xml:space="preserve">
+    <value>Faça agendamentos e reservas de espaço em seu condomínio</value>
+  </data>
+  <data name="ClassificacaoServico" xml:space="preserve">
+    <value>Classificação</value>
+  </data>
+  <data name="ClassificacaoServicoDescricao" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Comunicados" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="ComunicadosDescricao" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Condominios" xml:space="preserve">
+    <value>Condomínios</value>
+  </data>
+  <data name="CondominiosDescricao" xml:space="preserve">
+    <value>Faça o Gerenciamento de Condomínios</value>
+  </data>
+  <data name="Empresas" xml:space="preserve">
+    <value>Administradoras</value>
+  </data>
+  <data name="EmpresasDescricao" xml:space="preserve">
+    <value>Faça o Gerenciamento de Administradoras</value>
+  </data>
+  <data name="Estatisticas" xml:space="preserve">
+    <value>Estatísticas</value>
+  </data>
+  <data name="EstatisticasDescricao" xml:space="preserve">
+    <value>Analise a utilização do Ximob</value>
+  </data>
+  <data name="Fornecedores" xml:space="preserve">
+    <value>Fornecedores</value>
+  </data>
+  <data name="FornecedoresDescricao" xml:space="preserve">
+    <value>Faça o Gerenciamento de Fornecedores</value>
+  </data>
+  <data name="Funcionarios" xml:space="preserve">
+    <value>Funcionários</value>
+  </data>
+  <data name="FuncionariosDescricao" xml:space="preserve">
+    <value>Informação sobre os funcionários do seu condomínio</value>
+  </data>
+  <data name="LabelMenu" xml:space="preserve">
+    <value>Menu</value>
+  </data>
+  <data name="Mensagens" xml:space="preserve">
+    <value>Mensagens</value>
+  </data>
+  <data name="MensagensDescricao" xml:space="preserve">
+    <value>Troque mensagens com outros moradores</value>
+  </data>
+  <data name="Moradores" xml:space="preserve">
+    <value>Moradores</value>
+  </data>
+  <data name="MoradoresDescricao" xml:space="preserve">
+    <value>Moradores de seu condomínio</value>
+  </data>
+  <data name="Pagamentos" xml:space="preserve">
+    <value>Pagamentos</value>
+  </data>
+  <data name="PagamentosDescricao" xml:space="preserve">
+    <value>Pagamento do seu condomínio com boleto e cartão de crédito</value>
+  </data>
+  <data name="Precos" xml:space="preserve">
+    <value>Preços</value>
+  </data>
+  <data name="PrecosDescricao" xml:space="preserve">
+    <value>Configure os preços do sistema</value>
+  </data>
+  <data name="Publicidade" xml:space="preserve">
+    <value>Publicidade</value>
+  </data>
+  <data name="PublicidadeDescricao" xml:space="preserve">
+    <value>Anuncie aqui</value>
+  </data>
+  <data name="Questionarios" xml:space="preserve">
+    <value>Enquetes</value>
+  </data>
+  <data name="QuestionariosDescricao" xml:space="preserve">
+    <value>Vote</value>
+  </data>
+  <data name="Recursos" xml:space="preserve">
+    <value>Espaços Comuns</value>
+  </data>
+  <data name="Servicos" xml:space="preserve">
+    <value>Serviços</value>
+  </data>
+  <data name="ServicosDescricao" xml:space="preserve">
+    <value>Serviços disponíveis em sua região</value>
+  </data>
+  <data name="Utilizadores" xml:space="preserve">
+    <value>Usuários</value>
+  </data>
+  <data name="UtilizadoresDescricao" xml:space="preserve">
+    <value>Faça a gestão de Usuários</value>
+  </data>
+  <data name="Veiculos" xml:space="preserve">
+    <value>Veículos</value>
+  </data>
+  <data name="VeiculosDescricao" xml:space="preserve">
+    <value>Informações sobre veículos cadastrados</value>
+  </data>
+</root>

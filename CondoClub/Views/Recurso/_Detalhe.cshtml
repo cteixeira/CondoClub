@@ -1,0 +1,66 @@
+﻿@using CondoClub.Web.Models;
+@using CondoClub.Web.Controllers;
+@model Recurso
+<div class="form">
+    @Html.ValidationSummary()
+    @Html.HiddenFor(m => m.ID)
+    <div class="form-2column">
+        @Html.LabelFor(m => m.Designacao)
+        @Html.TextBoxFor(m => m.Designacao)
+    </div>
+    <div class="form-2column">
+        @Html.LabelFor(m => m.Activo)
+        @Html.CheckBoxFor(m => m.Activo)
+    </div>
+    <div class="form-2column">
+        @Html.LabelFor(m => m.RequerAprovacao)
+        @Html.CheckBoxFor(m => m.RequerAprovacao)
+        <div class="note12">@Resources.Recurso.RequerAprovacaoInfo</div>
+    </div>
+    <div class="form-2column">
+        @Html.LabelFor(m => m.DiasMinimosAprovacao)
+        @if (Model.RequerAprovacao) { 
+            @Html.TextBoxFor(m => m.DiasMinimosAprovacao)
+        } else { 
+            @Html.TextBoxFor(m => m.DiasMinimosAprovacao, new { disabled="disabled" })
+        }
+        <div class="note12"></div>
+        <div class="note12">@Resources.Recurso.DiasMinimosAprovacaoInfo</div>
+    </div>
+    <div class="form-2column">
+        @Html.LabelFor(m => m.MaxSlotsReserva)
+        @Html.TextBoxFor(m => m.MaxSlotsReserva)
+        <div class="note12">@Resources.Recurso.MaxSlotsReservaInfo</div>
+    </div>
+   @* <div class="form-2column">
+        @Html.LabelFor(m => m.IntervaloReserva)
+        @Html.TextBoxFor(m => m.IntervaloReserva)
+        <div class="note12">@Resources.Recurso.IntervaloReservaInfo</div>
+    </div>*@
+    @if (!Model.ID.HasValue) {
+        <div class="toolbox-no-border">
+            <input type="submit" class="orange1-button" value="@Resources.Geral.Gravar" />
+            <input type="reset" id="resetnewrec" class="orange3-button" onclick="CloseNewRec();" value="@Resources.Geral.Cancelar" />
+        </div>
+    } else {
+        <div class="toolbox-no-border">
+            @if (Model.Permissoes.Contains(CondoClub.Regras.Enum.Permissao.Gravar)) {
+                <input type="submit" class="orange1-button" value="@Resources.Geral.Gravar" />
+            }
+            @if (Model.Permissoes.Contains(CondoClub.Regras.Enum.Permissao.Apagar)) {
+                @Ajax.ActionLink(Resources.Geral.Apagar, "Apagar",
+                new { @id = Model.ID },
+                new AjaxOptions { HttpMethod = "Delete", Confirm = Resources.Geral.TemCerteza },
+                new { @class = "orange2-button" }
+            )
+            }
+            @Ajax.ActionLink(Resources.Geral.Cancelar, "_DetalheVisualizar",
+            new { @id = Model.ID },
+            new AjaxOptions { HttpMethod = "Get", UpdateTargetId = Model.ID.Value.ToString() },
+            new { @class = "orange3-button" }
+        )
+        </div>
+    }
+    <div class="clear"></div>
+
+</div>

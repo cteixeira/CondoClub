@@ -1,0 +1,75 @@
+﻿@model CondoClub.Web.Models.Comunicado
+@using CondoClub.Web;
+@using CondoClub.Web.Controllers;
+
+<div class="header">
+    <div class="user-image">
+        <img src="@Url.Action("Avatar", "Ficheiro", new { id = Model.RemetenteAvatar })" alt="" />
+    </div>
+    <div class="user-info">                        
+        @Html.Label(Model.RemetenteNome, new { @class = "user" })
+        @Html.Label(String.Concat(Model.DataHora.ToShortDateString(), " ", Model.DataHora.ToShortTimeString()), new { @class = "date" })
+    </div>
+    @if (Model.Permissoes.Contains(CondoClub.Regras.Enum.Permissao.Apagar)) {
+        <div style="float:right;">
+            <a href="#" onclick="return Del(@Model.ID);"><img src="~/content/images/cancel.png" alt="@Resources.Geral.Apagar" /></a>
+        </div>
+    }
+    <div class="clear"></div>
+</div>
+<p class="message">
+    @Html.Raw(Model.Texto)
+</p>
+@if (!String.IsNullOrEmpty(Model.Video)) { 
+    <iframe class='youtube-frame' src='http://www.youtube.com/embed/@Model.Video' frameborder='0' allowfullscreen></iframe>
+}
+@if (Model.ImagemID != null) { 
+    @Html.DisplayFor(m => m.ImagemID, "ImagemComunicado")
+}
+<div class="menu">
+    <ul class="actions">
+        <li>
+            @if (Model.Permissoes.Contains(CondoClub.Regras.Enum.Permissao.Gravar)) {
+                if (Model.Gosto) {
+                    <a href="#" onclick="return Like(this, false);">@Resources.Comunicado.Desgosto</a>
+                }
+                else { 
+                    <a href="#" onclick="return Like(this, true);">@Resources.Comunicado.Gosto</a>
+                }
+            }
+        </li>
+    </ul>
+    <ul class="info">
+        <li>@(String.Concat(Model.totalGostos.ToString(), " ", Resources.Comunicado.Gostos))</li>
+        <li>@(String.Concat(Model.totalComentarios.ToString(), " ", Resources.Comunicado.Comentarios))</li>
+    </ul>
+</div>
+
+@foreach (var itemCom in Model.Comentarios) {
+    <div class="reply" id='@("com" + itemCom.ID)'>
+        <div class="user-image">
+            <img src="@Url.Action("Avatar", "Ficheiro", new { id = itemCom.ComentadorAvatar })" alt="" />
+        </div>
+        <div class="reply-message">
+            <div style="float:left; width: 94%;">
+                @Html.Label(itemCom.ComentadorNome, new { @class = "user" })
+                @Html.DisplayFor(m => itemCom.Comentario)
+            </div>
+            @if (itemCom.Permissoes.Contains(CondoClub.Regras.Enum.Permissao.Apagar)) {
+                <div style="float:right;">
+                    <a href="#" onclick="return DelCom(@itemCom.ID);"><img src="~/content/images/cancel_14.png" alt="@Resources.Geral.Apagar" /></a>
+                </div>
+            }
+            <div class="clear"></div>
+        </div>
+        
+    </div>
+}
+
+@if (Model.Permissoes.Contains(CondoClub.Regras.Enum.Permissao.Gravar)) {
+    <div class="new-message">
+        <div class="message-textbox">
+            <input type="text" placeholder="@Resources.Comunicado.Comentario" />
+        </div>
+    </div>
+}

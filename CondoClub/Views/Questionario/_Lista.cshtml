@@ -1,0 +1,18 @@
+﻿@model IEnumerable<CondoClub.Web.Models.Questionario>
+
+@{ DateTime dataActual = DateTime.Now.Date; }
+
+@foreach (var item in Model)
+{
+    <div id="@item.ID" class="block-list-group">
+        @if (!item.JaRespondi && dataActual >= item.Inicio.Date && dataActual <= item.Fim.Date) {
+            Html.RenderPartial("_DetalheVotar", item);
+        }
+        else if (dataActual >= item.Inicio.Date) {
+            Html.RenderPartial("_DetalheResultado", item);
+        }
+        else {
+            Html.RenderPartial("_DetalheVisualizar", item);
+        }
+    </div>
+}

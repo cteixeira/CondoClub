@@ -1,0 +1,15 @@
+﻿@model IEnumerable<CondoClub.Regras.Fornecedor.Categoria>
+
+@foreach (var item in Model) {
+    <div class="block-list-group">
+        <div class="header multiline" onclick="$('#@item.CategoriaID').slideToggle();">
+            <label class="title">@item.Designacao</label>
+        </div>
+        <div class="content" style="display:none;" id="@item.CategoriaID">
+            @foreach (var subCat in item.SubCategorias) {
+                <div style="padding:2px;">- @Html.ActionLink(subCat.Designacao, "Pesquisa", 
+                                                new { TermoPesquisa = subCat.Designacao }, new { @class = "link-orange" })</div>
+            }
+        </div>
+    </div>
+}

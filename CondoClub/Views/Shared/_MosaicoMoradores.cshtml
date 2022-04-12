@@ -1,0 +1,21 @@
+﻿<ul class="users-images no-select">
+    @{ 
+        var mosaicos = new CondoClub.Web.Controllers.UtilizadorController().ConstroiMosaicoMoradores();
+        if (mosaicos.Count > 0) {
+            var indexer = 0;
+            string cssclass;
+            for (int i = 0; i < 15; i++) {
+                ++indexer;
+                if (indexer == mosaicos.Count()) {
+                    indexer = 0;
+                }
+                cssclass = "";
+                if (i == 0 || i == 5 || i == 10) {
+                    cssclass = "first";
+                }
+        <li><a>
+            <img alt="user @cssclass" src="@Url.Action("Avatar", "Ficheiro", new { id = mosaicos[indexer].AvatarID })" /></a></li>	 
+            }
+        }
+    }
+</ul>

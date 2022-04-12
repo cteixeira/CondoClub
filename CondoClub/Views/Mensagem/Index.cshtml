@@ -1,0 +1,244 @@
+﻿@using CondoClub.Web.Models;
+@using CondoClub.Web.Controllers;
+@model IEnumerable<CondoClub.Web.Models.MensagemGrupo>
+
+@{ var permissoes = (List<CondoClub.Regras.MensagemPermissao>)ViewData["Permissoes"]; }
+<div class="main-container messages">
+    <div class="header">
+        <div class="title"><h5>@Resources.Mensagem.Mensagens</h5></div>
+        @if (permissoes.Contains(CondoClub.Regras.MensagemPermissao.CriarMensagem))
+        {
+            <div class="options">
+                <a href="#" class="link-orange" onclick="return ShowHideNewRec();" style="">@Resources.Geral.Novo</a>
+            </div>
+        }
+        <div class="clear"></div>
+    </div>
+    <div class="separator10"></div>
+    <!--novo registo---------------------->
+    @if (permissoes.Contains(CondoClub.Regras.MensagemPermissao.CriarMensagem)) {
+        <div id="newrec" style="display: none;">
+            @using (Html.BeginForm("Gravar", "Mensagem", FormMethod.Post, new { id = "gravar" })) {
+                Html.RenderPartial("_Novo", new MensagemNova());
+            }
+        </div>
+    }
+    <div id="lista">
+        @{ Html.RenderPartial("_Lista", Model); }
+    </div>
+    @using (Ajax.BeginForm("_Detalhe", null,
+        new AjaxOptions {
+            InsertionMode = InsertionMode.InsertAfter,
+            UpdateTargetId = "dummy",
+            LoadingElementId = "dummy",
+            OnComplete = "GetDetalheCompleted"
+
+        },
+        new { id = "getDetalhe" })) { 
+        @Html.Hidden("id")
+    }
+    @using (Ajax.BeginForm("ResponderMensagem", null,
+        new AjaxOptions {
+            InsertionMode = InsertionMode.Replace,
+            UpdateTargetId = "dummy",
+            OnComplete = "GetDetalheCompleted"
+        },
+        new { id = "responderMensagem" })) { 
+        @Html.Hidden("RespostaID")
+        @Html.Hidden("Texto")
+        @*@Html.Hidden("Ficheiros")*@
+    }
+</div>
+@section scripts{
+    @Scripts.Render("~/scripts/fileuploader")
+    @Scripts.Render("~/scripts/peoplepicker")
+    <script type="text/javascript">
+        //enable do validator do hidden field
+        $.validator.setDefaults({
+            ignore: ""
+        });
+        $(function () {
+            var sendingMessage = false;
+            $('#newMessage').PeoplePicker({
+                inputSelector: '#messageTo',
+                receiversContainerSelector: '#receivers',
+                dataUrl: '@Url.Action("SeleccionaMensagemDestinatario", "Mensagem")',
+                avatarUrl: '@Url.Action("Avatar", "Ficheiro")',
+                useCache: false,
+                onSelectionChange: function(selectedItems){
+                    if(selectedItems.length > 0){
+                        $('#Destinatarios').val(JSON.stringify(selectedItems));
+                    }else{
+                        $('#Destinatarios').val('');                    
+                    }
+                }
+            });
+            $('#gravar').live('submit', function (e) {
+                if(sendingMessage){
+                    return false;
+                }
+                sendingMessage = true;
+                e.preventDefault();
+                var dest =  $('#newMessage').PeoplePicker('getSelectedItems');
+                $('#Destinatarios').val(JSON.stringify(dest));
+                var files = $('#newMessage').data('files'); 
+                var ajax_params = {
+                    texto:$('#Texto').val(),
+                    destinatarios:dest,
+                    ficheiros:  $('#newMessage').data('files')
+                };
+                $.ajax({
+                    type:'POST',
+                    contentType: 'application/json; charset=utf-8',
+                    url: '@Url.Action("Gravar")',
+                    data: JSON.stringify(ajax_params),
+                    success: function(response, status, xhr){
+                        if(response){
+                            sendingMessage = false;
+                            if (xhr.getResponseHeader("Content-Type").indexOf("application/x-javascript") !== -1) {  // jQuery already executes JavaScript for us
+                                return;
+                            }
+                            $('#lista').html(response);
+                            ShowHideNewRec();
+                        }
+                    },
+                    error: function(response){
+                        console.log('error')
+                    },
+                });
+            });
+            $('.file-uploader-container').CustomFileUpload({
+                URLUploadFile: "@Url.Action("GravarFicheiros", "Ficheiro")",
+                ButtonsToHideContainer: '#newMessage .toolbox',
+                DropZone: $('.file-uploader-container .fileupload-dropzone'),
+                DoneFunction: function (e, data) {
+                    if(data){
+                        var uploadedFiles = $('#newMessage').data('files');
+                        if(!uploadedFiles){
+                            uploadedFiles = [];
+                        }
+                        for(var i = 0; i < data.length; ++i){
+                            uploadedFiles.push(data[i].ID);
+                            //$('#newMessage .attachments').append('<span class="attachment-container"><a href="@Url.Action("SeleccionaMensagemFicheiro")">' + data[i].Nome + "." + data[i].Extensao + '</a><span>&times;</span></span>');
+                            $('#newMessage .attachments').append('<span class="attachment-container"><a href="#" onclick="return false;">' + data[i].Nome + "." + data[i].Extensao + '</a></span>');
+                        }
+                        $('#newMessage').data('files', uploadedFiles);
+                        if(!$('#newMessage .attachments').is(":visible")){
+                            $('#newMessage .attachments').show();
+                        }
+                    }
+                }
+            }); 
+        })
+
+        //guardar a mensagem corrente para poder fazer o scrollbottom
+        var mensagemCorrente = 0;
+        function GetDetalhe(sender) {
+            var self = $(sender);
+
+            $('.block-list-group .detail-container').each(function(){
+                var $block = $(this).parents('.block-list-group:first');
+                if(!($block.find('.header')[0] === self[0])){
+                    $block.find('.header').data('expanded', false);
+                    $block.find('.detail-container').remove();
+                }
+            });
+             
+            $('html, body').animate({
+                scrollTop: self.offset().top - 10
+            }, 300);
+
+            var messageId = self.parent().attr('message-id');
+            mensagemCorrente = messageId;
+            if (!self.data('expanded')) {
+                $('#getDetalhe').attr('data-ajax-update', '#thread_' + messageId);
+                $('#getDetalhe').attr('data-ajax-loading', '#loading_' + messageId);
+                $('#getDetalhe').find('#id').val(messageId);
+                $('#getDetalhe').trigger('submit');
+                self.data('expanded', true);
+            } else {
+                self.nextAll('#detalhe_' + messageId).remove();
+                self.data('expanded', false);
+            }
+        }
+
+        function GetDetalheCompleted() {
+            $('#detalhe_' + mensagemCorrente + ' .content').each(function () {
+                var self = $(this);
+                setTimeout(function () {
+                    //esperar um pouco antes de fazer scroll, o chrome executava isto antes de fazer o replace do conteudo do detalhe
+                    self.scrollTop(self.prop("scrollHeight"));
+                }, 25);
+                self.next('.new-message').find('.message-textarea textarea').val('');
+                self.parents('.block-list-group:first').find('.header .new-messages-number').hide();
+            });
+            /*
+            $('#detalhe_' + mensagemCorrente + ' .new-message').find('.file-uploader-container').CustomFileUpload({
+                URLUploadFile: "@Url.Action("GravarFicheiros", "Ficheiro")",
+                ButtonsToHideContainer: '#detalhe_' + mensagemCorrente + ' .new-message .toolbox',
+                DropZone: $('#detalhe_' + mensagemCorrente + ' .new-message .file-uploader-container .fileupload-dropzone'),
+                DoneFunction: function (e, data) {
+                    if(data){
+                        var respostaCorrente = $('#detalhe_' + mensagemCorrente + ' .new-message');
+                        var uploadedFiles = respostaCorrente.data('files');
+                        if(!uploadedFiles){
+                            uploadedFiles = [];
+                        }
+                        for(var i = 0; i < data.length; ++i){
+                            uploadedFiles.push(data[i].ID);
+                            respostaCorrente.find('.attachments').append('<span class="attachment-container"><a href="@Url.Action("SeleccionaMensagemFicheiro")">' + data[i].Nome + "." + data[i].Extensao + '</a><span>&times;</span></span>');
+                        }
+                        respostaCorrente.data('files', uploadedFiles);
+                        if(!respostaCorrente.find('.attachments').is(":visible")){
+                            respostaCorrente.find('.attachments').show();
+                        }
+                    }
+                }
+            }); 
+            */
+        }
+        
+        function ResponderMensagem(sender) {
+            var self = $(sender);
+            self.nextAll('.messages, .new-message').hide('fast', function () {
+                $(this).remove();
+            });
+            var respostaId = self.parents('.block-list-group:first').attr('message-id');
+            mensagemCorrente = respostaId;
+            var texto = self.parents('.new-message:first').find('textarea').val();
+            /*           
+            var uploadedFiles = self.parents('.new-message:first').data('files');
+            var uploadedFilesStr = "";
+            for(var i = 0; i < uploadedFiles.length; ++i){
+                uploadedFilesStr += 'Ficheiro['+ i +']={ID:' + uploadedFiles[i] + '};';
+            }
+            */
+            $('#responderMensagem').attr('data-ajax-update', '#detalhe_' + respostaId);
+            $('#responderMensagem').find('#RespostaID').val(respostaId);
+            $('#responderMensagem').find('#Texto').val(texto);
+            /*$('#responderMensagem').find('#Ficheiros').val(uploadedFilesStr);*/
+            $('#responderMensagem').trigger('submit');
+        }
+
+        function ShowHideNewRec() {
+            var $newrec = $('#newrec');
+            if($newrec.is(':visible')){
+                $('#newMessage').PeoplePicker('close');
+            } 
+            $newrec.slideToggle('fast', function(){
+                if(!$newrec.is(':visible')){
+                    $('#newMessage').PeoplePicker('clearSelectedItems');
+                    $(this).find('#Texto').val('');
+                    $('#newMessage .attachments').empty().hide();
+                    $('.validation-summary-errors').addClass('validation-summary-valid');
+                    $('.validation-summary-errors').removeClass('validation-summary-errors');
+                    
+                }else{
+                    $('#messageTo').focus();    
+                }
+            }); 
+            
+            return false;
+        }
+    </script>
+}

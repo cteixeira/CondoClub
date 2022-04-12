@@ -1,0 +1,238 @@
+﻿@using CondoClub.Web.Models;
+@using CondoClub.Web.Controllers;
+
+@model Condominio
+
+
+<div class="header">
+    <img class="image" alt="" src="@Url.Action("Avatar", "Ficheiro", 
+        new { id = Model.AvatarID, thumbnail = true })"/>
+    <span class="title">@Model.Nome</span>
+    <span class="subtitle">@Model.Cidade</span>
+</div>
+<div class="content" style="display:none;">
+    <div class="form-readonly">
+        <div class="form-3column">
+            <span class="photo">
+                <img alt="user" height="60" width="60" src="@Url.Action("Avatar", "Ficheiro", 
+                    new { id = Model.AvatarID, thumbnail = false })"/>
+            </span>
+        </div>
+        <div class="form-3column">
+            @Html.LabelFor(m => m.ExtratoSocialID)
+            <label class="value">
+                @if (!string.IsNullOrEmpty(Model.ExtratoSocialDesignacao))
+                {
+                    @Model.ExtratoSocialDesignacao
+                }
+                else
+                {
+                    @Html.DisplayFor(m => m.ExtratoSocialDesignacao, "CampoVazio")
+                }
+            </label>
+        </div>
+        <div class="form-3column">
+            @Html.LabelFor(m => m.Fraccoes)
+            <label class="value">
+                @if (Model.Fraccoes.HasValue)
+                {
+                    @Model.Fraccoes
+                }
+                else
+                {
+                    @Html.DisplayFor(m => m.Fraccoes, "CampoVazio")
+                }
+            </label>
+        </div>
+        <div class="form-3column">
+            @Html.LabelFor(m => m.Contribuinte)
+            <label class="value">
+                @if (!string.IsNullOrEmpty(Model.Contribuinte))
+                {
+                    @Model.Contribuinte
+                }
+                else
+                {
+                    @Html.DisplayFor(m => m.Contribuinte, "CampoVazio")
+                }
+            </label>
+        </div>
+        <div class="form-3column">
+            @Html.LabelFor(m => m.EmpresaID)
+            <label class="value">
+                @if (!string.IsNullOrEmpty(Model.EmpresaNome))
+                {
+                    @Model.EmpresaNome
+                }
+                else
+                {
+                    @Html.DisplayFor(m => m.EmpresaNome, "CampoVazio")
+                }
+            </label>
+        </div>
+        <div class="form-3column">
+            @Html.LabelFor(m => m.OpcaoPagamentoID)
+            <label class="value">
+                @if (!string.IsNullOrEmpty(Model.OpcaoPagamentoDesignacao))
+                {
+                    @Model.OpcaoPagamentoDesignacao
+                }
+                else
+                {
+                    @Html.DisplayFor(m => m.OpcaoPagamentoDesignacao, "CampoVazio")
+                }
+            </label>
+        </div>
+        <div class="form-3column">
+            @Html.LabelFor(m => m.FormaPagamentoID)
+            <label class="value">
+                @if (!string.IsNullOrEmpty(Model.FormaPagamentoDesignacao))
+                {
+                    @Model.FormaPagamentoDesignacao
+                }
+                else
+                {
+                    @Html.DisplayFor(m => m.FormaPagamentoDesignacao, "CampoVazio")
+                }
+            </label>
+        </div>
+         <div class="form-3column">
+            @Html.LabelFor(m => m.Activo)
+            <label class="value">
+                @Html.CheckBoxFor(m=>m.Activo, new { @disabled = "disabled" })
+            </label>
+        </div>
+        <div class="form-3column">
+            @Html.LabelFor(m => m.DataActivacao)
+            <label class="value">
+                @if (Model.DataActivacao.HasValue)
+                {
+                    @Model.DataActivacao
+                }
+                else
+                {
+                    @Html.DisplayFor(m => m.DataActivacao, "CampoVazio")
+                }
+            </label>
+        </div>
+        <div class="form-1column">
+            <div class="google-map-supplier"></div>
+            <div style="font-size: 0.8em; color: gray; margin-top:5px; margin-bottom:5px;">
+                @if (!String.IsNullOrEmpty(Model.Latitude)) { @Html.Raw(String.Concat(Resources.Servico.Latitude, ": ", Model.Latitude, "&nbsp;&nbsp;")) }
+                @if (!String.IsNullOrEmpty(Model.Longitude)) { @Html.Raw(String.Concat(Resources.Servico.Longitude, ": ", Model.Longitude)) }
+            </div>
+        </div>
+        <div class="form-3column">
+            @Html.LabelFor(m => m.Endereco)
+            <label class="value">
+                @if (!string.IsNullOrEmpty(Model.Endereco))
+                {
+                    @Model.Endereco
+                }
+                else
+                {
+                    @Html.DisplayFor(m => m.Endereco, "CampoVazio")
+                }
+            </label>
+        </div>
+        <div class="form-3column">
+            @Html.LabelFor(m => m.Localidade)
+            <label class="value">
+                @if (!string.IsNullOrEmpty(Model.Localidade))
+                {
+                    @Model.Localidade
+                }
+                else
+                {
+                    @Html.DisplayFor(m => m.Localidade, "CampoVazio")
+                }
+            </label>
+        </div>
+        <div class="form-3column">
+            @Html.LabelFor(m => m.Cidade)
+            <label class="value">
+                @if (!string.IsNullOrEmpty(Model.Cidade))
+                {
+                    @Model.Cidade
+                }
+                else
+                {
+                    @Html.DisplayFor(m => m.Cidade, "CampoVazio")
+                }
+            </label>
+        </div>
+        <div class="form-3column">
+            @Html.LabelFor(m => m.CodigoPostal)
+            <label class="value">
+                @if (!string.IsNullOrEmpty(Model.CodigoPostal))
+                {
+                    @Model.CodigoPostal
+                }
+                else
+                {
+                    @Html.DisplayFor(m => m.CodigoPostal, "CampoVazio")
+                }
+            </label>
+        </div>
+        <div class="form-3column">
+            @Html.LabelFor(m => m.Estado)
+            <label class="value">
+                @if (!string.IsNullOrEmpty(Model.Estado))
+                {
+                    @Model.Estado
+                }
+                else
+                {
+                    @Html.DisplayFor(m => m.Estado, "CampoVazio")
+                }
+            </label>
+        </div>
+        <div class="form-3column">
+            @Html.LabelFor(m => m.PaisID)
+            <label class="value">
+                @if (!string.IsNullOrEmpty(Model.PaisDesignacao))
+                {
+                    @Model.PaisDesignacao
+                }
+                else
+                {
+                    @Html.DisplayFor(m => m.PaisDesignacao, "CampoVazio")
+                }
+            </label>
+        </div>
+        <div id="utilizadorContainer_@Model.ID" class="form-1column">
+            <div class="separator10"></div>
+            <label>@Resources.Condominio.Sindicos</label>
+            <div class="separator15"></div>
+            @if (Model.Utilizadores.Count == 0)
+            {
+                <label class="value">@Resources.Condominio.SemSindicos</label>
+            }
+            else
+            {
+                <table class="table inner">
+                    @foreach (var u in Model.Utilizadores)
+                    {
+                        <tr>
+                            <td class="col1"><label>@u.Nome</label></td>
+                            <td class="col2"><label>@u.Fraccao</label></td>
+                            <td class="col3">@if (u.Activo) { <label>@Resources.Geral.Activo</label> } else { <label>@Resources.Geral.Inactivo</label> } </td>
+                        </tr>
+                    }
+                </table>
+            }
+        </div>
+        @Html.HiddenFor(m => m.Latitude)
+        @Html.HiddenFor(m => m.Longitude)
+    </div>
+    @if (Model.ID != null && (
+            Model.Permissoes.Contains(CondoClub.Regras.CondominioPermissao.Gravar) ||
+            Model.Permissoes.Contains(CondoClub.Regras.CondominioPermissao.Apagar)
+        ))
+    {
+        <div class="toolbox-no-border">
+            <input type="button" onclick="EditRec(@Model.ID)" class="orange1-button" value="@Resources.Geral.Editar" />
+        </div>
+        <div class="clear"></div>
+    }
+</div>

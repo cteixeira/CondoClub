@@ -1,0 +1,138 @@
+﻿@using CondoClub.Web;
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>@(!String.IsNullOrEmpty(ViewBag.Title) ? ViewBag.Title : Resources.Geral.NomeApp)</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        @Styles.Render("~/content/core")
+        @Styles.Render("~/content/bxslider")
+        @Scripts.Render("~/scripts/modernizr")
+        @Scripts.Render("~/scripts/core")
+        @Scripts.Render("~/scripts/jqueryval")
+        @Scripts.Render("~/scripts/bxslider")
+        @Scripts.Render("~/scripts/autocomplete")
+    </head>
+    <body>
+        <div class="top-bar">
+            <div class="container">
+                @{ Html.RenderPartial("_MenuTopo", CondoClub.Web.ControladorSite.Utilizador); }
+            </div>
+        </div>
+        <div class="container main-content">
+            @if (ControladorSite.Utilizador != null && ControladorSite.Utilizador.CondominioID.HasValue) { 
+                <div class="grid_12"  style="display:none;">
+                    <a class="logo" href="~/"><h3>@ControladorSite.Utilizador.EntidadeNome</h3></a>        
+                </div>
+            }
+            @if (ControladorSite.Utilizador.Perfil != CondoClub.Regras.Enum.Perfil.CondoClub &&
+                ControladorSite.Utilizador.Perfil != CondoClub.Regras.Enum.Perfil.Empresa &&
+                ControladorSite.Utilizador.Perfil != CondoClub.Regras.Enum.Perfil.Fornecedor) {
+                <div class="grid_4 users-images-container">
+                    @{ Html.RenderPartial("_MosaicoMoradores"); }
+                </div>
+                <!--Banner-->        
+                <div class="grid_8 banner-container">
+                    @{ Html.RenderPartial("_PublicidadeTopo");}
+                </div>
+            }
+            <div class="clear"></div>
+            @if (this.ViewContext.RouteData.Values["Controller"].ToString().Equals("Comunicado", StringComparison.InvariantCultureIgnoreCase)) {
+                <!--Main Menu-->
+                Html.RenderPartial("_MenuPrincipal");
+                <div class="grid_8">
+                    @RenderBody()
+                </div>
+            } else { 
+                <!--Inner Menu-->
+                Html.RenderPartial("_MenuPrincipalInterior");
+                if (this.ViewContext.RouteData.Values["Controller"].ToString().Equals("Servico", StringComparison.InvariantCultureIgnoreCase) &&
+                    !this.ViewContext.RouteData.Values["Action"].ToString().Equals("Fornecedor", StringComparison.InvariantCultureIgnoreCase)) {
+                    
+                    IEnumerable<CondoClub.Web.Models.PublicidadeVisualizar> lPubDireita = CondoClub.Web.Controllers.PublicidadeController.ConstroiPublicidadeLateral();
+                    ViewData["ListaPublicidadeDireita"] = lPubDireita; 
+                    if (lPubDireita != null && lPubDireita.Count() > 0) { 
+                        <div class="grid_8">
+                            @RenderBody()
+                        </div>
+                        <div class="grid_2 side-pub-container">
+                            @{ Html.RenderPartial("_PublicidadeDireita"); }
+                        </div>
+                    } else { 
+                        <div class="grid_10">
+                            @RenderBody()
+                        </div>
+                    }
+                } else { 
+                    <div class="grid_10">
+                        @RenderBody()
+                    </div>
+                }
+            }
+            <div class="clear"></div>
+        </div>
+        <div class="container footer">
+            <div class="grid_12">
+                <strong>Ximob</strong>&nbsp;&copy; - Todos os direitos reservados     
+            </div>
+        </div>
+        <script type="text/javascript">
+            $('body').addClass($('.inner-menu .menu-item.active').attr('topbar-cssclass'));      
+        </script>
+        @RenderSection("scripts", required: false)
+
+        @if (ControladorSite.Utilizador.Perfil == CondoClub.Regras.Enum.Perfil.CondoClub ||
+            ControladorSite.Utilizador.Perfil == CondoClub.Regras.Enum.Perfil.Empresa
+        ) {
+            <script type="text/javascript">
+                $(function(){
+                    $(document).keyup(function(e) {
+                        if (e.keyCode == 27 && $('.top-hidden-bar').is(':visible')) {
+                            $('.top-hidden-bar').slideUp();
+                        }
+                    });
+
+                    var cache = {};
+
+                    $("#condominios").autocomplete({
+                        minLength: 2,
+                        delay: 300,
+                        focus: function (event, ui) {
+                            $("#condominios").val(ui.item.Nome);
+                            $("#condominioID").val(ui.item.ID);
+                            return false;
+                        },
+                        select: function (event, ui) {
+                            $("#condominios").val(ui.item.Nome);
+                            $("#condominioID").val(ui.item.ID);
+                            return false;
+                        },
+                        source: function(request, response) {
+                            if (cache.term == request.term && cache.content) {
+                                response(cache.content);
+                                return;
+                            }
+                            if (new RegExp(cache.term).test(request.term) && cache.content) {
+                                response($.ui.autocomplete.filter(cache.content, request.term));
+                                return;
+                            }
+                            $.ajax({
+                                url: "@Url.Action("ConstroiAutoComplete", "Condominio")",
+                                dataType: "json",
+                                data: request,
+                                success: function(data) {
+                                    cache.term = request.term;
+                                    cache.content = data;
+                                    response(data);
+                                }
+                            });
+                        }
+                    });
+                });
+            </script>
+        }
+    </body>
+</html>

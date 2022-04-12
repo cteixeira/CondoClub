@@ -1,0 +1,125 @@
+﻿@using CondoClub.Web.Models;
+
+@model IEnumerable<RecursoReserva>
+@Styles.Render("~/content/datepicker")
+<div class="main-container reserva-lista">
+    <div class="header">
+        <div class="title">
+            <h5>@Resources.Recurso.Reservas</h5>
+        </div>
+        <div class="options">
+           <a class="link-orange" href='@Url.Action("Index", "Calendario")'>@Resources.Geral.Voltar</a>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="search form">
+        @{ Html.RenderPartial("_ListaReservaFiltro", new CondoClub.Web.Models.ListaReservaFiltro()); } 
+    </div>
+    <div id="lista">@{ Html.RenderPartial("_ListaReserva", Model); }</div>
+    <div style="text-align: center;">
+        <a href="#" id="getMoreLink" onclick="GetMore(); return false;" class="link-orange" style="display:none">
+            @Resources.Comunicado.CarregarMais
+        </a>
+        <div class="message-loading" style="display:none;" id="loader">
+            <img src="~/content/images/loader.gif" alt="loading" />
+        </div>
+    </div>
+    @using (Ajax.BeginForm("_ListaReserva", null, new AjaxOptions
+    {
+        UpdateTargetId = "lista",
+        InsertionMode = InsertionMode.InsertAfter,
+        LoadingElementId = "loader",
+        OnComplete = "GetMoreComplete"
+    },
+        new { id = "getMore" }))
+    { 
+        @Html.Hidden("count")
+        @Html.Hidden("RecursoID",null, new { id = "getMoreRecursoID" })
+        @Html.Hidden("MoradorID", null, new { id = "getMoreMoradorID" })
+        @Html.Hidden("DataInicio", null, new { id = "getMoreDataInicio" })
+        @Html.Hidden("DataFim", null, new { id = "getMoreDataFim" })
+        @Html.Hidden("Estado", null, new { id = "getMoreEstado" })
+    }
+</div>
+@section scripts{
+    @Scripts.Render("~/scripts/datepicker")
+    <script type="text/javascript">
+        SetCalendar('calSearchDataInicio', { changeMonth: true, changeYear: true });
+        SetCalendar('calSearchDataFim', { changeMonth: true, changeYear: true });
+
+        //---- ini GetMore ----
+        var can_load = true;
+        var cheking_scroll = false;
+        var iniRegistos =  @ViewData["nrReservasIni"];
+        var nextRegistos = @ViewData["nrReservasNext"];
+        var countRegistos = 0;
+        
+        (function ($) {
+
+            initGetMore();
+
+        })(jQuery);
+
+        function AfterSearch(){
+            initGetMore();        
+        }
+
+        function initGetMore(){
+            countRegistos = $('.block-list-group').length;
+            if (iniRegistos > countRegistos){
+                can_load = false;
+                $('#getMoreLink').css('display', 'none');
+            }else{
+                can_load = true;
+                $('#getMoreLink').css('display', 'block');
+            }
+        }
+
+        function GetMore() {
+            if (can_load) {
+                can_load = false;
+                $('#getMoreLink').css('display', 'none');
+                countRegistos = $('.block-list-group').length;
+                var form = $("#formPesquisa");
+                $('#getMore').find('#count').val(countRegistos);
+                $('#getMore').find('#getMoreRecursoID').val(form.find("#RecursoID").val());
+                $('#getMore').find('#getMoreMoradorID').val(form.find("#MoradorID").val());
+                $('#getMore').find('#getMoreDataInicio').val(form.find('#calSearchDataInicio').val());
+                $('#getMore').find('#getMoreDataFim').val(form.find('#calSearchDataFim').val());
+                $('#getMore').find('#getMoreEstado').val(form.find("#Estado").val());
+                $('#getMore').trigger('submit');
+            }
+        }
+
+
+        function GetMoreComplete() {
+            totCom = $('.block-list-group').length;
+            if (totCom > countRegistos && totCom % nextRegistos == 0) {
+                can_load = true;
+                $('#getMoreLink').css('display', 'block');
+            }
+        }
+
+        $(window).bind('scroll', function (e) {
+            if (!cheking_scroll && can_load && isOnScreen($('#getMoreLink'))) {
+                cheking_scroll = true;
+                setTimeout(function () { cheking_scroll = false; }, 500);
+                GetMore();
+            }
+        });
+
+        isOnScreen = function (element) {
+            var curPos = element.offset();
+
+            var curBottom = curPos.top + (element.height() / 2);
+            if (/webkit.*mobile/i.test(navigator.userAgent)) {
+                //corrigir bug do offset no iphone
+                curBottom -= 50;
+            }
+            var screenHeight = $(window).height()
+            return (curBottom > (screenHeight + $(window).scrollTop())) ? false : true;
+        }
+        //---- end GetMore ----
+
+    </script>
+}

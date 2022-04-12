@@ -1,0 +1,3 @@
+﻿ALTER TABLE [dbo].[Agenda]
+    ADD CONSTRAINT [FK_Agenda_Pais] FOREIGN KEY ([PaisID]) REFERENCES [dbo].[Pais] ([PaisID]) ON DELETE NO ACTION ON UPDATE NO ACTION;
+

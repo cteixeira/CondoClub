@@ -1,0 +1,51 @@
+﻿@using System.Web.Helpers;
+
+@model IEnumerable<CondoClub.Web.Models.Estatistica.Categoria>
+
+@if (Model != null) {
+    <div class="block-list-group">
+
+        <div id="lineChart" style="margin-top: 20px; height: 300px;"></div>
+        <div id="pieChart" style="margin-top: 20px; height: 500px;"></div>
+
+        <script type="text/javascript">
+            dataChart = @Html.Raw(new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(Model));
+        </script>
+
+        @if (Model.Count() > 0) {
+            <table class="table">
+                <tr>
+                    <th>@Resources.Estatistica.TblCategoria</th>
+                    <th>@Resources.Estatistica.TblGrupo1</th>
+                    <th>@Resources.Estatistica.TblGrupo2</th>
+                    <th>@Resources.Estatistica.TblData</th>
+                    <th>@Resources.Estatistica.TblTotal</th>
+                </tr>
+    
+                @foreach (var item in Model) {
+                    <tr>
+                        <td>
+                            @Html.Raw(item.Designacao)
+                        </td>
+                        <td>
+                            @Html.Raw(item.Grupo1)
+                        </td>
+                        <td>
+                            @Html.Raw(item.Grupo2)
+                        </td>
+                        <td>
+                            @Html.Raw(Convert.ToDateTime(item.Data).ToShortDateString())
+                        </td>
+                        <td>
+                            @Html.Raw(item.Total.ToString("#,0"))
+                        </td>
+                    </tr>
+                }
+            </table>
+
+        }
+        else { 
+            <strong>@Resources.Geral.SemResultados</strong>
+        }
+    </div>
+}

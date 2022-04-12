@@ -1,0 +1,87 @@
+﻿@using CondoClub.Web.Models;
+@using CondoClub.Web.Controllers;
+
+@model Questionario
+
+<div class="header">
+    <span class="title" style="width: 100%;">@Model.Questao</span>
+</div>
+<div class="content" style="display:none;">
+    <div class="form-1column" style="margin-bottom: 20px; line-height: 30px;">
+        <div>- @Html.Raw(Model.Opcao1)</div>
+        <div class="survey-classification" style="width: @Model.TotalRespostasPorOpcaoPercentagem[1]%;">
+            <div style="width: 200px;">
+                @String.Concat(Model.TotalRespostasPorOpcao[1], 
+                    Resources.Questionario.Legenda2, "(", 
+                    Model.TotalRespostasPorOpcaoPercentagem[1], "%)")
+            </div>
+        </div>
+        <div>- @Html.Raw(Model.Opcao2)</div>
+        <div class="survey-classification" style="width: @Model.TotalRespostasPorOpcaoPercentagem[2]%">
+            @String.Concat(Model.TotalRespostasPorOpcao[2], 
+                Resources.Questionario.Legenda2, "(", 
+                Model.TotalRespostasPorOpcaoPercentagem[2], "%)")
+        </div>
+        @if (!string.IsNullOrEmpty(Model.Opcao3)) {
+            <div>- @Html.Raw(Model.Opcao3)</div>
+            <div class="survey-classification" style="width: @Model.TotalRespostasPorOpcaoPercentagem[3]%">
+                @String.Concat(Model.TotalRespostasPorOpcao[3],
+                    Resources.Questionario.Legenda2, "(",
+                    Model.TotalRespostasPorOpcaoPercentagem[3], "%)")
+            </div>
+        }
+        @if (!string.IsNullOrEmpty(Model.Opcao4)) {
+            <div>- @Html.Raw(Model.Opcao4)</div>
+            <div class="survey-classification" style="width: @Model.TotalRespostasPorOpcaoPercentagem[4]%">
+                @String.Concat(Model.TotalRespostasPorOpcao[4],
+                    Resources.Questionario.Legenda2, "(",
+                    Model.TotalRespostasPorOpcaoPercentagem[4], "%)")
+            </div>
+        }
+        @if (!string.IsNullOrEmpty(Model.Opcao5)) {
+            <div>- @Html.Raw(Model.Opcao5)</div>
+            <div class="survey-classification" style="width: @Model.TotalRespostasPorOpcaoPercentagem[5]%">
+                @String.Concat(Model.TotalRespostasPorOpcao[5],
+                    Resources.Questionario.Legenda2, "(",
+                    Model.TotalRespostasPorOpcaoPercentagem[5], "%)")
+            </div>
+        }
+        @if (!string.IsNullOrEmpty(Model.Opcao6)) {
+            <div>- @Html.Raw(Model.Opcao6)</div>
+            <div class="survey-classification" style="width: @Model.TotalRespostasPorOpcaoPercentagem[6]%">
+                @String.Concat(Model.TotalRespostasPorOpcao[6],
+                    Resources.Questionario.Legenda2, "(",
+                    Model.TotalRespostasPorOpcaoPercentagem[6], "%)")
+            </div>
+        }
+        @if (!string.IsNullOrEmpty(Model.Opcao7)) {
+            <div>- @Html.Raw(Model.Opcao7)</div>
+            <div class="survey-classification" style="width: @Model.TotalRespostasPorOpcaoPercentagem[7]%">
+                @String.Concat(Model.TotalRespostasPorOpcao[7],
+                    Resources.Questionario.Legenda2, "(",
+                    Model.TotalRespostasPorOpcaoPercentagem[7], "%)")
+            </div>
+        }
+        @if (!string.IsNullOrEmpty(Model.Opcao8)) {
+            <div>- @Html.Raw(Model.Opcao8)</div>
+            <div class="survey-classification" style="width: @Model.TotalRespostasPorOpcaoPercentagem[8]%">
+                @String.Concat(Model.TotalRespostasPorOpcao[8],
+                    Resources.Questionario.Legenda2, "(",
+                    Model.TotalRespostasPorOpcaoPercentagem[8], "%)")
+            </div>
+        }
+    </div>
+    <div class="form-1column">
+        <label class="value" style="font-size:.9em;">
+            @String.Concat(Resources.Questionario.Legenda1, Model.TotalRespostas, Resources.Questionario.Legenda2,
+                            Resources.Questionario.Legenda3, Model.Inicio.ToShortDateString(),
+                            Resources.Questionario.Legenda4, Model.Fim.ToShortDateString())
+        </label>
+    </div>
+    @if (Model.ID != null && Model.Permissoes.Contains(CondoClub.Regras.Enum.Permissao.Gravar)) {
+        <div class="toolbox-no-border">
+            <input type="button" onclick="EditRec(@Model.ID)" class="orange1-button" value="@Resources.Geral.Editar" />
+        </div>
+    }
+    <div class="clear"></div>
+</div>

@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="https://ccbbproxy.azurewebsites.net/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="https://ccbbproxy.azurewebsites.net/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="https://ccbbproxy.azurewebsites.net/">
+      <s:element name="GerarBoleto">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="boleto" type="tns:BoletoModel" />
+            <s:element minOccurs="0" maxOccurs="1" name="cedente" type="tns:CedenteModel" />
+            <s:element minOccurs="0" maxOccurs="1" name="sacado" type="tns:SacadoModel" />
+            <s:element minOccurs="0" maxOccurs="1" name="instrucoes" type="tns:ArrayOfInstrucaoModel" />
+            <s:element minOccurs="0" maxOccurs="1" name="MerchantKey" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="BoletoModel">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:EntidadeModel">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Vencimento" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ValorBoleto" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Carteira" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="NossoNumero" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="NumeroDocumento" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ValorCobrado" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CedenteId" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="SacadoId" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="EspecieDocumento" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="DataEmissao" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="Pago" type="s:boolean" />
+              <s:element minOccurs="0" maxOccurs="1" name="DataPago" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="LinhaDigitavel" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="Remessa" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="DataVenc" type="s:dateTime" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="EntidadeModel">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:TableServiceEntity" />
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="TableServiceEntity" abstract="true">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Timestamp" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="PartitionKey" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="RowKey" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="InstrucaoModel">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:EntidadeModel">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Codigo" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="NDias" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="BoletoId" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="SacadoModel">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:EntidadeModel">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="CPFCNPJ" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Nome" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Logradouro" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Numero" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Complemento" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Bairro" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Cidade" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CEP" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="UF" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="CedenteModel">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:EntidadeModel">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Agencia" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Conta" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CodigoCedente" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CPFCNPJ" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Nome" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Convenio" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Logradouro" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Numero" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Complemento" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Bairro" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Cidade" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CEP" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="UF" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ArrayOfInstrucaoModel">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="InstrucaoModel" nillable="true" type="tns:InstrucaoModel" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GerarBoletoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GerarBoletoResult" type="tns:RetornoModel" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="RetornoModel">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="ID" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="HtmlBoleto" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="LinhaDigitavel" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Excecoes" type="tns:ArrayOfString" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfString">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetBoleto">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="MerchantKey" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetBoletoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetBoletoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetLinhaDigitavel">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="MerchantKey" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetLinhaDigitavelResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetLinhaDigitavelResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BoletoPago">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="LinhaDigitavel" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="MerchantKey" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BoletoPagoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="BoletoPagoResult" nillable="true" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GerarBoletoSoapIn">
+    <wsdl:part name="parameters" element="tns:GerarBoleto" />
+  </wsdl:message>
+  <wsdl:message name="GerarBoletoSoapOut">
+    <wsdl:part name="parameters" element="tns:GerarBoletoResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetBoletoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetBoleto" />
+  </wsdl:message>
+  <wsdl:message name="GetBoletoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetBoletoResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetLinhaDigitavelSoapIn">
+    <wsdl:part name="parameters" element="tns:GetLinhaDigitavel" />
+  </wsdl:message>
+  <wsdl:message name="GetLinhaDigitavelSoapOut">
+    <wsdl:part name="parameters" element="tns:GetLinhaDigitavelResponse" />
+  </wsdl:message>
+  <wsdl:message name="BoletoPagoSoapIn">
+    <wsdl:part name="parameters" element="tns:BoletoPago" />
+  </wsdl:message>
+  <wsdl:message name="BoletoPagoSoapOut">
+    <wsdl:part name="parameters" element="tns:BoletoPagoResponse" />
+  </wsdl:message>
+  <wsdl:portType name="ProxySoap">
+    <wsdl:operation name="GerarBoleto">
+      <wsdl:input message="tns:GerarBoletoSoapIn" />
+      <wsdl:output message="tns:GerarBoletoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetBoleto">
+      <wsdl:input message="tns:GetBoletoSoapIn" />
+      <wsdl:output message="tns:GetBoletoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLinhaDigitavel">
+      <wsdl:input message="tns:GetLinhaDigitavelSoapIn" />
+      <wsdl:output message="tns:GetLinhaDigitavelSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BoletoPago">
+      <wsdl:input message="tns:BoletoPagoSoapIn" />
+      <wsdl:output message="tns:BoletoPagoSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ProxySoap" type="tns:ProxySoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GerarBoleto">
+      <soap:operation soapAction="https://ccbbproxy.azurewebsites.net/GerarBoleto" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBoleto">
+      <soap:operation soapAction="https://ccbbproxy.azurewebsites.net/GetBoleto" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLinhaDigitavel">
+      <soap:operation soapAction="https://ccbbproxy.azurewebsites.net/GetLinhaDigitavel" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BoletoPago">
+      <soap:operation soapAction="https://ccbbproxy.azurewebsites.net/BoletoPago" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ProxySoap12" type="tns:ProxySoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GerarBoleto">
+      <soap12:operation soapAction="https://ccbbproxy.azurewebsites.net/GerarBoleto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBoleto">
+      <soap12:operation soapAction="https://ccbbproxy.azurewebsites.net/GetBoleto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLinhaDigitavel">
+      <soap12:operation soapAction="https://ccbbproxy.azurewebsites.net/GetLinhaDigitavel" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BoletoPago">
+      <soap12:operation soapAction="https://ccbbproxy.azurewebsites.net/BoletoPago" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Proxy">
+    <wsdl:port name="ProxySoap" binding="tns:ProxySoap">
+      <soap:address location="https://ccbbproxy.azurewebsites.net/Services/Proxy.asmx" />
+    </wsdl:port>
+    <wsdl:port name="ProxySoap12" binding="tns:ProxySoap12">
+      <soap12:address location="https://ccbbproxy.azurewebsites.net/Services/Proxy.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

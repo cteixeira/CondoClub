@@ -1,0 +1,319 @@
+﻿@using CondoClub.Web.Models;
+@using CondoClub.Web.Controllers;
+
+@model IEnumerable<Condominio>
+
+@{ var permissoes = (List<CondoClub.Regras.CondominioPermissao>)ViewData["Permissoes"]; }
+@{ var filtro = (CondoClub.Web.Models.CondominioFiltro)ViewData["Filtro"]; }
+@Styles.Render("~/content/datepicker")
+
+<div class="main-container">
+    <div class="header">
+        <div class="title">
+            <h5>@Resources.Menu.Condominios</h5>
+        </div>
+        @if (permissoes.Contains(CondoClub.Regras.CondominioPermissao.Gravar) ||
+            permissoes.Contains(CondoClub.Regras.CondominioPermissao.EnviarConvites))
+        {
+            <div class="options">
+                @if (permissoes.Contains(CondoClub.Regras.CondominioPermissao.EnviarConvites))
+                {
+                    <a id="btnInvite" href="#" class="link-orange" onclick="$('#invite').slideToggle();return false;">
+                        @Resources.Condominio.Convite
+                    </a>
+                }
+                @if (permissoes.Contains(CondoClub.Regras.CondominioPermissao.Gravar) &&
+                    permissoes.Contains(CondoClub.Regras.CondominioPermissao.EnviarConvites))
+                {
+                    <span class="separator"></span>
+                }
+                @if (permissoes.Contains(CondoClub.Regras.CondominioPermissao.Gravar))
+                {
+                    <a id="btnNew" href="#" class="link-orange">@Resources.Geral.Novo</a>
+                }
+            </div>
+        }
+        <div class="clear"></div>
+    </div>
+    @using (Html.BeginForm("Pesquisa", "Condominio", FormMethod.Post, new { @id = "formSearch" }))
+    {
+        <div class="search">
+            <div class="filter-column1">
+                <b>@(Resources.Geral.Pesquisar + ":")</b>
+                @Html.TextBoxFor(m => filtro.TermoPesquisa, new { placeholder = Resources.Condominio.Pesquisar, type = "search" })
+            </div>
+            <div class="filter-column2">
+                <b>@(Resources.Condominio.EstadoRegisto + ":")</b>
+                @Html.DropDownListFor(m => filtro.EstadoPesquisa, new CondominioController().ConstroiDropDownEstados(), Resources.Utilizador.Todos)
+            </div>
+            @if (CondoClub.Web.ControladorSite.Utilizador.Perfil == CondoClub.Regras.Enum.Perfil.CondoClub)
+            {
+            <div class="form-1column" style="padding:0px">
+                <b>@(Resources.Condominio.Empresa + ":")</b>
+                @Html.DropDownListFor(m => filtro.EmpresaPesquisa, new EmpresaController().ConstroiDropDown(), String.Empty)
+            </div>
+            }
+            <div class="clear"></div>
+            <div class="toolbox-no-border">
+                <input type="submit" class="button-option orange1-button" value="@Resources.Geral.Pesquisar" />
+                <input id="btnResetPesquisa" type="button" class="button-option orange1-button" value="@Resources.Geral.Reset" />
+                <div class="clear"></div>
+            </div>
+        </div>
+    }
+    <div class="separator10"></div>
+    <!--novo registo---------------------->
+    @if (permissoes.Contains(CondoClub.Regras.CondominioPermissao.Gravar))
+    {
+        <div id="new" style="display: none;">
+            @using (Ajax.BeginForm("Gravar",
+                new AjaxOptions
+                {
+                    UpdateTargetId = "lista",
+                    InsertionMode = InsertionMode.InsertBefore,
+                    OnSuccess = "AfterSave"
+                }))
+            {
+                Html.RenderPartial("_Detalhe", new Condominio());
+            }
+        </div>
+    }
+    @if (permissoes.Contains(CondoClub.Regras.CondominioPermissao.EnviarConvites))
+    {
+        <div id="invite" style="display: none;">
+            @using (Ajax.BeginForm("EnviarConvite",
+                new AjaxOptions { }))
+            {
+                Html.RenderPartial("_Convite", new CondominioConvite());
+            }
+        </div>
+    }
+
+    <div id="lista">@{ Html.RenderPartial("_Lista", Model); }</div>
+
+    <div style="text-align: center;">
+        <a href="#" id="getMoreLink" onclick="GetMore(); return false;" class="link-orange" style="display:none">
+            @Resources.Comunicado.CarregarMais
+        </a>
+        <div class="message-loading" style="display:none;" id="loader">
+            <img src="~/content/images/loader.gif" alt="loading" />
+        </div>
+    </div>
+
+    @using (Ajax.BeginForm("_Lista", null, new AjaxOptions
+    {
+        UpdateTargetId = "lista",
+        InsertionMode = InsertionMode.InsertAfter,
+        LoadingElementId = "loader",
+        OnComplete = "GetMoreComplete"
+    },
+        new { id = "getMore" }))
+    { 
+        @Html.Hidden("termoPesquisa")
+        @Html.Hidden("estadoPesquisa")
+        @Html.Hidden("count")
+    }
+
+    @using (Ajax.BeginForm("_DetalheEditar", null,
+        new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "#"},
+        new { id = "editRec" }))
+    {
+        @Html.Hidden("id")
+    }
+</div>
+@section scripts{
+    @Scripts.Render("~/scripts/fileuploader")
+    @Scripts.Render("~/scripts/addresspicker")
+    @*@Scripts.Render("~/scripts/invitepicker")*@
+
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBws9wlXadPEXoNj74kmzjXd_5Du7NvVIw&libraries=places&sensor=false"></script>
+
+    <script type="text/javascript">
+        $('.block-list-group .header').live('click', function () {
+            var self = $(this);
+
+            $('.block-list-group .content:visible').not(self.next('.content')).hide(); 
+            $('html, body').animate({
+                    scrollTop: self.offset().top - 10
+                }, 300);
+
+            $(this).nextAll('.block-list-group .content').slideToggle(400, function(){
+                $(this).find(".google-map-supplier").AddressPickerReadOnly({
+                    Latitude: $(this).find("#Latitude").val(),
+                    Longitude: $(this).find("#Longitude").val()
+                });
+            });
+        });
+        
+        var primeiroClick = true;
+        $('#btnNew').click(function(){
+            $('#new').slideToggle(400, function(){
+                if(primeiroClick){
+                    $(this).find(".google-map-supplier").AddressPicker();
+                    primeiroClick = false;
+                }
+            });
+
+            return false;
+        });       
+
+        function EditRec(id) {
+            $('#editRec').attr('data-ajax-update', '#' + id);
+            $('#editRec').attr('data-ajax-complete', "ResetValidators(" + id + "); BeforeUpdate(" + id + ");");
+            $('#editRec').find('#id').val(id);
+            $('#editRec').trigger('submit');
+        }
+
+        function AfterSave(data) {
+            if (data.indexOf('alert(') == -1) {
+                $('#new').slideToggle('', function () {
+                    $('form', $(this))[0].reset();
+                    $(".form-3column img", $(this)).attr('src', "@Url.Action("Avatar", "Ficheiro", new { grande = true })");
+                    $("#lista .block-list-group:first").PulseAnimation();
+                });
+            }
+        }
+
+        function AfterUpdate(data, id) {
+            if (data.indexOf('alert(') == -1) {
+                $("#" + id).PulseAnimation();
+            }
+        }
+
+        function CloseNewRec() {
+            $('#new').slideToggle();
+        }
+
+        function AfterDelete(id) {
+            $("#" + id).hide('slow', function () { $(this).remove(); });
+        }
+
+        /**** Fotos *****/
+        $("#new .file-uploader-container").CustomFileUpload({
+            URLUploadFile: "@Url.Action("GravarImagemForm", "Ficheiro")",
+            DropZone: $("#new .file-uploader-container"),
+            SingleFileUploads: true,
+            LimitMultiFileUploads: 1,
+            DoneFunction: function(e, data) { UploadFotoDone(e, data, $("#new")); },
+            AlternativeButtonLabel: "@Resources.Geral.MaisFoto"
+        });
+
+        $("#new .google-map-supplier").AddressPicker();
+
+//        $("#invite").InvitePicker();
+        function Reset() {
+            $("#Destinatarios").val('');
+            $("#invite").slideToggle();
+        }
+
+        $("#resetnewinv").click(function(){
+            Reset();
+        });
+
+        function BeforeUpdate(id){
+            $("#" + id + " .file-uploader-container").CustomFileUpload({
+                URLUploadFile: "@Url.Action("GravarImagemForm", "Ficheiro")",
+                DropZone: $("#" + id + " .file-uploader-container"),
+                SingleFileUploads: true,
+                LimitMultiFileUploads: 1,
+                DoneFunction: function(e, data) { UploadFotoDone(e, data, $("#" + id)); },
+                AlternativeButtonLabel: "@Resources.Geral.MaisFoto"
+            });
+
+            BindClickPhoto($("#" + id));
+
+            $("#" + id + " .google-map-supplier").AddressPicker({
+                Latitude: $("#" + id + " #Latitude").val(),
+                Longitude:  $("#" + id + " #Longitude").val()
+            });
+        }
+
+        function UploadFotoDone(e, data, container){
+            var fotoID = data[0].ID;
+            container.find(".photo img").attr("src", "@Url.Action("Avatar", "Ficheiro")/" + fotoID);
+            container.find("#AvatarID").val(fotoID);
+        }
+
+        $(function(){
+            BindClickPhoto($("#new"));
+
+            $("#btnResetPesquisa").click(function () {
+                $(".search input[type='search']").val('');
+                $(".search select").val('');
+                $("#formSearch").submit();
+            });
+        });
+
+        function BindClickPhoto(container){
+            var modifyButton = container.find(".photo .modify-button");
+            container.find(".photo").bind({
+                click: function(){
+                    container.find(".file-uploader-container input[type='button']").click();            
+                },
+                mouseenter: function(){
+                    modifyButton.css('display', 'inline-block');
+                },
+                mouseleave: function(){
+                    modifyButton.hide();
+                }
+            });
+        }
+
+        //---- ini GetMore ----
+        var can_load = true;
+        var cheking_scroll = false;
+        var iniCom = @ViewData["nrCondominiosIni"];
+        var nextCom = @ViewData["nrCondominiosNext"];
+        var countCom = 0;
+        
+        (function ($) {
+            $("#termoPesquisa").val($("#TermoPesquisa").val());
+            $("#estadoPesquisa").val($("#EstadoPesquisa").val());
+
+            countCom = $('.block-list-group').length;
+            if (iniCom > countCom){
+                can_load = false;
+                $('#getMoreLink').css('display', 'none');
+            }
+        })(jQuery);
+
+        function GetMore() {
+            if (can_load) {
+                can_load = false;
+                $('#getMoreLink').css('display', 'none');
+                countCom = $('.block-list-group').length;
+                $('#getMore').find('#count').val(countCom);
+                $('#getMore').trigger('submit');
+            }
+        }
+
+        function GetMoreComplete() {
+            totCom = $('.block-list-group').length;
+            if (totCom > countCom && totCom % nextCom == 0) {
+                can_load = true;
+                $('#getMoreLink').css('display', 'block');
+            }
+        }
+
+        $(window).bind('scroll', function (e) {
+            if (!cheking_scroll && can_load && isOnScreen($('#getMoreLink'))) {
+                cheking_scroll = true;
+                setTimeout(function () { cheking_scroll = false; }, 500);
+                GetMore();
+            }
+        });
+
+        isOnScreen = function (element) {
+            var curPos = element.offset();
+
+            var curBottom = curPos.top + (element.height() / 2);
+            if (/webkit.*mobile/i.test(navigator.userAgent)) {
+                //corrigir bug do offset no iphone
+                curBottom -= 50;
+            }
+            var screenHeight = $(window).height()
+            return (curBottom > (screenHeight + $(window).scrollTop())) ? false : true;
+        }
+        //---- end GetMore ----
+    </script>
+}

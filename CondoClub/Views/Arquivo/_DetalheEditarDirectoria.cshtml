@@ -1,0 +1,16 @@
+﻿@using CondoClub.Web.Models;
+@using CondoClub.Web.Controllers;
+
+@model ArquivoDirectoria
+
+
+@using (Ajax.BeginForm("GravarDirectoria",
+    new AjaxOptions
+    {
+        UpdateTargetId = "dir_" + Model.ID.Value,
+        InsertionMode = InsertionMode.Replace,
+        OnSuccess = "AfterUpdate(data, " + "'dir_" + Model.ID.Value + "')"
+    }))
+{
+    Html.RenderPartial("_DetalheDirectoria", Model);
+}

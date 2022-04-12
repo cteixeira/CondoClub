@@ -1,0 +1,24 @@
+﻿@using CondoClub.Web.Models;
+@using CondoClub.Web.Controllers;
+
+@model IEnumerable<CondoClub.Regras.Fornecedor.Categoria>
+
+@{ var permissoes = (List<CondoClub.Regras.Fornecedor.Permissao>)ViewData["Permissoes"]; }
+
+<div class="main-container">
+    <div class="header">
+        <div class="title"><h5>@Resources.Servico.TituloServicos</h5></div>
+        <div class="clear"></div>
+    </div>
+    @using (Html.BeginForm("Pesquisa", "Servico")) {
+        <div class="search">
+            @Html.TextBox("TermoPesquisa", null, new { placeholder = Resources.Servico.TermoPesquisa, type = "search" })
+            <div class="toolbox-no-border">
+                <input type="submit" class="button-option orange1-button" value="@Resources.Geral.Pesquisar" />
+                <div class="clear"></div>
+            </div>
+        </div>
+    }
+    <div class="separator10"></div>
+    <div id="lista">@{ Html.RenderPartial("_ListaCategoria", Model); }</div>
+</div>

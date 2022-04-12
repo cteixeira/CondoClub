@@ -1,0 +1,34 @@
+﻿@model CondoClub.Web.Models.Servico
+
+<div class="header">
+    <div class="user-image">
+        <img src="@Url.Action("Avatar", "Ficheiro", new { id = Model.AvatarID })" alt="" />
+    </div>
+    <div class="user-info">                   
+        @Html.ActionLink(Model.Nome, "Fornecedor", null, new { nome = Model.Nome}, new { @class = "user" })
+    </div>
+    <div style="float:right; font-size:1em;">
+        @Html.ActionLink(@Resources.Geral.Abrir, "Fornecedor", null, new { nome = Model.Nome }, new { @class="link-orange" })
+    </div>
+    <div class="clear"></div>
+</div>
+
+<div class="message">
+    @Html.Raw(Model.Descricao)
+    <div style="font-size:0.8em; color: gray; margin-top:5px;">
+        @if (!String.IsNullOrEmpty(Model.Endereco)){ @Html.Raw(String.Concat(Model.Endereco, "&nbsp;&bull;&nbsp;")) }
+        @if (!String.IsNullOrEmpty(Model.Localidade)) { @Html.Raw(String.Concat(Model.Localidade, "&nbsp;&bull;&nbsp;")) }
+        @if (!String.IsNullOrEmpty(Model.Cidade)) { @Html.Raw(String.Concat(Model.Cidade, "&nbsp;&bull;&nbsp;")) }
+        @if (!String.IsNullOrEmpty(Model.Estado)) { @Html.Raw(String.Concat(Model.Estado, "&nbsp;&bull;&nbsp;")) }
+        @if (!String.IsNullOrEmpty(Model.CodigoPostal)) { @Html.Raw(Model.CodigoPostal) }
+    </div>
+</div>
+
+<div class="menu">
+    <ul class="actions">
+        <li><span class="rating-stars @Model.CssClassificacaoMedia"></span></li>
+    </ul>
+    <ul class="info">
+        <li>@(String.Concat(Model.TotalComentarios.ToString(), " ", Resources.Servico.Comentarios))</li>
+    </ul>   
+</div>

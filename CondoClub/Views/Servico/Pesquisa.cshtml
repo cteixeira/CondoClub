@@ -1,0 +1,112 @@
+﻿@using CondoClub.Web.Models;
+@using CondoClub.Web.Controllers;
+
+@model IEnumerable<Servico>
+
+@{ var permissoes = (List<CondoClub.Regras.Fornecedor.Permissao>)ViewData["Permissoes"]; }
+
+<div class="main-container">
+
+    <div class="section-header"><h5>@Resources.Servico.TituloServicos</h5></div>
+    <div class="clear"></div>
+
+    @using (Html.BeginForm("Pesquisa", "Servico")) {
+        <div class="new-message">
+            <div class="message-textbox">
+                @Html.TextBox("TermoPesquisa", ViewData["TermoPesquisa"], new { placeholder = Resources.Servico.TermoPesquisa })
+            </div>
+            <div class="toolbox-no-border">
+                <input type="submit" class="button-option orange1-button" value="@Resources.Geral.Pesquisar" />
+                <input type="button" class="button-option orange3-button" onclick="window.location='@Url.Action("Index")'" value="@Resources.Geral.Cancelar" />
+                <div class="clear"></div>
+            </div>
+        </div>
+    }
+    
+    @if (Model.Count() > 0) {
+        <div id="lista">@{ Html.RenderPartial("_ListaServico", Model); }</div>
+        
+        if (Model.Count() == Convert.ToInt32(ViewData["nrServicosIni"])) {
+            <div style="text-align: center;">
+                <a href="#" id="getMoreLink" onclick="GetMore(); return false;" class="link-orange">@Resources.Comunicado.CarregarMais</a>
+                <div class="message-loading" style="display:none;" id="loader">
+                    <img src="~/content/images/loader.gif" alt="loading" />
+                </div>
+            </div>
+        }
+    }
+    else { 
+        <h5 class="block-list-group-empty">@Resources.Servico.SemResultados</h5>
+    }
+
+    @using (Ajax.BeginForm("_ListaServico", null, new AjaxOptions {
+        UpdateTargetId = "lista",
+        InsertionMode = InsertionMode.InsertAfter,
+        LoadingElementId = "loader",
+        OnComplete = "GetMoreComplete"
+    },
+        new { id = "getMore" })) { 
+        @Html.Hidden("count")
+        @Html.Hidden("TermoPesquisa", ViewData["TermoPesquisa"])}
+</div>
+
+
+@section scripts{
+    <script type="text/javascript">
+
+        //---- ini GetMore ----
+        var can_load = true;
+        var cheking_scroll = false;
+        var iniCom = @ViewData["nrServicosIni"];
+        var nextCom = @ViewData["nrServicosNext"];
+        var countCom = 0;
+
+        (function ($) {
+            countCom = $('.announcement').length;
+            if (iniCom > countCom){
+                can_load = false;
+                $('#getMoreLink').css('display', 'none');
+            }
+        })(jQuery);
+
+        function GetMore() {
+            if (can_load) {
+                can_load = false;
+                $('#getMoreLink').css('display', 'none');
+                countCom = $('.announcement').length;
+                $('#getMore').find('#count').val(countCom);
+                $('#getMore').trigger('submit');
+            }
+        }
+
+        function GetMoreComplete() {
+            totCom = $('.announcement').length
+            if (totCom > countCom && totCom % nextCom == 0) {
+                can_load = true;
+                $('#getMoreLink').css('display', 'block');
+            }
+        }
+
+        $(window).bind('scroll', function () {
+            if (!cheking_scroll && can_load && isOnScreen($('#getMoreLink'))) {
+                cheking_scroll = true;
+                setTimeout(function () { cheking_scroll = false; }, 500);
+                GetMore();
+            }
+        });
+
+        isOnScreen = function (element) {
+            var curPos = element.offset();
+            var curBottom = curPos.top + (element.height() / 2);
+            if (/webkit.*mobile/i.test(navigator.userAgent)) {
+                //corrigir bug do offset no iphone
+                curBottom -= 50;
+            }
+            var screenHeight = $(window).height()
+            return (curBottom > (screenHeight + $(window).scrollTop())) ? false : true;
+        }
+        //---- end GetMore ----
+
+    </script>
+
+}

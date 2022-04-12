@@ -1,0 +1,143 @@
+﻿@using CondoClub.Web.Models;
+@using CondoClub.Web.Controllers;
+
+@model IEnumerable<Veiculo>
+
+@{ var permissoes = (List<CondoClub.Regras.Enum.Permissao>)ViewData["Permissoes"]; }
+
+<div class="main-container">
+    <div class="header">
+        <div class="title">
+            <h5>@Resources.Menu.Veiculos</h5>
+        </div>
+        @if (permissoes.Contains(CondoClub.Regras.Enum.Permissao.Gravar))
+        {
+            <div class="options">
+                <a href="#" class="link-orange" onclick="$('#new').slideToggle(''); return false;" style="">
+                    @Resources.Geral.Novo
+                </a>
+            </div>
+        }
+        <div class="clear"></div>
+    </div>
+    <div class="search">
+        <input id="txtPesquisar" type="search" placeholder="@Resources.Geral.Pesquisar" />
+    </div>
+    <div class="separator10"></div>
+    <!--novo registo---------------------->
+    @if (permissoes.Contains(CondoClub.Regras.Enum.Permissao.Gravar))
+    {
+        <div id="new" style="display: none;">
+            @using (Ajax.BeginForm("Gravar",
+                new AjaxOptions
+                {
+                    UpdateTargetId = "lista",
+                    InsertionMode = InsertionMode.InsertBefore,
+                    OnSuccess = "AfterSave"
+                }))
+            {
+                Html.RenderPartial("_Detalhe", new Veiculo());
+            }
+        </div>
+    }
+
+    <div id="lista">@{ Html.RenderPartial("_Lista", Model); }</div>
+
+    @using (Ajax.BeginForm("_DetalheEditar", null,
+        new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "#" },
+        new { id = "editRec" }))
+    {
+        @Html.Hidden("id")
+    }
+</div>
+
+@section scripts{
+    @Scripts.Render("~/scripts/fileuploader")
+
+    <script type="text/javascript">
+        $('.block-list-group .header').live('click', function () {
+
+            var self = $(this);
+            $('.block-list-group .content:visible').not(self.next('.content')).hide();
+            $('html, body').animate({
+                scrollTop: self.offset().top - 10
+            }, 300);
+
+            $(this).nextAll('.block-list-group .content').slideToggle();
+        });   
+
+        function EditRec(id) {
+            $('#editRec').attr('data-ajax-update', '#' + id);
+            $('#editRec').attr('data-ajax-complete', "ResetValidators(" + id + "); BeforeUpdate(" + id + ");");
+            $('#editRec').find('#id').val(id);
+            $('#editRec').trigger('submit');
+        }
+
+        function AfterSave(data) {
+            if (data.indexOf('alert(') == -1) {
+                $('#new').slideToggle('', function () {
+                    $(".form-2column input:not([type='submit']):not([type='button'])", $(this)).val('');
+                    $(".form-2column select", $(this)).val('');
+                    $(".form-2column img", $(this)).attr('src', "@Url.Action("Avatar", "Ficheiro", new { grande = true })");
+                    $("#lista .block-list-group:first").PulseAnimation();
+                });
+            }
+        }
+
+        function AfterUpdate(data, id) {
+            if (data.indexOf('alert(') == -1) {
+                $("#" + id).PulseAnimation();
+            }
+        }
+
+        function CloseNewRec() {
+            $('#new').slideToggle();
+        }
+
+        function AfterDelete(id) {
+            $("#" + id).hide('slow', function () { $(this).remove(); });
+        }
+
+        $(function () {
+            $('#txtPesquisar').keyup(function () {
+                var keywords = RemoverAcentos($(this).val().toLowerCase());
+
+                $('#lista .block-list-group .header').each(function () {
+                    if (RemoverAcentos($('span', $(this)).text().toLowerCase()).indexOf(keywords) == -1) {
+                        $(this).parent().hide();
+                    }
+                    else {
+                        $(this).parent().show();
+                    }
+                });
+            });
+        });
+
+        /**** Fotos *****/
+        $("#new .file-uploader-container").CustomFileUpload({
+            URLUploadFile: "@Url.Action("GravarImagemForm", "Ficheiro")",
+            DropZone: $("#new .file-uploader-container"),
+            SingleFileUploads: true,
+            LimitMultiFileUploads: 1,
+            DoneFunction: function(e, data) { UploadFotoDone(e, data, $("#new")); },
+            AlternativeButtonLabel: "@Resources.Geral.MaisFoto"
+        });
+
+        function BeforeUpdate(id){
+            $("#" + id + " .file-uploader-container").CustomFileUpload({
+                URLUploadFile: "@Url.Action("GravarImagemForm", "Ficheiro")",
+                DropZone: $("#" + id + " .file-uploader-container"),
+                SingleFileUploads: true,
+                LimitMultiFileUploads: 1,
+                DoneFunction: function(e, data) { UploadFotoDone(e, data, $("#" + id)); },
+                AlternativeButtonLabel: "@Resources.Geral.MaisFoto"
+            });
+        }
+
+        function UploadFotoDone(e, data, container){
+            var fotoID = data[0].ID;
+            container.find(".photo img").attr("src", "@Url.Action("Avatar", "Ficheiro")/" + fotoID);
+            container.find("#FotoID").val(fotoID);
+        }
+    </script>
+}

@@ -1,0 +1,24 @@
+﻿@model CondoClub.Web.Models.Comunicado
+
+<div id="newAnnouncement" class="new-announcement">
+
+    @Html.ValidationSummary()
+
+    <div class="announcement-textarea">
+        @Html.TextAreaFor(m => m.Texto, new { placeholder = Resources.Comunicado.Texto })
+    </div>
+    <div class="announcement-textbox" id="addVideo" style="display:none; margin-bottom:6px;">
+        @Html.TextBoxFor(m => m.Video, new { placeholder = Resources.Comunicado.Video })
+    </div>
+    <div class="toolbox">
+        <input type="submit" class="button-option orange1-button" value="@Resources.Geral.Partilhar" />
+        @{ Html.RenderPartial("_FileUploader", "orange1-button"); }
+        <!--input type="file" id="fileUp" name="fileUp" style="display: none;" accept="image/*" onchange="SetFileName();" />
+        <input type="button" onclick="$('#fileUp').trigger('click');" class="button-option orange2-button" value="@Resources.Comunicado.AdicionarImagem" /-->
+        <input type="button" onclick="$('#addVideo').toggle();" class="button-option orange1-button" value="@Resources.Comunicado.AdicionarVideo" />
+        <div class="clear"></div>
+    </div>
+    @Html.HiddenFor(m => m.ImagemID)
+    <div id="fileName"></div>
+    <input type="reset" id="resetnewrec" style="display:none;" class="button-option orange3-button" onclick="ResetNewRec();" value="@Resources.Geral.Cancelar" />
+</div>

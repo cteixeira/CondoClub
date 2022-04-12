@@ -1,0 +1,396 @@
+﻿@using CondoClub.Web.Models;
+@using CondoClub.Web.Controllers;
+@using CondoClub.Web.Controllers.DadosMestre;
+
+@model IEnumerable<Utilizador>
+
+@{ var permissoes = (List<CondoClub.Regras.Enum.Permissao>)ViewData["Permissoes"]; }
+@{ var filtro = (CondoClub.Web.Models.UtilizadorFiltro)ViewData["Filtro"]; }
+<div class="main-container">
+    <div class="header">
+        <div class="title">
+            <h5>@Resources.Menu.Utilizadores</h5>
+        </div>
+        @if (permissoes.Contains(CondoClub.Regras.Enum.Permissao.Gravar))
+        {
+            <div class="options">
+                <a href="#" class="link-orange" onclick="$('#new').slideToggle(''); return false;">
+                    @Resources.Geral.Novo
+                </a>
+            </div>
+        }
+        <div class="clear"></div>
+    </div>
+    @using (Html.BeginForm("Pesquisa", "Utilizador", FormMethod.Post, new { @id = "formSearch" }))
+    {
+        <div class="search">
+            <div class="filter-column1">
+                <b>@(Resources.Geral.Pesquisar + ":")</b>
+                @*@Html.TextBox("TermoPesquisa", null, new { placeholder = Resources.Geral.Pesquisar, type = "search" })*@
+                @Html.TextBoxFor(m => filtro.TermoPesquisa, new { placeholder = Resources.Geral.Pesquisar, type = "search" })
+            </div>
+            <div class="filter-column2">
+                <b>@(Resources.Condominio.EstadoRegisto + ":")</b>
+                @*@Html.DropDownList("EstadoPesquisa", new UtilizadorController().ConstroiDropDownEstados(), Resources.Utilizador.Todos)*@
+                @Html.DropDownListFor(m => filtro.EstadoPesquisa, new UtilizadorController().ConstroiDropDownEstados(), Resources.Utilizador.Todos)
+            </div>
+            <div class="filter-column-left">
+                <b>@(Resources.Utilizador.PerfilUtilizador + ":")</b>
+                @*@Html.DropDownList("PerfilPesquisa", new PerfilUtilizadorController().ConstroiDropDown(), "")*@
+                @Html.DropDownListFor(m => filtro.PerfilPesquisaInt, new PerfilUtilizadorController().ConstroiDropDown(), String.Empty)
+            </div>
+            <div class="filter-column-right">
+                <b>@(Resources.Utilizador.Condominio + ":")</b>
+                @*@Html.DropDownList("CondominioPesquisa", new CondominioController().ConstroiDropDown(), "")*@
+                @Html.DropDownListFor(m => filtro.CondominioPesquisa, new CondominioController().ConstroiDropDown(), String.Empty)
+            </div>
+            <div class="filter-column-left">
+                <b>@(Resources.Utilizador.Empresa + ":")</b>
+                @*@Html.DropDownList("EmpresaPesquisa", new EmpresaController().ConstroiDropDown(), "")*@
+                @Html.DropDownListFor(m => filtro.EmpresaPesquisa, new EmpresaController().ConstroiDropDown(), String.Empty)
+            </div>
+            <div class="filter-column-right">
+                <b>@(Resources.Utilizador.Fornecedor + ":")</b>
+                @*@Html.DropDownList("FornecedorPesquisa", new FornecedorController().ConstroiDropDown(), "")*@
+                @Html.DropDownListFor(m => filtro.FornecedorPesquisa, new FornecedorController().ConstroiDropDown(), String.Empty)
+            </div>
+            <div class="clear"></div>
+            <div class="toolbox-no-border">
+                <input type="submit" class="button-option orange1-button" value="@Resources.Geral.Pesquisar" />
+                <input id="btnResetPesquisa" type="button" class="button-option orange1-button" value="@Resources.Geral.Reset" />
+                <div class="clear"></div>
+            </div>
+        </div>
+    }
+    <div class="separator10"></div>
+    <!--novo registo---------------------->
+    @if (permissoes.Contains(CondoClub.Regras.Enum.Permissao.Gravar))
+    {
+        <div id="new" style="display: none;">
+            @using (Ajax.BeginForm("Gravar",
+                new AjaxOptions
+                {
+                    UpdateTargetId = "lista",
+                    InsertionMode = InsertionMode.InsertBefore,
+                    OnSuccess = "AfterSave"
+                }))
+            {
+                Html.RenderPartial("_Detalhe", new Utilizador());
+            }
+        </div>
+    }
+
+    <div id="lista">@{ Html.RenderPartial("_Lista", Model); }</div>
+
+    <div style="text-align: center;">
+        <a href="#" id="getMoreLink" onclick="GetMore(); return false;" class="link-orange" style="display:none">
+            @Resources.Comunicado.CarregarMais
+        </a>
+        <div class="message-loading" style="display:none;" id="loader">
+            <img src="~/content/images/loader.gif" alt="loading" />
+        </div>
+    </div>
+
+    @using (Ajax.BeginForm("_Lista", null, new AjaxOptions
+        {
+            UpdateTargetId = "lista",
+            InsertionMode = InsertionMode.InsertAfter,
+            LoadingElementId = "loader",
+            OnComplete = "GetMoreComplete"
+        },
+        new { id = "getMore" }))
+    { 
+        @Html.Hidden("termoPesquisa")
+        @Html.Hidden("estadoPesquisa")
+        @Html.Hidden("perfilPesquisaInt")
+        @Html.Hidden("condominioPesquisa")
+        @Html.Hidden("empresaPesquisa")
+        @Html.Hidden("fornecedorPesquisa")
+        @Html.Hidden("count")
+    }
+
+    @using (Ajax.BeginForm("_DetalheEditar", null,
+        new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "#" },
+        new { id = "editRec" }))
+    {
+        @Html.Hidden("id")
+    }
+
+    @using (Ajax.BeginForm("_DetalheEditarPassword", null,
+        new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "#" },
+        new { id = "editPass" }))
+    {
+        @Html.Hidden("id")
+    }
+</div>
+@section scripts{
+    @Scripts.Render("~/scripts/fileuploader")
+
+    <script type="text/javascript">
+        $('.block-list-group .header').live('click', function () {
+
+            var self = $(this);
+            $('.block-list-group .content:visible').not(self.next('.content')).hide();
+            $('html, body').animate({
+                scrollTop: self.offset().top - 10
+            }, 300);
+
+            $(this).nextAll('.block-list-group .content').slideToggle();
+        });
+
+        function EditRec(id) {
+            $('#editRec').attr('data-ajax-update', '#' + id);
+            $('#editRec').attr('data-ajax-complete', "ResetValidators(" + id + "); BeforeUpdate(" + id + ");");
+            $('#editRec').find('#id').val(id);
+            $('#editRec').trigger('submit');
+        }
+
+        function EditPass(id) {
+            $('#editPass').attr('data-ajax-update', '#' + id);
+            $('#editPass').attr('data-ajax-complete', "ResetValidators(" + id + ");");
+            $('#editPass').find('#id').val(id);
+            $('#editPass').trigger('submit');
+        }
+
+        function AfterSave(data) {
+            if (data.indexOf('alert(') == -1) {
+                $('#new').slideToggle('', function () {
+                    $(".form input:not([type='submit'],[type='button'],[type='reset'],[type='checkbox'],[type='hidden'])", 
+                        $(this)).val('');
+                    $(".form select", $(this)).val('');
+                    $(".form img", $(this)).attr('src', "@Url.Action("Avatar", "Ficheiro", new { grande = true })");
+                    $("#lista .block-list-group:first").PulseAnimation();
+                });
+            }
+        }
+
+        function AfterUpdate(data, id) {
+            if (data.indexOf('alert(') == -1) {
+                $("#" + id).PulseAnimation();
+            }
+        }
+
+        function CloseNewRec() {
+            $('#new').slideToggle();
+        }
+
+        function AfterDelete(id) {
+            $("#" + id).hide('slow', function () { $(this).remove(); });
+        }
+
+        /**** Fotos *****/
+        $("#new .file-uploader-container").CustomFileUpload({
+            URLUploadFile: "@Url.Action("GravarImagemForm", "Ficheiro")",
+            DropZone: $("#new .file-uploader-container"),
+            SingleFileUploads: true,
+            LimitMultiFileUploads: 1,
+            DoneFunction: function(e, data) { UploadFotoDone(e, data, $("#new")); },
+            AlternativeButtonLabel: "@Resources.Geral.MaisFoto"
+        });
+
+        function BeforeUpdate(id){
+            $("#" + id + " .file-uploader-container").CustomFileUpload({
+                URLUploadFile: "@Url.Action("GravarImagemForm", "Ficheiro")",
+                DropZone: $("#" + id + " .file-uploader-container"),
+                SingleFileUploads: true,
+                LimitMultiFileUploads: 1,
+                DoneFunction: function(e, data) { UploadFotoDone(e, data, $("#" + id)); },
+                AlternativeButtonLabel: "@Resources.Geral.MaisFoto"
+            });
+
+            BindClickPhoto($("#" + id));
+
+            ValidarCamposRegisto(id);
+
+            $("#" + id + " #PerfilID").change(function(){ 
+               ValidarCamposRegisto(id);
+            });
+        }
+
+        function UploadFotoDone(e, data, container){
+            var fotoID = data[0].ID;
+            container.find(".photo img").attr("src", "@Url.Action("Avatar", "Ficheiro")/" + fotoID);
+            container.find("#AvatarID").val(fotoID);
+        }
+
+        $(function(){
+            BindClickPhoto($("#new"));
+
+            $("#new #PerfilID").change(function(){ 
+               ValidarCamposRegisto("new");
+            });
+
+            $("#btnResetPesquisa").click(function () {
+                $(".search input[type='search']").val('');
+                $(".search select").val('');
+                $("#filtro_PerfilPesquisaInt").val('@(((int)CondoClub.Regras.Enum.Perfil.Morador).ToString())');
+                $("#formSearch").submit();
+            });
+        });
+
+        function BindClickPhoto(container){
+            var modifyButton = container.find(".photo .modify-button");
+            container.find(".photo").bind({
+                click: function(){
+                    container.find(".file-uploader-container input[type='button']").click();            
+                },
+                mouseenter: function(){
+                    modifyButton.css('display', 'inline-block');
+                },
+                mouseleave: function(){
+                    modifyButton.hide();
+                }
+            });
+        }
+
+        //---- ini GetMore ----
+        var can_load = true;
+        var cheking_scroll = false;
+        var iniCom = @ViewData["nrUtilizadoresIni"];
+        var nextCom = @ViewData["nrUtilizadoresNext"];
+        var countCom = 0;
+        
+        (function ($) {
+            $("#termoPesquisa").val($("#filtro_TermoPesquisa").val());
+            $("#estadoPesquisa").val($("#filtro_EstadoPesquisa").val());
+            $("#perfilPesquisaInt").val($("#filtro_PerfilPesquisaInt").val());
+            $("#condominioPesquisa").val($("#filtro_CondominioPesquisa").val());
+            $("#empresaPesquisa").val($("#filtro_EmpresaPesquisa").val());
+            $("#fornecedorPesquisa").val($("#filtro_FornecedorPesquisa").val());
+
+            countCom = $('.block-list-group').length;
+            if (iniCom > countCom){
+                can_load = false;
+                $('#getMoreLink').css('display', 'none');
+            }
+        })(jQuery);
+
+        function GetMore() {
+            if (can_load) {
+                can_load = false;
+                $('#getMoreLink').css('display', 'none');
+                countCom = $('.block-list-group').length;
+                $('#getMore').find('#count').val(countCom);
+                $('#getMore').trigger('submit');
+            }
+        }
+
+        function GetMoreComplete() {
+            totCom = $('.block-list-group').length
+            if (totCom > countCom && totCom % nextCom == 0) {
+                can_load = true;
+                $('#getMoreLink').css('display', 'block');
+            }
+        }
+
+        $(window).bind('scroll', function (e) {
+            if (!cheking_scroll && can_load && isOnScreen($('#getMoreLink'))) {
+                cheking_scroll = true;
+                setTimeout(function () { cheking_scroll = false; }, 500);
+                GetMore();
+            }
+        });
+
+        isOnScreen = function (element) {
+            var curPos = element.offset();
+
+            var curBottom = curPos.top + (element.height() / 2);
+            if (/webkit.*mobile/i.test(navigator.userAgent)) {
+                //corrigir bug do offset no iphone
+                curBottom -= 50;
+            }
+            var screenHeight = $(window).height()
+            return (curBottom > (screenHeight + $(window).scrollTop())) ? false : true;
+        }
+        //---- end GetMore ----
+
+        @{ 
+            var perfilCondoclubID = (int)CondoClub.Regras.Enum.Perfil.CondoClub; 
+            var perfilEmpresaID = (int)CondoClub.Regras.Enum.Perfil.Empresa;
+            var perfilSindicoID = (int)CondoClub.Regras.Enum.Perfil.Síndico;
+            var perfilMoradorID = (int)CondoClub.Regras.Enum.Perfil.Morador;
+            var perfilPortariaID = (int)CondoClub.Regras.Enum.Perfil.Portaria;
+            var perfilConsultaID = (int)CondoClub.Regras.Enum.Perfil.Consulta;
+            var perfilFornecedorID = (int)CondoClub.Regras.Enum.Perfil.Fornecedor;
+        }
+
+        function ValidarCamposRegisto(id){
+            var container = $("#" + id);
+
+            if(container.find("#PerfilID").val() == "@perfilCondoclubID")
+            {
+                container.find("#CondominioID").val('');
+                container.find("#CondominioID").prop('disabled', 'disabled');
+
+                container.find("#FornecedorID").val('');
+                container.find("#FornecedorID").prop('disabled', 'disabled');
+
+                container.find("#EmpresaID").val('');
+                container.find("#EmpresaID").prop('disabled', 'disabled');
+
+                container.find("#Fraccao").val('');
+                container.find("#Fraccao").prop('disabled', 'disabled');
+            }
+            else if(container.find("#PerfilID").val() == "@perfilEmpresaID")
+            {
+                container.find("#CondominioID").val('');
+                container.find("#CondominioID").prop('disabled', 'disabled');
+
+                container.find("#FornecedorID").val('');
+                container.find("#FornecedorID").prop('disabled', 'disabled');
+
+                container.find("#EmpresaID").prop('disabled', false);
+
+                container.find("#Fraccao").val('');
+                container.find("#Fraccao").prop('disabled', 'disabled');
+            }
+            else if(container.find("#PerfilID").val() == "@perfilSindicoID" || 
+                container.find("#PerfilID").val() == "@perfilMoradorID")
+            {
+                container.find("#CondominioID").prop('disabled', false);
+
+                container.find("#FornecedorID").val('');
+                container.find("#FornecedorID").prop('disabled', 'disabled');
+
+                container.find("#EmpresaID").val('');
+                container.find("#EmpresaID").prop('disabled', 'disabled');
+
+                container.find("#Fraccao").prop('disabled', false);
+            }
+            else if(container.find("#PerfilID").val() == "@perfilPortariaID" || 
+                container.find("#PerfilID").val() == "@perfilConsultaID")
+            {
+                container.find("#CondominioID").prop('disabled', false);
+
+                container.find("#FornecedorID").val('');
+                container.find("#FornecedorID").prop('disabled', 'disabled');
+
+                container.find("#EmpresaID").val('');
+                container.find("#EmpresaID").prop('disabled', 'disabled');
+
+                container.find("#Fraccao").val('');
+                container.find("#Fraccao").prop('disabled', 'disabled');
+            }
+            else if(container.find("#PerfilID").val() == "@perfilFornecedorID")
+            {
+                container.find("#CondominioID").val('');
+                container.find("#CondominioID").prop('disabled', 'disabled');
+
+                container.find("#FornecedorID").prop('disabled', false);
+
+                container.find("#EmpresaID").val('');
+                container.find("#EmpresaID").prop('disabled', 'disabled');
+
+                container.find("#Fraccao").val('');
+                container.find("#Fraccao").prop('disabled', 'disabled');
+            }
+            else
+            {
+                container.find("#CondominioID").prop('disabled', false);
+                container.find("#FornecedorID").prop('disabled', false);
+                container.find("#EmpresaID").prop('disabled', false);
+                container.find("#Fraccao").prop('disabled', false);
+            }
+        }
+    </script>
+}

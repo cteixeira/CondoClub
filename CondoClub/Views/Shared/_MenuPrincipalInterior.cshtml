@@ -1,0 +1,25 @@
+﻿@using CondoClub.Web.Controllers;
+
+@{ IEnumerable<UtilizadorController.OpcaoMenu> lista = UtilizadorController.ConstroiMenu(true); }
+@if (lista.Count() > 0)
+{
+    <div class="grid_2">
+        <div class="inner-menu no-select">
+            <div class="menu-header">@Resources.Menu.LabelMenu</div>
+            <div class="menu-item-container">
+                @{
+                    string controlador = this.ViewContext.RouteData.Values["Controller"].ToString();
+                    ViewData["CurrentTopBarColor"] = "color1";
+                    foreach (var opcao in lista)
+                    {
+                        <div class="menu-item @opcao.CssClassCor @(controlador.Equals(opcao.Controlador) || opcao.ControllersItemSelected.Contains(controlador) ? "active" : "")" topbar-cssclass="@opcao.CssClassCor">
+                            <a href="@Url.Action(opcao.Accao, opcao.Controlador)"></a>
+                            <span class="icon @opcao.CssClass"></span>
+                            <label class="title">@opcao.Designacao</label>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+}

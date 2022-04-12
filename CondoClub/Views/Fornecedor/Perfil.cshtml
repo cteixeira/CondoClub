@@ -1,0 +1,258 @@
+﻿@using CondoClub.Web.Models;
+@using CondoClub.Web.Controllers;
+
+@model Fornecedor
+
+
+<div class="main-container">
+    <div class="header">
+        <div class="title">
+            <h5>@Resources.Utilizador.PerfilFornecedor</h5>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="separator10"></div>
+    <div class="form-readonly" style="padding: 5px;">
+
+        <div class="form-3column">
+            @Html.LabelFor(m => m.Nome)
+            <label class="value">
+                @if (!string.IsNullOrEmpty(Model.Nome))
+                {
+                    @Model.Nome
+                }
+                else
+                {
+                    @Html.DisplayFor(m => m.Nome, "CampoVazio")
+                }
+            </label>
+        </div>
+        <div class="form-1column column-span-3">
+            @Html.LabelFor(m => m.Descricao)
+            <label class="value">
+                @if (!string.IsNullOrEmpty(Model.Descricao))
+                {
+                    @Model.Descricao
+                }
+                else
+                {
+                    @Html.DisplayFor(m => m.Descricao, "CampoVazio")
+                }
+            </label>
+        </div>
+        <div class="form-3column">
+            <span class="photo">
+                <img alt="user" height="60" width="60" src="@Url.Action("Avatar", "Ficheiro", 
+                    new { id = Model.AvatarID, thumbnail = false })"/>
+            </span>
+        </div>
+        <div class="form-3column">
+            @Html.LabelFor(m => m.Contribuinte)
+            <label class="value">
+                @if (!string.IsNullOrEmpty(Model.Contribuinte))
+                {
+                    @Model.Contribuinte
+                }
+                else
+                {
+                    @Html.DisplayFor(m => m.Contribuinte, "CampoVazio")
+                }
+            </label>
+        </div>
+        <div class="form-3column">
+            @Html.LabelFor(m => m.OpcaoPagamentoID)
+            <label class="value">
+                @if (!string.IsNullOrEmpty(Model.OpcaoPagamentoDesignacao))
+                {
+                    @Model.OpcaoPagamentoDesignacao
+                }
+                else
+                {
+                    @Html.DisplayFor(m => m.OpcaoPagamentoDesignacao, "CampoVazio")
+                }
+            </label>
+        </div>
+        <div class="form-3column">
+            @Html.LabelFor(m => m.FormaPagamentoID)
+            <label class="value">
+                @if (!string.IsNullOrEmpty(Model.FormaPagamentoDesignacao))
+                {
+                    @Model.FormaPagamentoDesignacao
+                }
+                else
+                {
+                    @Html.DisplayFor(m => m.FormaPagamentoDesignacao, "CampoVazio")
+                }
+            </label>
+        </div>
+        <div class="form-3column">
+            @Html.LabelFor(m => m.Telefone)
+            <label class="value">
+                @if (!string.IsNullOrEmpty(Model.Telefone))
+                {
+                    @Model.Telefone
+                }
+                else
+                {
+                    @Html.DisplayFor(m => m.Telefone, "CampoVazio")
+                }
+            </label>
+        </div>
+        <div class="form-3column">
+            @Html.LabelFor(m => m.Email)
+            <label class="value">
+                @if (!string.IsNullOrEmpty(Model.Email))
+                {
+                    @Model.Email
+                }
+                else
+                {
+                    @Html.DisplayFor(m => m.Email, "CampoVazio")
+                }
+            </label>
+        </div>
+        <div class="form-3column">
+            @Html.LabelFor(m => m.URL)
+            <label class="value">
+                @if (!string.IsNullOrEmpty(Model.URL))
+                {
+                    @Model.Email
+                }
+                else
+                {
+                    @Html.DisplayFor(m => m.URL, "CampoVazio")
+                }
+            </label>
+        </div>
+        <div class="form-3column">
+            @Html.LabelFor(m => m.RaioAccao)
+            <label class="value">
+                @Model.RaioAccao
+            </label>
+        </div>
+        <div class="form-3column">
+            @Html.LabelFor(m => m.ClassificacaoMedia)
+            <label class="value">
+                @Model.ClassificacaoMedia
+            </label>
+        </div>
+        <div class="form-3column">
+            @Html.LabelFor(m => m.TotalComentarios)
+            <label class="value">
+                @Model.TotalComentarios
+            </label>
+        </div>
+        <div class="form-1column">
+            <div class="google-map-supplier"></div>
+        </div>
+        <div class="form-3column">
+            @Html.LabelFor(m => m.Endereco)
+            <label class="value">
+                @if (!string.IsNullOrEmpty(Model.Endereco))
+                {
+                    @Model.Endereco
+                }
+                else
+                {
+                    @Html.DisplayFor(m => m.Endereco, "CampoVazio")
+                }
+            </label>
+        </div>
+        <div class="form-3column">
+            @Html.LabelFor(m => m.Localidade)
+            <label class="value">
+                @if (!string.IsNullOrEmpty(Model.Localidade))
+                {
+                    @Model.Localidade
+                }
+                else
+                {
+                    @Html.DisplayFor(m => m.Localidade, "CampoVazio")
+                }
+            </label>
+        </div>
+        <div class="form-3column">
+            @Html.LabelFor(m => m.Cidade)
+            <label class="value">
+                @if (!string.IsNullOrEmpty(Model.Cidade))
+                {
+                    @Model.Cidade
+                }
+                else
+                {
+                    @Html.DisplayFor(m => m.Cidade, "CampoVazio")
+                }
+            </label>
+        </div>
+        <div class="form-3column">
+            @Html.LabelFor(m => m.CodigoPostal)
+            <label class="value">
+                @if (!string.IsNullOrEmpty(Model.CodigoPostal))
+                {
+                    @Model.CodigoPostal
+                }
+                else
+                {
+                    @Html.DisplayFor(m => m.CodigoPostal, "CampoVazio")
+                }
+            </label>
+        </div>
+        <div class="form-3column">
+            @Html.LabelFor(m => m.Estado)
+            <label class="value">
+                @if (!string.IsNullOrEmpty(Model.Estado))
+                {
+                    @Model.Estado
+                }
+                else
+                {
+                    @Html.DisplayFor(m => m.Estado, "CampoVazio")
+                }
+            </label>
+        </div>
+        <div class="form-3column">
+            @Html.LabelFor(m => m.PaisID)
+            <label class="value">
+                @if (!string.IsNullOrEmpty(Model.PaisDesignacao))
+                {
+                    @Model.PaisDesignacao
+                }
+                else
+                {
+                    @Html.DisplayFor(m => m.PaisDesignacao, "CampoVazio")
+                }
+            </label>
+        </div>
+        <div class="form-1column categorias-container">
+            <strong>@Resources.Servico.Categorias</strong>
+            <br /><br />
+            <table class="table">
+                @{ 
+                    foreach (var c in Model.Categorias) {
+                        <tr><td>@c.Value.Designacao</td></tr>
+                    }
+                }
+            </table>
+        </div>
+        <div class="clear"></div>
+        <div class="toolbox-no-border">
+            @using (Html.BeginForm("EditarPerfil", "Fornecedor"))
+            {
+                <input type="submit" class="orange1-button" value="@Resources.Geral.Editar" />
+            }
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>    
+@section scripts{
+    @Scripts.Render("~/scripts/addresspicker")
+    
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBws9wlXadPEXoNj74kmzjXd_5Du7NvVIw&libraries=places&sensor=false"></script>
+
+    <script type="text/javascript">
+        $(".google-map-supplier").AddressPickerReadOnly({
+            Latitude: "@Model.Latitude",
+            Longitude: "@Model.Longitude"
+        });
+    </script>
+}

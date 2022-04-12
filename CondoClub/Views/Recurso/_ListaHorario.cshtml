@@ -1,0 +1,50 @@
+﻿@model CondoClub.Web.Models.Recurso
+@if (Model != null && Model.ID.HasValue) { 
+    <div id="horarioContainer_@Model.ID" class="form-1column horario-container">
+        <label>@Resources.Recurso.Horario</label>
+        <div class="note12" style="margin-bottom:5px;">@Resources.Recurso.HorarioInfo</div>
+        <table class="table">
+            <tr>
+                <th>
+                    @Resources.Recurso.DiaSemana
+                </th>
+                <th>
+                    @Resources.Recurso.HoraInicio
+                </th>
+                <th>
+                    @Resources.Recurso.NumeroSlots
+                </th>
+                <th>
+                    @Resources.Recurso.DuracaoSlot
+                </th>
+            </tr>
+            @foreach (var h in Model.Horario) {
+                <tr id="detalheHorario_@h.RecursoHorarioID">
+                    @{ Html.RenderPartial("_DetalheHorarioVisualizar", h); }
+                </tr>
+            }
+            <tr class="newRecHorario" style="display: none;">
+                <td colspan="4" class="form">
+                    @using (Ajax.BeginForm("_DetalheHorarioGravar", null,
+                            new AjaxOptions { 
+                                InsertionMode = InsertionMode.Replace, 
+                                UpdateTargetId = "horarioContainer_" + Model.ID,
+                                OnSuccess = "AfterSaveRecursoHorario"
+                            },
+                            new { id = "formNovoDetalheHorario" })) {
+
+                        Html.RenderPartial("_DetalheHorario", new CondoClub.Web.Models.RecursoHorario { RecursoID = Model.ID.Value });
+                    }
+                </td>
+            </tr>
+        </table>
+        <div class="toolbox-no-border">
+            @if (Model.ID != null && (
+                Model.Permissoes.Contains(CondoClub.Regras.Enum.Permissao.Gravar) ||
+                Model.Permissoes.Contains(CondoClub.Regras.Enum.Permissao.Apagar)
+            )) {
+                <input type="submit" class="orange1-button" value="@Resources.Recurso.AdicionarHorario" onclick="return ShowHideNewRecHorario(this);" />
+            }
+        </div>
+    </div>
+}

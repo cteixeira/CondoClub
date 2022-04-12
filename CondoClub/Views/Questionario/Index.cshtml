@@ -1,0 +1,144 @@
+﻿@using CondoClub.Web.Models;
+@using CondoClub.Web.Controllers;
+
+@model IEnumerable<Questionario>
+
+@{ var permissoes = (List<CondoClub.Regras.Enum.Permissao>)ViewData["Permissoes"]; }
+@Styles.Render("~/content/datepicker")
+
+<div class="main-container">
+    <div class="header">
+        <div class="title">
+            <h5>@Resources.Menu.Questionarios</h5>
+        </div>
+        @if (permissoes.Contains(CondoClub.Regras.Enum.Permissao.Gravar)) {
+            <div class="options">
+                <a href="#" class="link-orange" onclick="$('#new').slideToggle(''); return false;" style="">
+                    @Resources.Geral.Novo
+                </a>
+            </div>
+        }
+        <div class="clear"></div>
+    </div>
+    <div class="search">
+        <input id="txtPesquisar" type="search" placeholder="@Resources.Geral.Pesquisar" />
+    </div>
+    <div class="separator10"></div>
+    <!--novo registo---------------------->
+    @if (permissoes.Contains(CondoClub.Regras.Enum.Permissao.Gravar))
+    {
+        <div id="new" style="display: none;">
+            @using (Ajax.BeginForm("Gravar",
+                new AjaxOptions
+                {
+                    UpdateTargetId = "lista",
+                    InsertionMode = InsertionMode.InsertBefore,
+                    OnSuccess = "AfterInsert"
+                }))
+            {
+                Html.RenderPartial("_Detalhe", new Questionario());
+            }
+        </div>
+    }
+
+    <div id="lista">@{ Html.RenderPartial("_Lista", Model); }</div>
+
+    @using (Ajax.BeginForm("_DetalheEditar", null,
+        new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "#" }, 
+        new { id = "editRec" })) { 
+        @Html.Hidden("id")
+    }
+
+    @using (Ajax.BeginForm("Resposta", null,
+        new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "#" }, 
+        new { id = "resposta" })) { 
+        @Html.Hidden("id")
+        @Html.Hidden("opcao")
+        @Html.Hidden("outraOpcao")
+    }
+
+</div>
+
+@section scripts{
+    @Scripts.Render("~/scripts/datepicker")
+    
+    <script type="text/javascript">
+        (function ($) {
+            SetDatePicker('');
+            ResetValidators(); 
+        })(jQuery);
+
+
+        $('.block-list-group .header').live('click', function () {
+
+            var self = $(this);
+            $('.block-list-group .content:visible').not(self.next('.content')).hide();
+            $('html, body').animate({
+                scrollTop: self.offset().top - 10
+            }, 300);
+
+            $(this).nextAll('.block-list-group .content').slideToggle();
+        });
+
+        function SetDatePicker(id){
+            SetCalendar('calIni_' + id, { changeMonth: true, changeYear: true, yearRange: 'c:c+1' });
+            SetCalendar('calFim_' + id, { changeMonth: true, changeYear: true, yearRange: 'c:c+1' });
+        }
+
+        function CloseNewRec() {
+            $('#new').slideToggle();
+        }
+
+        function EditRec(id) {
+            $('#editRec').attr('data-ajax-update', '#' + id);
+            $('#editRec').attr('data-ajax-complete', "ResetValidators(" + id + "); SetDatePicker(" + id + ");");
+            $('#editRec').find('#id').val(id);
+            $('#editRec').trigger('submit');
+        }
+
+        function Resposta(id) {
+            if (!$("#" + id + " input[type='radio']:checked").val()) {
+                alert('@Html.Raw(Resources.Erro.OpcaoObrigatoria)');
+                return;
+            }
+            $('#resposta').attr('data-ajax-update', '#' + id);
+            $('#resposta').attr('data-ajax-success', "AfterUpdate(data, " + id + ")");
+            $('#resposta').find('#id').val(id);
+            $('#resposta').find('#opcao').val($("#" + id + " input[type='radio']:checked").val());
+            $('#resposta').find('#outraOpcao').val($('#OutraOpcao' + id).val());
+            $('#resposta').trigger('submit');
+        }
+
+        function AfterInsert(data) {
+            if (data.indexOf('alert(') == -1) {
+                $('#resetnewrec').trigger('click');
+                $("#lista .block-list-group:first").PulseAnimation();
+            }
+        }
+
+        function AfterUpdate(data, id) {
+            if (data.indexOf('alert(') == -1) {
+                $("#" + id).PulseAnimation();
+            }
+        }
+
+        function AfterDelete(id) {
+            $("#" + id).hide('slow', function () { $(this).remove(); });
+        }
+
+        $(function () {
+            $('#txtPesquisar').keyup(function () {
+                var keywords = RemoverAcentos($(this).val().toLowerCase());
+
+                $('#lista .block-list-group .header').each(function () {
+                    if (RemoverAcentos($('span', $(this)).text().toLowerCase()).indexOf(keywords) == -1) {
+                        $(this).parent().hide();
+                    }
+                    else {
+                        $(this).parent().show();
+                    }
+                });
+            });
+        });
+    </script>
+}

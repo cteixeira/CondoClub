@@ -1,0 +1,129 @@
+﻿@using System.Configuration;
+@using CondoClub.Web.Controllers;
+@using CondoClub.Web.Controllers.DadosMestre;
+@using CondoClub.Web.Models;
+
+@model UtilizadorRegisto
+
+@{
+    Layout = "~/Views/Shared/_Blank.cshtml";
+}
+
+<div class="logo-blank">
+    <a class="logo" href="~/"><img src="~/Content/images/logo_grande.png" /></a>
+</div>
+<div>
+    <h4>@(Resources.Registo.MensagemUtilizador + ":")</h4>
+    @using (Html.BeginForm("RegistarUtilizador", "Registo"))
+    {
+        <div class="form new-regist">
+            <div>
+                @Html.ValidationSummary()
+                @Html.HiddenFor(m => m.PerfilIDCifrado)
+                @Html.HiddenFor(m => m.CondominioIDCifrado)
+                @Html.HiddenFor(m => m.EmpresaIDCifrado)
+                @Html.HiddenFor(m => m.FornecedorIDCifrado)
+            </div>
+            <div class="form-3column">
+                <span class="photo">
+                    <img alt="user" height="60" width="60" src="@Url.Action("Avatar", "Ficheiro", 
+                        new { id = Model.AvatarID, thumbnail = false })" />
+                    <span class="orange1-button modify-button">@Resources.Geral.Alterar</span>
+                </span>
+                <div class="note">@Resources.Registo.AlterarAvatar</div>
+                <div class="toolbox-no-border" style="margin:0;">
+                    @Html.HiddenFor(m => m.AvatarID)
+                    <div style="display:none">
+                        @{ Html.RenderPartial("_FileUploader", "orange1-button no-float"); }
+                    </div>
+                </div>
+            </div>
+            <div class="form-1column column-span-3">
+                @Html.LabelFor(m => m.Nome)
+                @Html.TextBoxFor(m => m.Nome)
+            </div>
+            <div class="form-1column column-span-3">
+                <div class="form-2column">
+                    @Html.LabelFor(m => m.Email)
+                    @Html.TextBoxFor(m => m.Email)
+                </div>
+                <div class="form-2column">
+                    @Html.LabelFor(m => m.Password)
+                    @Html.PasswordFor(m => m.Password)
+                </div>
+            </div>
+            <div class="form-1column column-span-3">
+                <div class="form-2column">
+                    @Html.LabelFor(m => m.ConfirmarPassword)
+                    @Html.PasswordFor(m => m.ConfirmarPassword)
+                </div>
+                
+                @if (Model.PerfilID == (int)CondoClub.Regras.Enum.Perfil.Síndico ||
+                    Model.PerfilID == (int)CondoClub.Regras.Enum.Perfil.Morador)
+                {
+                    <div class="form-2column">
+                        @Html.LabelFor(m => m.Fraccao)
+                        @Html.TextBoxFor(m => m.Fraccao)
+                    </div>
+                }
+            </div>
+            @if (Model.PerfilID == (int)CondoClub.Regras.Enum.Perfil.Morador)
+            {
+                <div class="form-1column column-span-3">
+                    <span class="checkbox2">
+                        @Html.CheckBoxFor(m => m.AceitarCondicoesGerais)
+                        <label>@Html.Raw(String.Format(Resources.Registo.AceitarCondicoesGerais, Url.Action("CondicoesGerais")))</label>
+                    </span>
+                </div>
+            }
+            else
+            {
+                @Html.HiddenFor(m => m.AceitarCondicoesGerais)
+            }
+            <div class="clear"></div>
+            <div class="toolbox margin-top-20">
+                <input class="orange1-button" type="submit" value="@Resources.Registo.ConcluirRegisto" />
+                 @Html.ActionLink(Resources.Geral.Voltar, "Retroceder",
+                    new
+                    {
+                        cifra = Model.CifraUrl()
+                    },
+                    new { @class = "orange3-button" }
+                )
+            </div>
+        </div>
+    }
+</div>
+@section scripts{
+    @Scripts.Render("~/scripts/fileuploader")
+
+    <script type="text/javascript">
+
+        $('.file-uploader-container').CustomFileUpload({
+            URLUploadFile: "@Url.Action("GravarImagemForm", "Ficheiro")",
+            DropZone: $("#new .file-uploader-container"),
+            SingleFileUploads: true,
+            LimitMultiFileUploads: 1,
+            DoneFunction: function(e, data) { UploadFotoDone(e, data); }
+        });
+
+        var modifyButton = $(".photo .modify-button");
+        $(".photo").bind({
+            click: function(){
+                $(".file-uploader-container input[type='button']").click();            
+            },
+            mouseenter: function(){
+                modifyButton.css('display', 'inline-block');
+            },
+            mouseleave: function(){
+                modifyButton.hide();
+            }
+        });
+
+        function UploadFotoDone(e, data, container){
+            var fotoID = data[0].ID;
+            $('.photo img').attr("src", "@Url.Action("Avatar", "Ficheiro")/" + fotoID);
+            $('#AvatarID').val(fotoID);
+        }
+    </script>
+}

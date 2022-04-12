@@ -1,0 +1,45 @@
+﻿@using CondoClub.Web.Models;
+@using CondoClub.Web.Controllers;
+
+@model Questionario
+
+<div class="header multiline">
+    <span class="title" style="width: 100%;">@Model.Questao</span>
+</div>
+<div class="content" style="display:none;">
+    <div class="form-1column" style="margin-bottom: 15px; line-height: 30px;">
+        <div>- @Html.Raw(Model.Opcao1)</div>
+        <div>- @Html.Raw(Model.Opcao2)</div>
+        @if (!string.IsNullOrEmpty(Model.Opcao3)) {
+            <div>- @Html.Raw(Model.Opcao3)</div>
+        }
+        @if (!string.IsNullOrEmpty(Model.Opcao4)) {
+            <div>- @Html.Raw(Model.Opcao4)</div>
+        }
+        @if (!string.IsNullOrEmpty(Model.Opcao5)) {
+            <div>- @Html.Raw(Model.Opcao5)</div>
+        }
+        @if (!string.IsNullOrEmpty(Model.Opcao6)) {
+            <div>- @Html.Raw(Model.Opcao6)</div>
+        }
+        @if (!string.IsNullOrEmpty(Model.Opcao7)) {
+            <div>- @Html.Raw(Model.Opcao7)</div>
+        }
+        @if (!string.IsNullOrEmpty(Model.Opcao8)) {
+            <div>- @Html.Raw(Model.Opcao8)</div>
+        }
+    </div>
+    <div class="form-1column">
+        <label class="value" style="font-size:.9em;">
+            @String.Concat(Resources.Questionario.Legenda1, Model.TotalRespostas, Resources.Questionario.Legenda2,
+                            Resources.Questionario.Legenda3, Model.Inicio.ToShortDateString(),
+                            Resources.Questionario.Legenda4, Model.Fim.ToShortDateString())
+        </label>
+    </div>
+    @if (Model.ID != null && Model.Permissoes.Contains(CondoClub.Regras.Enum.Permissao.Gravar)){
+        <div class="toolbox-no-border">
+            <input type="button" onclick="EditRec(@Model.ID)" class="orange1-button" value="@Resources.Geral.Editar" />
+        </div>
+        <div class="clear"></div>
+    }
+</div>

@@ -1,0 +1,16 @@
+﻿@using CondoClub.Web.Models;
+@using CondoClub.Web.Controllers;
+
+@model ArquivoFicheiro
+
+
+@using (Ajax.BeginForm("ActualizarFicheiro",
+    new AjaxOptions
+    {
+        UpdateTargetId = "file_" + Model.ID.Value,
+        InsertionMode = InsertionMode.Replace,
+        OnSuccess = "AfterUpdate(data, " + "'file_" + Model.ID.Value + "')"
+    }))
+{
+    Html.RenderPartial("_DetalheFicheiro", Model);
+}

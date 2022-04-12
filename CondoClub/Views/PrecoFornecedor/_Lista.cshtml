@@ -1,0 +1,8 @@
+﻿@model IEnumerable<CondoClub.Web.Models.PrecoFornecedor>
+
+@foreach (var item in Model)
+{
+    <div id="@item.ID" class="block-list-group">
+        @{ Html.RenderPartial("_DetalheVisualizar", item); }
+    </div>
+}

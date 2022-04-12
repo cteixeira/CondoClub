@@ -1,0 +1,31 @@
+﻿@using CondoClub.Web.Models;
+@using CondoClub.Web.Controllers;
+
+@model ArquivoFicheiro
+
+<a class="link" href="@Model.Link">
+    <span class="column-1">
+        <span class="@Model.CSSClassIcon"></span>
+        <span class="name">@(Model.Nome + "." + Model.Extensao)</span>
+    </span>
+    <span class="column-2">@String.Format(Resources.Arquivo.TamanhoFicheiro, Model.Tamanho)</span>
+    <span class="column-3">@Model.DataHora</span>
+    <span class="column-4">@Model.UtilizadorNome</span>
+</a>
+@if (Model.Permissoes.Contains(CondoClub.Regras.Enum.Permissao.Gravar) ||
+    Model.Permissoes.Contains(CondoClub.Regras.Enum.Permissao.Apagar))
+{
+    <span class="column-5 menu">
+        @if (Model.Permissoes.Contains(CondoClub.Regras.Enum.Permissao.Gravar))
+        {
+            @Ajax.ActionLink(" ", "_DetalheEditarFicheiro",
+                new { @id = Model.ID },
+                new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "file_" + Model.ID }
+            )
+        }
+    </span>
+}
+else
+{
+    <span class="column-5"></span>
+}

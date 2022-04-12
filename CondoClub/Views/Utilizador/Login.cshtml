@@ -1,0 +1,102 @@
+﻿@using System.Configuration;
+
+@model CondoClub.Web.Models.Login
+
+@{
+    Layout = "~/Views/Shared/_Blank.cshtml";
+}
+
+@*<div class="separator30"></div>
+<div class="centered">
+    <img src="~/Content/images/logo_grande.png" />
+</div>
+<div class="grid_6 alpha login-video-div">
+    <div>
+        <iframe class="youtube-frame" src="@ConfigurationManager.AppSettings["LoginVideoURL"]" frameborder="0" allowfullscreen></iframe>
+    </div>
+</div>
+<div class="grid_4 omega login-data-div">
+    @using (Html.BeginForm())
+    {
+        <div>
+            @Html.ValidationSummary()
+        </div>
+        <span class="login-data">
+            <!--[if lte IE 9]>
+	            @Html.LabelFor(m => m.Email)
+	        <![endif]-->
+            @Html.TextBoxFor(m => m.Email, new { @placeholder = Resources.Utilizador.Email })
+            <!--[if lte IE 9]>
+	            @Html.LabelFor(m => m.Password)
+	        <![endif]-->
+            @Html.PasswordFor(m => m.Password, new { @placeholder = Resources.Utilizador.Password })
+        </span>
+        <div class="login-button">
+            <input class="gray-button" type="submit" value="@Resources.Utilizador.Entrar" />
+        </div>
+        <span class="block separator10"></span>
+        <span class="checkbox">
+            @Html.CheckBoxFor(m => m.RememberMe)
+            @Html.LabelFor(m => m.RememberMe)
+        </span>
+        <span class="label-10">
+            @Html.ActionLink(Resources.Utilizador.RecuperarPassword, "RecuperarPassword")
+        </span>        
+        @Html.ActionLink(Resources.Registo.RegisteCondominio, "Condominio", "Registo", null, new { @class = "create-account-link" })
+        @Html.ActionLink(Resources.Registo.RegisteFornecedor, "Fornecedor", "Registo", null, new { @class = "create-account-link" })
+        @Html.ActionLink(Resources.Registo.RegisteEmpresa, "Empresa", "Registo", null, new { @class = "create-account-link" })
+    }
+</div>
+<div class="clear separator30"></div>
+<div class="centered separator30">
+    <span class="bg-icon-market-25">
+       <a href="#">@Resources.MenuFundo.ConhecaNossosPlanos</a>
+    </span>
+</div>
+@{ Html.RenderPartial("_MenuFundo"); }*@
+
+
+<div class="separator30"></div>
+<div class="centered">
+    <img src="~/Content/images/logo_grande.png" />
+</div>
+<div class="grid_1 alpha omega">&nbsp;</div>
+<div class="grid_5 alpha omega">
+    <div class="login-data-div2-left">
+        @using (Html.BeginForm())
+        {
+            <div>
+                @Html.ValidationSummary()
+            </div>
+            <span class="login-data">
+                <!--[if lte IE 9]>
+	                @Html.LabelFor(m => m.Email)
+	            <![endif]-->
+                @Html.TextBoxFor(m => m.Email, new { @placeholder = Resources.Utilizador.Email })
+                <!--[if lte IE 9]>
+	                @Html.LabelFor(m => m.Password)
+	            <![endif]-->
+                @Html.PasswordFor(m => m.Password, new { @placeholder = Resources.Utilizador.Password })
+            </span>
+            <div class="login-button">
+                <input class="gray-button" type="submit" value="@Resources.Utilizador.Entrar" />
+            </div>
+            <span class="block separator10"></span>
+            <span class="checkbox">
+                @Html.CheckBoxFor(m => m.RememberMe)
+                @Html.LabelFor(m => m.RememberMe)
+            </span>
+            <span class="label-10">
+                @Html.ActionLink(Resources.Utilizador.RecuperarPassword, "RecuperarPassword", "Utilizador")
+            </span>
+        }
+    </div>
+</div>
+<div class="grid_4 omega">
+    <div class="login-data-div2-right">
+        @Html.ActionLink(Resources.Registo.RegisteCondominio, "Condominio", "Registo", null, new { @class = "create-account-link" })
+        @Html.ActionLink(Resources.Registo.RegisteFornecedor, "Fornecedor", "Registo", null, new { @class = "create-account-link" })
+        @Html.ActionLink(Resources.Registo.RegisteEmpresa, "Empresa", "Registo", null, new { @class = "create-account-link" })
+    </div>
+</div>
+<div class="clear separator30"></div>

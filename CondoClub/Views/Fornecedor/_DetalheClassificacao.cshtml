@@ -1,0 +1,19 @@
+﻿@model CondoClub.Web.Models.FornecedorClassificacao
+
+<div class="user-image">
+    <img src="@Url.Action("Avatar", "Ficheiro", new { id = Model.UtilizadorAvatarID })" alt="" />
+</div>
+<div class="reply-message">
+    <div style="float:left; width: 94%;">
+        @Html.Label(Model.UtilizadorNome, new { @class = "user" })
+        <br />@(!String.IsNullOrEmpty(Model.Comentario) ? Html.Label(Model.Comentario) : Html.Label("") )
+        <br /><span class="rating-stars @Model.CssClassificacao"></span>
+        <br />@Html.Label(String.Concat(Model.DataHora.ToShortDateString(), " ", Model.DataHora.ToShortTimeString()), new { @class = "date" })
+    </div>
+    @if (Model.Permissoes.Contains(CondoClub.Regras.Enum.Permissao.Apagar)) {
+        <div style="float:right;">
+            <a href="#" onclick="return DeleteClassificacao(@Model.ID);"><img src="~/content/images/cancel_14.png" alt="@Resources.Geral.Apagar" /></a>
+        </div>
+    }
+    <div class="clear"></div>
+</div>

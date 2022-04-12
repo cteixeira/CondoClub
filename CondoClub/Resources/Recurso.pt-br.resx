@@ -1,0 +1,255 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Activo" xml:space="preserve">
+    <value>Ativo</value>
+  </data>
+  <data name="AdicionarHorario" xml:space="preserve">
+    <value>+ Horário</value>
+  </data>
+  <data name="Aprovar" xml:space="preserve">
+    <value>Aprovar</value>
+  </data>
+  <data name="AvisoMaxSlotsReservaIntervaloReserva" xml:space="preserve">
+    <value>Já existem reservas para datas posteriores ao dia de hoje.\nNão vai ser possível garantir que estas reservas respeitarão as novas regras do campos Máximo de Reservas por Dia.\nTem a certeza que deseja gravar as alterações?</value>
+  </data>
+  <data name="AvisoTodasReservasCanceladas" xml:space="preserve">
+    <value>Todas as reservas existentes nesse período serão canceladas.\nTem a certeza que deseja efectuar as alterações?</value>
+  </data>
+  <data name="CancelarAprovacao" xml:space="preserve">
+    <value>Não Aceitar</value>
+  </data>
+  <data name="CancelarReserva" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+  <data name="Configurar" xml:space="preserve">
+    <value>Configurar</value>
+  </data>
+  <data name="DataFim" xml:space="preserve">
+    <value>Data Fim</value>
+  </data>
+  <data name="DataInicio" xml:space="preserve">
+    <value>Data Início</value>
+  </data>
+  <data name="Designacao" xml:space="preserve">
+    <value>Designação</value>
+  </data>
+  <data name="DiaSemana" xml:space="preserve">
+    <value>Dia da Semana</value>
+  </data>
+  <data name="DiasMinimosAprovacao" xml:space="preserve">
+    <value>Dias mínimos para aprovação</value>
+  </data>
+  <data name="DiasMinimosAprovacaoDesignacao" xml:space="preserve">
+    <value>Nº de dias de antecedência necessários para se solicitar a reserva.</value>
+  </data>
+  <data name="Disponivel" xml:space="preserve">
+    <value>Disponível</value>
+  </data>
+  <data name="DuracaoSlot" xml:space="preserve">
+    <value>Duração Slot (minutos)</value>
+  </data>
+  <data name="DuracaoSlotInfo" xml:space="preserve">
+    <value>Período de tempo de cada reserva em minutos. Os períodos de reserva não poderão ultrapassar a meia noite do dia, ou a soma dos períodos perfazer mais de 24h.</value>
+  </data>
+  <data name="ErroColisaoSlots" xml:space="preserve">
+    <value>Erro ao  gravar novo registro porque colide com outro horário no mesmo dia.</value>
+  </data>
+  <data name="ErroRecursoComReservas" xml:space="preserve">
+    <value>Não é possível apagar essa Área Comum porque possui reservas associadas no Sistema</value>
+  </data>
+  <data name="ErroSuperior24Horas" xml:space="preserve">
+    <value>A combinação Hora Inicio, Numero Slots e Duração de Slot não é válida porque ultrapassa as 24 horas.</value>
+  </data>
+  <data name="EstadoReserva" xml:space="preserve">
+    <value>Estado da Reserva</value>
+  </data>
+  <data name="EstadoReservaPendenteAprovacao" xml:space="preserve">
+    <value>Esperando Confirmação</value>
+  </data>
+  <data name="EstadoReservaReprovado" xml:space="preserve">
+    <value>Não Aprovado</value>
+  </data>
+  <data name="EstadoReservaReservado" xml:space="preserve">
+    <value>Reservado</value>
+  </data>
+  <data name="HoraInicio" xml:space="preserve">
+    <value>Hora Início</value>
+  </data>
+  <data name="Horario" xml:space="preserve">
+    <value>Horário</value>
+  </data>
+  <data name="HorarioInfo" xml:space="preserve">
+    <value>Configure os horários por cada dia da semana. Poderá acrescentar mais do que 1 horário por dia.</value>
+  </data>
+  <data name="InicioInfo" xml:space="preserve">
+    <value>Hora a partir da qual está disponível para reserva (formato HH:MM)</value>
+  </data>
+  <data name="IntervaloReserva" xml:space="preserve">
+    <value>Intervalo de reserva (horas)</value>
+  </data>
+  <data name="IntervaloReservaInfo" xml:space="preserve">
+    <value>Intervalo, em horas, para limitar o número máximo de reservas</value>
+  </data>
+  <data name="ListaReservas" xml:space="preserve">
+    <value>Lista de Reservas</value>
+  </data>
+  <data name="MaxSlotsReserva" xml:space="preserve">
+    <value>Máximo de Reservas por Dia</value>
+  </data>
+  <data name="MaxSlotsReservaInfo" xml:space="preserve">
+    <value>Número máximo de reservas, de um morador, por dia</value>
+  </data>
+  <data name="Morador" xml:space="preserve">
+    <value>Morador</value>
+  </data>
+  <data name="NaoDisponivel" xml:space="preserve">
+    <value>Não Disponível</value>
+  </data>
+  <data name="NumeroSlots" xml:space="preserve">
+    <value>Nº. de Reservas (Slots)</value>
+  </data>
+  <data name="NumeroSlotsInfo" xml:space="preserve">
+    <value>Nº de períodos de reserva possíveis de se requisitar em 24h</value>
+  </data>
+  <data name="PendenteAprovacao" xml:space="preserve">
+    <value>Esperando Confirmação</value>
+  </data>
+  <data name="Recursos" xml:space="preserve">
+    <value>Espaços Comuns</value>
+  </data>
+  <data name="RequerAprovacao" xml:space="preserve">
+    <value>Requer Aprovação pelo Síndico</value>
+  </data>
+  <data name="RequerAprovacaoInfo" xml:space="preserve">
+    <value>É necessária a aprovação pelo síndico para utilização?</value>
+  </data>
+  <data name="Reservado" xml:space="preserve">
+    <value>Reservado</value>
+  </data>
+  <data name="Reservar" xml:space="preserve">
+    <value>Solicitar Reserva</value>
+  </data>
+  <data name="Reservas" xml:space="preserve">
+    <value>Reservas</value>
+  </data>
+  <data name="TemCertezaApagarReservasSeraoCanceladas" xml:space="preserve">
+    <value>Todas as reservas neste periodo serão canceladas.\nTem a certeza que deseja apagar o registro?</value>
+  </data>
+</root>

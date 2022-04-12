@@ -1,0 +1,189 @@
+﻿@using CondoClub.Web.Models;
+@using CondoClub.Web.Controllers;
+
+@model IEnumerable<Recurso>
+@{ var permissoes = (List<CondoClub.Regras.Enum.Permissao>)ViewData["Permissoes"]; }
+
+<div class="main-container recurso-container">
+    <div class="header">
+        <div class="title">
+            <h5>@Resources.Menu.Recursos</h5>
+        </div>
+        <div class="options">
+           <a class="link-orange" href='@Url.Action("Index", "Calendario")'>@Resources.Geral.Voltar</a>
+        @if (permissoes.Contains(CondoClub.Regras.Enum.Permissao.Gravar)) {
+            <span class="separator"></span>
+            <a href="#" class="link-orange" onclick="$('#new').slideToggle(''); return false;" style="">
+                @Resources.Geral.Novo
+            </a>
+        }
+        <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="search">
+        <input id="txtPesquisar" type="search" placeholder="@Resources.Geral.Pesquisar" />
+    </div>
+    <div class="separator10"></div>
+    <!--novo registo---------------------->
+    @if (permissoes.Contains(CondoClub.Regras.Enum.Permissao.Gravar)){
+        <div id="new" style="display: none;">
+            @using (Ajax.BeginForm("Gravar",
+                new AjaxOptions
+                {
+                    UpdateTargetId = "lista",
+                    InsertionMode = InsertionMode.InsertBefore,
+                    OnSuccess = "AfterSave"
+                }))
+            {
+                Html.RenderPartial("_Detalhe", new Recurso());
+            }
+        </div>
+    }
+
+    <div id="lista">@{ Html.RenderPartial("_Lista", Model); }</div>
+
+    @using (Ajax.BeginForm("_DetalheEditar", null,
+        new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "#" },
+        new { id = "editRec" })){
+        @Html.Hidden("id")
+    }
+    @using (Ajax.BeginForm("_DetalheHorarioEditar", null,
+        new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "#" },
+        new { id = "editRecHorario" })){
+        @Html.Hidden("id")
+    }
+    @using (Ajax.BeginForm("_DetalheHorarioVisualizar", null,
+        new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "#"},
+        new { id = "cancelEditRecHorario" })){
+        @Html.Hidden("id")
+    }
+</div>
+@section scripts{
+    <script type="text/javascript">
+        
+        ResetValidators();
+
+        $(function () {
+
+            $('.block-list-group .header').live('click', function () {
+
+                var self = $(this);
+                if (!self.next('.content').is(':visible')) {
+                    $('.block-list-group .content:visible').not(self.next('.content')).each(function () {
+                        var $this = $(this);
+                        if ($this.find('form:visible').length == 0) {//não fechar se estiver a editar HorarioDetalhe
+                            $this.hide();
+                        }
+                    });
+                }
+                $('html, body').animate({
+                    scrollTop: self.offset().top - 10
+                }, 300);
+
+                $(this).nextAll('.block-list-group .content').slideToggle();
+            });
+
+
+            $('#txtPesquisar').keyup(function () {
+                var keywords = RemoverAcentos($(this).val().toLowerCase());
+
+                $('.block-list-group .header').each(function () {
+                    if (RemoverAcentos($('span', $(this)).text().toLowerCase()).indexOf(keywords) == -1) {
+                        $(this).parent().hide();
+                    } else {
+                        $(this).parent().show();
+                    }
+                });
+            });
+
+            $('#RequerAprovacao').live('click', function () {
+                var requerAprovacao = $(this).is(':checked');
+                if (requerAprovacao) {
+                    $(this).parents('form:first').find('#DiasMinimosAprovacao').removeAttr('disabled');
+                } else {
+                    $(this).parents('form:first').find('#DiasMinimosAprovacao').val('').removeClass('input-validation-error').attr('disabled', 'disabled'); 
+                }
+            });
+        });                                  
+
+        function EditRec(id) {
+            $('#editRec').attr('data-ajax-update', '#' + id);
+            $('#editRec').attr('data-ajax-complete', "ResetValidators(" + id + ");");
+            $('#editRec').find('#id').val(id);
+            $('#editRec').trigger('submit');
+        }
+
+        function AfterSave(data) {
+            if (data.indexOf('alert(') == -1) {
+                $('#new').slideToggle('', function () {
+                    $("input:not([type='submit']):not([type='button'])", $(this)).val('');
+                    $("#lista .block-list-group:first").find('.content').show();
+                    $("#lista .block-list-group:first").PulseAnimation();
+                });
+            }
+        }
+
+        function AfterUpdate(data, id, xhr) {
+            if (xhr.getResponseHeader("Content-Type").indexOf("application/x-javascript") !== -1) {  // jQuery already executes JavaScript for us
+                return;
+            }
+            $("#" + id).PulseAnimation();
+        }
+
+        function AfterDelete(id) {
+            $("#" + id).hide('slow', function () { $(this).remove(); });
+        }
+
+        function CloseNewRec() {
+            $('#new').slideToggle();
+        }
+
+        function EditRecHorario(id) {
+            $('#editRecHorario').attr('data-ajax-update', '#detalheHorario_' + id);
+            $('#afte').attr('data-ajax-complete', "ResetValidators('formDetalheHorario_" + id + "');");
+            $('#editRecHorario').find('#id').val(id);
+            $('#editRecHorario').trigger('submit');
+        }
+
+        function CancelEditRecHorario(sender) {
+            var id = $(sender).parents('form:first').find("#RecursoHorarioID").val();
+            if (id) {
+                $('#cancelEditRecHorario').attr('data-ajax-update', '#detalheHorario_' + id);
+                $('#cancelEditRecHorario').attr('data-ajax-complete', "ResetValidators(" + id + ");");
+                $('#cancelEditRecHorario').find('#id').val(id);
+                $('#cancelEditRecHorario').trigger('submit');
+            } else {
+                ShowHideNewRecHorario(sender);
+            }
+        }
+
+        function ShowHideNewRecHorario(sender) {
+            $(sender).parents('.horario-container:first').find(".newRecHorario").slideToggle();
+        }
+
+        function ConfirmarActualizarRecurso(RecursoID, Msg) {
+            var $form = $("#Gravar_" + RecursoID);
+            if (confirm(Msg)) {
+                $form.find('#confirmar').val(true);
+                $form.trigger('submit');
+            } else {
+                $form.find('#confirmar').val(false);            
+            }
+        }
+        function ConfirmarActualizarRecursoHorario(RecursoHorarioID, Msg) {
+            var $form = $("#formDetalheHorario_" + RecursoHorarioID);
+            if (confirm(Msg)) {
+                $form.find('#confirmar').val(true);
+                $form.trigger('submit');
+            } else {
+                $form.find('#confirmar').val(false);
+            }
+        }
+        function AfterDeleteRecursoHorario(id) {
+            $("#detalheHorario_" + id).hide('slow', function () { $(this).remove(); });
+        }
+        function AfterSaveRecursoHorario(data) {
+        }
+    </script>
+}

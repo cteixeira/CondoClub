@@ -1,0 +1,54 @@
+﻿@using CondoClub.Web.Models;
+
+@model PrecoFornecedor
+
+<div class="form">
+    @Html.ValidationSummary()
+    @Html.HiddenFor(m => m.ID)
+    <div class="form-2column">
+        @Html.LabelFor(m => m.PaisID)
+        @Html.DropDownListFor(m => m.PaisID, new CondoClub.Web.Controllers.DadosMestre.PaisController().ConstroiDropDown(), "")
+    </div>
+    <div class="form-2column">
+        @Html.LabelFor(m => m.OpcaoPagamentoID)        
+        @Html.DropDownListFor(m => m.OpcaoPagamentoID, new CondoClub.Web.Controllers.DadosMestre.OpcaoPagamentoController().ConstroiDropDown(), "")
+    </div>
+    <div class="form-2column">
+        @Html.LabelFor(m => m.FraccoesAte)
+        @Html.TextBoxFor(m => m.FraccoesAte)
+    </div>
+    <div class="form-2column">
+        @Html.LabelFor(m => m.Valor)
+        @Html.TextBoxFor(m => m.Valor)
+    </div>
+    @if (!Model.ID.HasValue)
+    {
+        <div class="toolbox-no-border">
+            <input type="submit" class="orange1-button" value="@Resources.Geral.Gravar" />
+            <input type="reset" id="resetnewrec" class="orange3-button" onclick="CloseNewRec();" value="@Resources.Geral.Cancelar" />
+        </div>
+    }
+    else
+    {
+        <div class="toolbox-no-border">
+            @if (Model.Permissoes.Contains(CondoClub.Regras.Enum.Permissao.Gravar))
+            {
+                <input type="submit" class="orange1-button" value="@Resources.Geral.Gravar" />
+            }
+            @if (Model.Permissoes.Contains(CondoClub.Regras.Enum.Permissao.Apagar))
+            {
+                @Ajax.ActionLink(Resources.Geral.Apagar, "Apagar",
+                    new { @id = Model.ID },
+                    new AjaxOptions { HttpMethod = "Delete", Confirm = Resources.Geral.TemCerteza },
+                    new { @class = "orange1-button" }
+                )
+            }
+            @Ajax.ActionLink(Resources.Geral.Cancelar, "_DetalheVisualizar",
+                 new { @id = Model.ID },
+                 new AjaxOptions { HttpMethod = "Get", UpdateTargetId = Model.ID.Value.ToString() },
+                 new { @class = "orange3-button" }
+            )
+        </div>
+    }
+    <div class="clear"></div>
+</div>
